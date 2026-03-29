@@ -1,0 +1,115 @@
+# =========================
+
+# 🔹 Python
+
+# =========================
+
+**pycache**/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*.so
+
+# Virtual Environments
+
+venv/
+env/
+.venv/
+
+# Python build files
+
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Jupyter Notebook
+
+.ipynb_checkpoints/
+
+# =========================
+
+# 🔹 Java (Maven/Gradle)
+
+# =========================
+
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# =========================
+
+# 🔹 IDE / Editor
+
+# =========================
+
+.vscode/
+.idea/
+*.iml
+
+# =========================
+
+# 🔹 OS Files
+
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+
+# 🔹 Logs
+
+# =========================
+
+*.log
+logs/
+
+# =========================
+
+# 🔹 Database
+
+# =========================
+
+*.db
+*.sqlite3
+
+# =========================
+
+# 🔹 Environment Variables (IMPORTANT)
+
+# =========================
+
+.env
+
+# =========================
+
+# 🔹 Temporary Files
+
+# =========================
+
+*.tmp
+*.temp
+*.swp
+
+# =========================
+
+# 🔹 Optional (Large Files)
+
+# =========================
+
+*.zip
+*.tar
+*.gz
+*.rar
+
+# =========================
+
+# 🔹 Node (if any frontend)
+
+# =========================
+
+node_modules/

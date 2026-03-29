@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Login - FAKE BANK OF INDIA</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- UPDATED GRADIENT BACKGROUND --- */
+        body {
+            font-family: 'Roboto', sans-serif;
+            /* The Gradient Logic:
+               1. Starts #0f4c75 (Deep Blue) at top to merge with Navbar.
+               2. Fades to #e3f2fd (Light Blue) in the middle.
+               3. Ends #0f4c75 (Deep Blue) at bottom to merge with Footer.
+            */
+            background: linear-gradient(180deg, 
+                #0f4c75 0%, 
+                #5c9bc7 15%, 
+                #e3f2fd 40%, 
+                #e3f2fd 60%, 
+                #5c9bc7 85%, 
+                #0f4c75 100%
+            );
+            /* Ensures gradient covers full screen and stays fixed while scrolling */
+            background-attachment: fixed; 
+            background-size: cover;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Navbar - Made Transparent to blend with the new body gradient */
+        .navbar-custom {
+            background-color: rgba(15, 76, 117, 0.95); /* Slightly transparent deep blue */
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .navbar-custom a { color: #ffffff !important; }
+        .navbar-custom .navbar-brand { font-weight: bold; }
+
+        /* --- LOGIN BOX (Glassmorphism) --- */
+        .container {
+            /* Deep Blue Glass Card */
+            background: linear-gradient(135deg, rgba(15, 76, 117, 0.95), rgba(50, 130, 184, 0.9));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 50px 30px;
+            margin: 100px auto 30px auto;
+            text-align: center;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* Stronger shadow to pop against the new light middle background */
+            box-shadow: 0 25px 50px rgba(15, 76, 117, 0.4); 
+            max-width: 450px;
+            min-width: 350px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container h2 {
+            color: #fff;
+            margin-bottom: 25px;
+            font-size: 32px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .form-group label {
+            color: #ffffff;
+            font-weight: bold;
+            text-align: left;
+            display: block;
+        }
+
+        .form-group input {
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 14px;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .form-group input::placeholder { color: rgba(255,255,255,0.6); }
+
+        .form-group input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            border-color: white;
+            outline: none;
+        }
+
+        .btn {
+            background-color: #ffffff;
+            color: #0f4c75;
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #f0f8ff;
+            transform: scale(1.02);
+            color: #0a3655;
+        }
+        
+        .custom-link { color: #bbe1fa; font-weight: bold; }
+        .custom-link:hover { color: white; text-decoration: none; }
+
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 100px;
+            height: 100vh;
+            padding: 0 5%;
+        }
+
+        /* --- WELCOME TEXT CARD --- */
+        .welcome-text {
+            background: linear-gradient(135deg, rgba(15, 76, 117, 0.95), rgba(50, 130, 184, 0.9));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px rgba(15, 76, 117, 0.4);
+            flex: 1;
+            text-align: left;
+            margin-right: 150px;
+            color: white;
+        }
+
+        .welcome-text h1 { font-weight: 700; color: white; font-size: 2.8rem; letter-spacing: 1px; }
+        .welcome-text h1 span { white-space: nowrap; color: #bbe1fa; }
+        .welcome-text h3 { font-weight: 500; color: rgba(255,255,255,0.9); font-size: 1.2rem; margin-top: 15px; }
+
+        /* Footer - Made Transparent to blend with bottom gradient */
+        .footer {
+            background-color: rgba(15, 76, 117, 0.95);
+            color: white;
+            padding: 15px 0;
+            font-size: 14px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .footer a { color: #bbe1fa; text-decoration: none; font-weight: bold; }
+        .footer a:hover { color: #ffffff; text-decoration: underline; }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#">FAKE BANK OF INDIA</a>
+    </nav>
+
+    <div class="hero-section">
+        <div class="welcome-text">
+            <h1>Welcome to <br> <span>FAKE BANK OF INDIA</span></h1>
+            <h3>Your Trusted Banking Partner</h3>
+        </div>
+
+        <div class="container">
+            <h2 class="text-center"><strong>Login</strong></h2>
+            <form method="post" action="/login">
+                <div class="form-group">
+                    <label>Username:</label>
+                    <input type="text" class="form-control" name="username" placeholder="Enter your Username" required />
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" class="form-control" name="password" placeholder="Enter your Password" required />
+                </div>
+                <button type="submit" class="btn btn-block">Login</button>
+            </form>
+            <p class="text-center mt-3">Don't have an account? <a href="/register" class="custom-link">Register here</a></p>
+
+            <div th:if="${param.error}" class="alert alert-danger mt-3 text-center" style="background: rgba(255,0,0,0.1); border: none; color: #ffcccc;">
+                Invalid username or password.
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Copyright Aakash & Team. All rights reserved. | <a th:href="@{/privacy-policy}">Privacy Policy</a> | <a th:href="@{/termsofservice}">Terms of Service</a></p>
+    </footer>
+
+</body>
+</html>

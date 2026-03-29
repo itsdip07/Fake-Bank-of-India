@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Register - FAKE BANK OF INDIA</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0f4c75, #3282b8);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar-custom {
+            background-color: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar-custom a {
+            color: #ffffff !important;
+        }
+
+        .navbar-custom .navbar-brand {
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .container h2 {
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        
+        .form-group label {
+            color: #eeeeee;
+            /* A slightly brighter off-white */
+            text-align: left;
+            display: block;
+        }
+
+        
+        .form-group input,
+        .form-group select {
+            border: 1px solid #555555;
+            /* Dark gray border */
+            background-color: #2c3e50;
+            /* A dark, opaque blue-gray background */
+            color: #ffffff;
+            /* White text for high contrast */
+        }
+
+        
+        .form-group select {
+            /* Adding padding here makes the select box itself look better */
+            padding: 0.375rem 0.75rem;
+        }
+
+        .form-group select option {
+            background-color: #2c3e50;
+            /* Use the same dark background */
+            color: #ffffff;
+            /* White text for high visibility */
+        }
+
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            background-color: #34495e;
+            /* A slightly darker background on focus */
+            border-color: #5dadec;
+            box-shadow: 0 0 0 0.25rem rgba(93, 173, 236, 0.25);
+            color: #ffffff;
+        }
+
+        .btn {
+            background-color: #3282b8;
+            border-color: #3282b8;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0f4c75;
+            border-color: #0f4c75;
+        }
+
+        .custom-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .custom-link:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px 0;
+            font-size: 14px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+
+            75% {
+                transform: translateX(-5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .tick-icon {
+            position: absolute;
+            right: 10px;
+            top: 38px;
+            color: lightgreen;
+            display: none;
+            font-size: 18px;
+        }
+
+        .alert-danger {
+            background-color: rgba(255, 0, 0, 0.2);
+            color: #ffc2c2;
+            border-color: #ff0000;
+        }
+
+        .text-center mt-3 {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#">FAKE BANK OF INDIA</a>
+    </nav>
+
+    <div class="container">
+        <h2 class="text-center"><strong>Create New Account</strong></h2>
+        <form method="post" action="/register">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group position-relative">
+                        <label>Username:</label>
+                        <input type="text" class="form-control" name="username" placeholder="Example: user#1234"
+                            onblur="showTick(this)" required />
+                        <span class="tick-icon">✅</span>
+                    </div>
+
+                    <div class="form-group position-relative">
+                        <label>Aadhaar Card:</label>
+                        <input type="text" class="form-control" name="aadhaarNumber" placeholder="Enter Aadhaar"
+                            oninput="formatAadhaar(this)" onblur="showTick(this); validateAadhaar(this)" required />
+                        <span class="tick-icon">✅</span>
+                    </div>
+
+                    <div class="form-group position-relative">
+                        <label>Mobile Number:</label>
+                        <input type="tel" class="form-control" name="mobileNumber"
+                            placeholder="Enter Mobile (1234567890)" pattern="\d{10}" maxlength="10"
+                            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                            onblur="validateMobile(this); showTick(this)" required />
+                        <span class="tick-icon">✅</span>
+                    </div>
+
+                    <div class="form-group position-relative">
+                        <label>Address:</label>
+                        <input type="text" class="form-control" name="address" placeholder="Enter Address"
+                            onblur="showTick(this)" required />
+                        <span class="tick-icon">✅</span>
+                    </div>
+
+                    <div class="form-group position-relative">
+                        <label>Branch Location:</label>
+                        <input type="text" class="form-control" name="location" placeholder="Enter Location"
+                            onblur="showTick(this)" required />
+                        <span class="tick-icon">✅</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group position-relative">
+                        <label>Account Holder Name:</label>
+                        <input type="text" class="form-control" name="accountHolder" placeholder="Full Name"
+                            onblur="showTick(this)" required />
+                        <span class="tick-icon">✅</span>
+                    </div>
+
+                    <div class="form-group position-relative">
+                        <label>PAN Card:</label>
+                        <input type="text" class="form-control" name="panNumber"
+                            placeholder="Enter PAN (Format: ABCDE1234F)" maxlength="10" oninput="validatePAN(this)"
+                            onblur="showTick(this)" required />
+                        <span class="tick-icon">✅</span>
+                    </div>
+
+                    <div class="form-group position-relative">
+                        <label>Email:</label>
+                        <input type="email" class="form-control" name="email"
+                            placeholder="Enter Email (example@gmail.com)" oninput="validateEmail(this)"
+                            onblur="showTick(this)" required />
+                        <div id="emailError" style="font-size: 14px; margin-top: 4px;"></div>
+                        <span class="tick-icon">✅</span>
+                    </div>
+
+                    <div class="form-group position-relative">
+                        <label>Account Type:</label>
+                        <select class="form-control" name="accountType" onblur="showTick(this)" required>
+                            <option value="Savings">Savings</option>
+                            <option value="Current">Current</option>
+                        </select>
+                        <span class="tick-icon">✅</span>
+                    </div>
+
+                    <div class="form-group position-relative">
+                        <label>Password:</label>
+                        <input type="password" class="form-control" name="password" placeholder="Use a Strong Password"
+                            onblur="showTick(this)" required />
+                        <span class="tick-icon">✅</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <script>
+                function showTick(input) {
+                    let tick = input.parentNode.querySelector('.tick-icon');
+                    if (input.value.trim() !== '') {
+                        tick.style.display = 'inline';
+                    } else {
+                        tick.style.display = 'none';
+                    }
+                }
+                function formatAadhaar(input) {
+                    let value = input.value.replace(/[^0-9]/g, '');
+                    if (value.length > 12) value = value.slice(0, 12);
+                    let formatted = '';
+                    if (value.length > 0) formatted = value.substring(0, 4);
+                    if (value.length > 4) formatted += ' - ' + value.substring(4, 8);
+                    if (value.length > 8) formatted += ' - ' + value.substring(8, 12);
+                    input.value = formatted;
+                }
+                function validateAadhaar(input) {
+                    let digits = input.value.replace(/[^0-9]/g, '');
+                    if (digits !== '' && digits.length < 12) {
+                        input.style.animation = 'shake 0.5s';
+                        alert("Invalid Aadhaar Number!");
+                        input.value = '';
+                    }
+                }
+                function validateMobile(input) {
+                    let value = input.value.trim();
+                    if (value.length === 0) return;
+                    if (value.length !== 10) {
+                        input.style.animation = 'shake 0.5s';
+                        alert("Invalid Phone Number! Try Again !!");
+                        input.value = '';
+                    }
+                }
+                function validatePAN(input) {
+                    let value = input.value.toUpperCase();
+                    if (value.length <= 5) {
+                        value = value.replace(/[^A-Z]/g, '');
+                    } else if (value.length <= 9) {
+                        value = value.slice(0, 5) + value.slice(5).replace(/[^0-9]/g, '');
+                    } else {
+                        value = value.slice(0, 9) + value.slice(9).replace(/[^A-Z]/g, '');
+                    }
+                    input.value = value;
+                    input.onblur = function () {
+                        if (value.length === 0) return;
+                        if (value.length < 10 || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(value)) {
+                            input.style.animation = 'shake 0.5s';
+                            alert("Invalid PAN Number!");
+                            input.value = '';
+                        }
+                    };
+                }
+                function validateEmail(input) {
+                    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    const errorDiv = document.getElementById('emailError');
+                    if (input.value === '') {
+                        errorDiv.textContent = '';
+                        errorDiv.style.color = '';
+                    } else if (emailPattern.test(input.value)) {
+                        errorDiv.textContent = '✅ Valid email format';
+                        errorDiv.style.color = 'lightgreen';
+                    } else {
+                        errorDiv.textContent = '❌ Invalid email format';
+                        errorDiv.style.color = 'red';
+                    }
+                }
+            </script>
+
+
+            <style>
+                .form-group {
+                    position: relative;
+                }
+
+                .tick-icon {
+                    position: absolute;
+                    right: 10px;
+                    top: 38px;
+                    color: lightgreen;
+                    display: none;
+                    font-size: 18px;
+                }
+            </style>
+
+
+            <div th:if="${error}" class="alert alert-danger mt-3 text-center">
+                User already present.
+            </div>
+            <button type="submit" class="btn btn-block">Register</button>
+        </form>
+
+        <p class="text-center mt-3">Already have an account? <a href="/login" class="custom-link">Login here</a></p>
+    </div>
+
+</body>
+
+</html>

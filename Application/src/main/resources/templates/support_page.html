@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Bank of India - 24/7 Support</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0f4c75;
+            --secondary: #3282b8;
+            --accent: #1b9aaa;
+            --gold: #f0a500;
+            --bg-gradient: linear-gradient(160deg, #e3f2fd 0%, #ffffff 35%, #f0f8ff 100%);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ─── NAVBAR ─── */
+        .navbar-custom {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+        }
+        .navbar-brand { color: var(--primary) !important; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.2rem; letter-spacing: 0.5px; }
+        .nav-link { color: #555 !important; font-weight: 500; }
+        .btn-login {
+            background: var(--primary);
+            color: white !important;
+            border-radius: 50px;
+            padding: 6px 22px;
+            font-weight: 600;
+        }
+        .nav-link.active { color: var(--primary) !important; font-weight: 700; }
+
+        /* ─── HERO ─── */
+        .hero {
+            position: relative;
+            padding: 80px 0 60px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Animated pulse rings behind clock */
+        .pulse-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .pulse-rings span {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1.5px solid rgba(15, 76, 117, 0.12);
+            animation: pulseRing 3.5s ease-out infinite;
+        }
+        .pulse-rings span:nth-child(1) { width: 180px; height: 180px; animation-delay: 0s; }
+        .pulse-rings span:nth-child(2) { width: 300px; height: 300px; animation-delay: 0.7s; }
+        .pulse-rings span:nth-child(3) { width: 430px; height: 430px; animation-delay: 1.4s; }
+        .pulse-rings span:nth-child(4) { width: 560px; height: 560px; animation-delay: 2.1s; }
+
+        @keyframes pulseRing {
+            0%   { opacity: 0.7; transform: translate(-50%, -50%) scale(0.85); }
+            100% { opacity: 0;   transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .hero-content { position: relative; z-index: 1; }
+
+        /* Live dot badge */
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 76, 117, 0.08);
+            border: 1px solid rgba(15, 76, 117, 0.18);
+            border-radius: 50px;
+            padding: 6px 18px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px;
+        }
+        .live-dot {
+            width: 9px; height: 9px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: blink 1.3s ease-in-out infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+            50%       { opacity: 0.7; box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1.15;
+            margin-bottom: 18px;
+        }
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+        }
+        .hero .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 540px;
+            margin: 0 auto 35px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        /* Live Clock */
+        .live-clock-wrap {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            padding: 18px 40px;
+            color: white;
+            box-shadow: 0 12px 35px rgba(15, 76, 117, 0.35);
+            margin-bottom: 50px;
+        }
+        .live-clock-wrap .clock-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.7;
+            margin-bottom: 4px;
+        }
+        #liveClock {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        #liveDate {
+            font-size: 0.8rem;
+            opacity: 0.75;
+            margin-top: 2px;
+        }
+
+        /* ─── STAT STRIP ─── */
+        .stat-strip {
+            background: linear-gradient(135deg, rgba(15,76,117,0.96), rgba(50,130,184,0.92));
+            padding: 30px 0;
+            margin-bottom: 70px;
+        }
+        .stat-item {
+            text-align: center;
+            color: white;
+            padding: 0 15px;
+        }
+        .stat-item .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #bbe1fa;
+        }
+        .stat-item .stat-label {
+            font-size: 0.82rem;
+            opacity: 0.75;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+        .stat-divider {
+            width: 1px;
+            background: rgba(255,255,255,0.15);
+            height: 50px;
+            margin: auto;
+        }
+
+        /* ─── SECTION HEADER ─── */
+        .section-label {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-label .eyebrow {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .section-label h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primary);
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .section-label p { color: #777; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+        /* ─── CHANNEL CARDS ─── */
+        .channel-card {
+            background: linear-gradient(135deg, rgba(15,76,117,0.95), rgba(50,130,184,0.9));
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 38px 28px;
+            color: white;
+            height: 100%;
+            transition: all 0.35s ease;
+            box-shadow: 0 10px 30px rgba(15,76,117,0.18);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .channel-card::before {
+            content: '';
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+        }
+        .channel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 22px 45px rgba(15,76,117,0.38);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .channel-card .ch-icon {
+            font-size: 2.4rem;
+            margin-bottom: 18px;
+            display: block;
+            background: -webkit-linear-gradient(#fff, #bbe1fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .channel-card .ch-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+        .channel-card .ch-avail {
+            display: inline-block;
+            background: rgba(34,197,94,0.2);
+            border: 1px solid rgba(34,197,94,0.5);
+            border-radius: 50px;
+            padding: 3px 12px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #86efac;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+        .channel-card .ch-desc { font-size: 0.9rem; color: rgba(255,255,255,0.78); line-height: 1.6; margin-bottom: 20px; }
+        .channel-card .ch-action {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #bbe1fa;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .channel-card .ch-action i { margin-left: 6px; transition: transform 0.2s; }
+        .channel-card:hover .ch-action i { transform: translateX(5px); }
+
+        /* ─── FAQ ─── */
+        .faq-section { margin: 80px 0; }
+        .reader-container {
+            background: rgba(255,255,255,0.88);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,1);
+        }
+        .custom-accordion .card {
+            border: none;
+            border-radius: 14px !important;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            overflow: hidden;
+        }
+        .custom-accordion .card-header {
+            background: rgba(15,76,117,0.04);
+            border: none;
+            padding: 0;
+        }
+        .custom-accordion .card-header button {
+            width: 100%;
+            text-align: left;
+            padding: 20px 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--primary);
+            background: transparent;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .custom-accordion .card-header button .faq-icon { transition: transform 0.3s; }
+        .custom-accordion .card-header button[aria-expanded="true"] .faq-icon { transform: rotate(45deg); }
+        .custom-accordion .card-body {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.8;
+            padding: 0 25px 22px;
+        }
+
+        /* ─── PROMISE STRIP ─── */
+        .promise-strip {
+            background: linear-gradient(135deg, #0a3356, var(--primary));
+            border-radius: 24px;
+            padding: 55px 40px;
+            color: white;
+            text-align: center;
+            margin: 70px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .promise-strip::after {
+            content: '24/7';
+            position: absolute;
+            bottom: -30px; right: -10px;
+            font-family: 'Playfair Display', serif;
+            font-size: 10rem;
+            font-weight: 900;
+            opacity: 0.04;
+            color: white;
+            line-height: 1;
+            pointer-events: none;
+        }
+        .promise-strip h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.3rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+        .promise-strip p { opacity: 0.8; max-width: 500px; margin: 0 auto 30px; line-height: 1.7; }
+        .btn-promise {
+            background: white;
+            color: var(--primary);
+            font-weight: 700;
+            border-radius: 50px;
+            padding: 14px 38px;
+            font-size: 0.95rem;
+            border: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        .btn-promise:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-decoration: none; color: var(--primary); }
+
+        /* ─── SECTION DIVIDER ─── */
+        .s-title {
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 18px;
+            margin-top: 40px;
+            position: relative;
+            display: inline-block;
+        }
+        .s-title::after {
+            content: '';
+            display: block;
+            width: 45px; height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+            margin-top: 8px;
+        }
+
+        .feature-list { list-style: none; padding: 0; }
+        .feature-list li {
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex; align-items: flex-start;
+        }
+        .feature-list li i { color: var(--secondary); margin-right: 14px; margin-top: 4px; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: #0a3356;
+            color: #ccc;
+            padding: 40px 0;
+            margin-top: 0;
+            font-size: 0.9rem;
+        }
+
+        /* ─── ANIMATIONS ─── */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">FAKE BANK OF INDIA</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="fas fa-bars text-primary"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/ex_products_page.html">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/support_page.html">Support</a></li>
+                    <li class="nav-item pl-3"><a class="btn btn-login" href="/login">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="pulse-rings">
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="container hero-content">
+            <div class="live-badge">
+                <span class="live-dot"></span>
+                All Systems Operational
+            </div>
+            <h1>We're Here.<br><em>Always.</em></h1>
+            <p class="subtitle">Day or night, rain or shine — our support team is ready to help you every single minute of every single day.</p>
+
+            <div class="live-clock-wrap">
+                <div class="clock-label">Current Time (IST)</div>
+                <div id="liveClock">--:--:--</div>
+                <div id="liveDate">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAT STRIP -->
+    <div class="stat-strip">
+        <div class="container">
+            <div class="row align-items-center text-center">
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Always Available</div>
+                </div>
+                <div class="col-md-1 d-none d-md-block"><div class="stat-divider"></div></div>
+                <div class="col-6 col-md-2 stat-item">
+                    <div class="stat-number">&lt;60s</div>
+                    <div class="stat-label">Avg. Response Time</div>
+                </div>
+                <div class="col-md-1 d-none d-md-block"><div class="stat-divider"></div></div>
+                <div class="col-6 col-md-2 stat-item">
+                    <div class="stat-number">12+</div>
+                    <div class="stat-label">Languages Supported</div>
+                </div>
+                <div class="col-md-1 d-none d-md-block"><div class="stat-divider"></div></div>
+                <div class="col-6 col-md-2 stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Customer Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUPPORT CHANNELS -->
+    <div class="container">
+        <div class="section-label fade-up">
+            <div class="eyebrow">Contact Us</div>
+            <h2>Choose Your Channel</h2>
+            <p>Multiple ways to reach us — pick what works best for you right now.</p>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-4 mb-4 fade-up delay-1">
+                <div class="channel-card">
+                    <i class="fas fa-phone-alt ch-icon"></i>
+                    <div class="ch-avail">24/7 Live</div>
+                    <div class="ch-title">Phone Support</div>
+                    <div class="ch-desc">Talk directly with a banking expert. No bots, no menus — just a real human, instantly.</div>
+                    <div><strong style="font-size:1.1rem;">1800-XXX-XXXX</strong><br><small style="opacity:0.7;">Toll-Free from anywhere in India</small></div>
+                    <div class="ch-action mt-3">Call Now <i class="fas fa-arrow-right"></i></div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-2">
+                <div class="channel-card">
+                    <i class="fas fa-comments ch-icon"></i>
+                    <div class="ch-avail">24/7 Live Chat</div>
+                    <div class="ch-title">Live Chat</div>
+                    <div class="ch-desc">Get instant help right here on the website. Our agents are online and ready within seconds.</div>
+                    <div class="ch-action mt-3">Start Chat <i class="fas fa-arrow-right"></i></div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-3">
+                <div class="channel-card">
+                    <i class="fab fa-whatsapp ch-icon"></i>
+                    <div class="ch-avail">24/7 Available</div>
+                    <div class="ch-title">WhatsApp Banking</div>
+                    <div class="ch-desc">Message us on WhatsApp for balance checks, statements, and quick queries — fast & secure.</div>
+                    <div><strong style="font-size:1.05rem;">+91 99XXX XXXXX</strong></div>
+                    <div class="ch-action mt-3">Message Us <i class="fas fa-arrow-right"></i></div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-1">
+                <div class="channel-card">
+                    <i class="fas fa-envelope-open-text ch-icon"></i>
+                    <div class="ch-avail">Reply within 2 hrs</div>
+                    <div class="ch-title">Email Support</div>
+                    <div class="ch-desc">For detailed queries, documentation, or formal complaints. We guarantee a response in under 2 hours.</div>
+                    <div><strong style="font-size:0.95rem;">support@fakebank.in</strong></div>
+                    <div class="ch-action mt-3">Send Email <i class="fas fa-arrow-right"></i></div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-2">
+                <div class="channel-card">
+                    <i class="fas fa-mobile-alt ch-icon"></i>
+                    <div class="ch-avail">Always On</div>
+                    <div class="ch-title">Mobile App Support</div>
+                    <div class="ch-desc">In-app chat, video calls with advisors, and instant complaint tracking — all from your phone.</div>
+                    <div class="ch-action mt-3">Open App <i class="fas fa-arrow-right"></i></div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-3">
+                <div class="channel-card">
+                    <i class="fas fa-map-marker-alt ch-icon"></i>
+                    <div class="ch-avail">Mon–Sat, 9AM–6PM</div>
+                    <div class="ch-title">Visit a Branch</div>
+                    <div class="ch-desc">Prefer face-to-face? Over 3,000 branches across India. Find the nearest one in seconds.</div>
+                    <div class="ch-action mt-3">Find Branch <i class="fas fa-arrow-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMISE STRIP -->
+    <div class="container">
+        <div class="promise-strip fade-up">
+            <h2>Our Promise to You</h2>
+            <p>We believe banking should never feel stressful. If you're stuck, confused, or in an emergency — we are just one tap away, round the clock.</p>
+            <a href="#" class="btn-promise">Talk to Us Right Now</a>
+        </div>
+    </div>
+
+    <!-- FAQ + TIPS -->
+    <div class="container faq-section">
+        <div class="section-label fade-up">
+            <div class="eyebrow">Self Service</div>
+            <h2>Quick Answers</h2>
+            <p>Most common issues, resolved in seconds.</p>
+        </div>
+
+        <div class="reader-container fade-up">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="s-title">Frequently Asked Questions</h3>
+                    <div class="accordion custom-accordion" id="faqAccordion">
+                        <div class="card">
+                            <div class="card-header" id="h1">
+                                <button data-toggle="collapse" data-target="#f1" aria-expanded="true" aria-controls="f1">
+                                    My card is blocked. What do I do?
+                                    <i class="fas fa-plus faq-icon"></i>
+                                </button>
+                            </div>
+                            <div id="f1" class="collapse show" data-parent="#faqAccordion">
+                                <div class="card-body">Call our 24/7 helpline <strong>1800-XXX-XXXX</strong> or use the Mobile App to instantly unblock your card. You can also do a self-service unblock via Net Banking under <em>Cards → Manage Card</em>.</div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="h2">
+                                <button class="collapsed" data-toggle="collapse" data-target="#f2" aria-expanded="false">
+                                    I forgot my Net Banking password.
+                                    <i class="fas fa-plus faq-icon"></i>
+                                </button>
+                            </div>
+                            <div id="f2" class="collapse" data-parent="#faqAccordion">
+                                <div class="card-body">Click <strong>"Forgot Password"</strong> on the login page. You'll receive an OTP on your registered mobile. You can also reset via our Mobile App using your fingerprint or face ID.</div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="h3">
+                                <button class="collapsed" data-toggle="collapse" data-target="#f3" aria-expanded="false">
+                                    I noticed a suspicious transaction.
+                                    <i class="fas fa-plus faq-icon"></i>
+                                </button>
+                            </div>
+                            <div id="f3" class="collapse" data-parent="#faqAccordion">
+                                <div class="card-body">Call us immediately at <strong>1800-XXX-XXXX</strong> to freeze your account. You can also block your card instantly via the app. File a chargeback request within 30 days for unauthorized transactions.</div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="h4">
+                                <button class="collapsed" data-toggle="collapse" data-target="#f4" aria-expanded="false">
+                                    How do I track my complaint status?
+                                    <i class="fas fa-plus faq-icon"></i>
+                                </button>
+                            </div>
+                            <div id="f4" class="collapse" data-parent="#faqAccordion">
+                                <div class="card-body">Every complaint gets a unique <strong>Ticket ID</strong>. Track it under <em>Support → My Tickets</em> in the Mobile App or Net Banking. You'll also receive SMS/email updates at every stage.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="s-title">Support Tips</h3>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-id-card"></i>
+                            <div><strong>Keep your CIF/Account Number handy</strong> before calling — it speeds up verification significantly.</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-moon"></i>
+                            <div><strong>Best time to call:</strong> Off-peak hours are between 2 AM – 7 AM IST for zero wait time.</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-robot"></i>
+                            <div><strong>Use "Agent" keyword</strong> during IVR to bypass automated menus and speak to a human directly.</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-file-alt"></i>
+                            <div><strong>Document everything:</strong> Save your Ticket ID and agent name after every support interaction.</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-shield-alt"></i>
+                            <div><strong>Never share OTPs or passwords</strong> — our agents will NEVER ask for these details.</div>
+                        </li>
+                    </ul>
+
+                    <div class="alert border-0 mt-4" style="background: rgba(15,76,117,0.06); border-radius: 14px; padding: 20px 24px;">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-headset fa-2x mr-3" style="color: var(--secondary);"></i>
+                            <div>
+                                <strong style="color: var(--primary);">Dedicated NRI Helpline</strong>
+                                <p class="mb-0 small text-muted mt-1">Calling from abroad? Reach us at <strong>+91-22-XXXX-XXXX</strong> — available 24/7 for all NRI customers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container text-center">
+            <p class="mb-2">&copy; 2025 Fake Bank of India. All Rights Reserved.</p>
+            <div class="small text-white-50">
+                <a href="#" class="text-white-50 mx-2">Privacy Policy</a> |
+                <a href="#" class="text-white-50 mx-2">Terms of Use</a> |
+                <a href="#" class="text-white-50 mx-2">Security</a> |
+                <a href="#" class="text-white-50 mx-2">Grievance Redressal</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Live IST Clock
+        function updateClock() {
+            const now = new Date();
+            const istOptions = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const dateOptions = { timeZone: 'Asia/Kolkata', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('liveClock').textContent = now.toLocaleTimeString('en-IN', istOptions);
+            document.getElementById('liveDate').textContent = now.toLocaleDateString('en-IN', dateOptions);
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Scroll-triggered fade-up
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

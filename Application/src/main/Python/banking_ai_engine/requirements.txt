@@ -1,0 +1,10 @@
+faiss-cpu
+sentence-transformers
+numpy
+pandas
+tqdm
+
+# Create Virtual Environment (if not created)
+# python -m venv venv
+# venv\Scripts\activate   (On Windows)
+# source venv/bin/activate (On Mac/Linux:)

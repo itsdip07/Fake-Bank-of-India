@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Bank of India - Complete Digital Experience</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ─── THEME ─── */
+        :root {
+            --primary: #0f4c75;
+            --secondary: #3282b8;
+            --accent: #1b9aaa;
+            --gold: #f0a500;
+            --bg-gradient: linear-gradient(180deg, #e3f2fd 0%, #ffffff 20%, #f0f8ff 100%);
+            --text-dark: #333;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* ─── UTILS (kept from original for hero) ─── */
+        .text-primary-custom { color: var(--primary) !important; }
+        .bg-primary-custom   { background-color: var(--primary) !important; }
+
+        .btn-primary-custom {
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50px;
+            padding: 10px 25px;
+            border: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-primary-custom:hover { background-color: #0a3655; color: white; transform: translateY(-2px); }
+
+        .btn-outline-custom {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 50px;
+            padding: 10px 25px;
+            background: transparent;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-outline-custom:hover { background: var(--primary); color: white; }
+
+        /* ─── NAVBAR (original) ─── */
+        .navbar-custom {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .navbar-brand { color: var(--primary) !important; font-weight: 700; letter-spacing: 0.4px; }
+        .nav-link     { color: #555 !important; font-weight: 500; }
+        .btn-login {
+            background: var(--primary);
+            color: white !important;
+            border-radius: 50px;
+            padding: 5px 20px;
+            font-weight: 600;
+        }
+
+        /* ─── HERO (original — DO NOT CHANGE) ─── */
+        .hero-section {
+            position: relative;
+            padding: 100px 0 60px;
+            min-height: 80vh;
+            overflow: hidden;
+        }
+        .glass-curve {
+            position: absolute;
+            top: 0; right: 0;
+            width: 55%; height: 100%;
+            background: rgba(255,255,255,0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-left: 1px solid rgba(255,255,255,0.5);
+            clip-path: ellipse(90% 100% at 100% 50%);
+            z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-title { font-size: 3.5rem; font-weight: 300; line-height: 1.2; color: #222; font-family: 'Roboto', sans-serif; }
+        .hero-title span { font-weight: 700; color: var(--primary); font-style: italic; }
+        /* ─── PILL TABS ─── */
+        .custom-tabs {
+            display: inline-flex;
+            background: rgba(15, 76, 117, 0.07);
+            border-radius: 50px;
+            padding: 5px;
+            gap: 4px;
+            margin-top: 40px;
+            border: none;
+        }
+        .custom-tabs .nav-item { list-style: none; }
+        .custom-tabs .nav-link {
+            border: none !important;
+            color: #666;
+            font-weight: 500;
+            font-size: 0.88rem;
+            background: transparent;
+            border-radius: 50px;
+            padding: 8px 20px;
+            transition: background 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+            white-space: nowrap;
+        }
+        .custom-tabs .nav-link:hover:not(.active) {
+            color: var(--primary);
+            background: rgba(15, 76, 117, 0.08);
+        }
+        .custom-tabs .nav-link.active {
+            background: var(--primary);
+            color: white !important;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(15, 76, 117, 0.3);
+        }
+
+        @keyframes float {
+            0%   { transform: translateY(0px); }
+            50%  { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* ════════════════════════════════════════════
+           REDESIGNED SECTIONS BELOW
+        ════════════════════════════════════════════ */
+
+        /* ─── STAT STRIP ─── */
+        .stat-strip {
+            background: linear-gradient(135deg, rgba(15,76,117,0.97), rgba(50,130,184,0.92));
+            padding: 30px 0;
+            margin-top: 0;
+        }
+        .stat-item { text-align: center; color: white; padding: 0 15px; }
+        .stat-item .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #bbe1fa;
+        }
+        .stat-item .stat-label {
+            font-size: 0.82rem;
+            opacity: 0.75;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+        .stat-divider { width: 1px; background: rgba(255,255,255,0.15); height: 50px; margin: auto; }
+
+        /* ─── QUICK ICONS ─── */
+        .quick-icons-section { padding: 70px 0 50px; }
+        .quick-icons-section .eyebrow {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .quick-icons-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: 900;
+            margin-bottom: 40px;
+        }
+        .icon-wrap { margin-bottom: 20px; text-align: center; cursor: pointer; }
+        .icon-circle {
+            width: 68px; height: 68px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 8px 22px rgba(15,76,117,0.12);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 12px;
+            color: var(--secondary);
+            font-size: 26px;
+            transition: 0.3s;
+            border: 1.5px solid rgba(50,130,184,0.1);
+        }
+        .icon-wrap:hover .icon-circle {
+            transform: translateY(-6px);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 16px 30px rgba(15,76,117,0.28);
+        }
+        .icon-label { font-size: 13px; font-weight: 600; color: #555; }
+
+        /* ─── SECTION HEADER ─── */
+        .section-label { text-align: center; margin-bottom: 50px; }
+        .section-label .eyebrow {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .section-label h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primary);
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .section-label p { color: #777; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+        /* ─── PROMO BANNER ─── */
+        .promo-banner {
+            background: linear-gradient(135deg, rgba(27,154,170,0.08), rgba(15,76,117,0.06));
+            border: 1px solid rgba(27,154,170,0.2);
+            border-radius: 20px;
+            padding: 32px 40px;
+            margin-bottom: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .promo-banner .promo-badge {
+            background: var(--gold);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 4px 14px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .promo-banner h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            font-weight: 900;
+            margin-bottom: 6px;
+        }
+        .promo-banner p { color: #666; margin: 0; font-size: 0.95rem; }
+
+        /* ─── PRODUCT CARDS (support-page style) ─── */
+        .products-section { padding: 0 0 80px; }
+
+        .product-card {
+            background: linear-gradient(135deg, rgba(15,76,117,0.95), rgba(50,130,184,0.9));
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 22px;
+            padding: 38px 30px;
+            color: white;
+            height: 100%;
+            transition: all 0.35s ease;
+            box-shadow: 0 10px 30px rgba(15,76,117,0.18);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 160px; height: 160px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(15,76,117,0.38);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .product-card .pc-icon {
+            font-size: 2.5rem;
+            margin-bottom: 18px;
+            display: block;
+            background: -webkit-linear-gradient(#fff, #bbe1fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .product-card .pc-tag {
+            display: inline-block;
+            background: rgba(240,165,0,0.25);
+            border: 1px solid rgba(240,165,0,0.6);
+            border-radius: 50px;
+            padding: 3px 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #fcd34d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+        .product-card .pc-tag.green {
+            background: rgba(34,197,94,0.2);
+            border-color: rgba(34,197,94,0.5);
+            color: #86efac;
+        }
+        .product-card .pc-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+        .product-card .pc-desc { font-size: 0.9rem; color: rgba(255,255,255,0.78); line-height: 1.65; margin-bottom: 22px; }
+        .product-card .pc-links { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+        .product-card .pc-links a {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 4px 12px;
+            border-radius: 50px;
+            transition: 0.2s;
+        }
+        .product-card .pc-links a:hover { background: rgba(255,255,255,0.15); color: white; }
+        .product-card .pc-cta {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 10px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.25s;
+            letter-spacing: 0.4px;
+        }
+        .product-card .pc-cta:hover { transform: translateX(4px); box-shadow: 0 6px 18px rgba(0,0,0,0.15); text-decoration: none; color: var(--primary); }
+
+        /* ─── PROMISE STRIP / CTA ─── */
+        .promise-strip {
+            background: linear-gradient(135deg, #0a3356, var(--primary));
+            border-radius: 24px;
+            padding: 60px 40px;
+            color: white;
+            text-align: center;
+            margin: 0 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .promise-strip::after {
+            content: 'FBOI';
+            position: absolute;
+            bottom: -30px; right: -10px;
+            font-family: 'Playfair Display', serif;
+            font-size: 9rem;
+            font-weight: 900;
+            opacity: 0.04;
+            color: white;
+            line-height: 1;
+            pointer-events: none;
+        }
+        .promise-strip h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.3rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+        .promise-strip p { opacity: 0.8; max-width: 520px; margin: 0 auto 32px; line-height: 1.7; font-size: 1rem; }
+        .btn-promise {
+            background: white;
+            color: var(--primary);
+            font-weight: 700;
+            border-radius: 50px;
+            padding: 14px 40px;
+            font-size: 0.95rem;
+            border: none;
+            transition: all 0.3s;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .btn-promise:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.2); text-decoration: none; color: var(--primary); }
+
+        /* ─── EMI CALCULATOR ─── */
+        .calc-section {
+            background: rgba(255,255,255,0.88);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 55px;
+            margin-bottom: 80px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+            border: 1px solid rgba(255,255,255,1);
+        }
+        .calc-section .s-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-weight: 900;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .calc-section .s-sub {
+            text-align: center;
+            color: #888;
+            margin-bottom: 45px;
+            font-size: 0.95rem;
+        }
+        .slider-label { font-weight: 600; color: #444; font-size: 0.95rem; margin-bottom: 8px; }
+        .slider-label span { color: var(--primary); font-weight: 700; }
+        .slider-custom {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, var(--secondary), #bbe1fa);
+            outline: none;
+            border-radius: 5px;
+        }
+        .slider-custom::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px; height: 22px;
+            background: var(--primary);
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(15,76,117,0.35);
+        }
+        .emi-dial {
+            width: 200px; height: 200px;
+            border: 14px solid var(--secondary);
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex; align-items: center; justify-content: center;
+            border-top-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(15,76,117,0.15);
+            background: white;
+            position: relative;
+        }
+        .emi-dial-inner h4 { color: var(--primary); font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.6rem; margin: 0; }
+        .emi-dial-inner small { color: #999; font-size: 0.8rem; }
+
+        /* ─── APP DOWNLOAD ─── */
+        .app-section {
+            background: linear-gradient(135deg, rgba(15,76,117,0.05), rgba(27,154,170,0.06));
+            border: 1px solid rgba(15,76,117,0.1);
+            border-radius: 25px;
+            padding: 60px 50px;
+            margin-bottom: 80px;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+        .app-section .app-text { flex: 1; min-width: 260px; }
+        .app-section .app-badge {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .app-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            color: var(--primary);
+            font-weight: 900;
+            margin-bottom: 14px;
+        }
+        .app-section p { color: #666; line-height: 1.7; margin-bottom: 28px; }
+        .app-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-right: 12px;
+            margin-bottom: 10px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .app-btn:hover { background: #0a3655; color: white; transform: translateY(-2px); text-decoration: none; }
+        .app-btn i { font-size: 1.3rem; }
+        .app-btn .btn-sub { font-size: 0.7rem; opacity: 0.75; line-height: 1; display: block; }
+        .app-btn .btn-main { font-size: 0.95rem; font-weight: 700; line-height: 1; display: block; }
+        .app-visual {
+            flex: 0 0 auto;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 50px rgba(15,76,117,0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+        .app-visual i { font-size: 90px; color: rgba(255,255,255,0.9); }
+
+        /* ─── FEATURE HIGHLIGHTS ─── */
+        .highlights-section { margin-bottom: 80px; }
+        .highlight-row {
+            background: rgba(255,255,255,0.88);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,1);
+        }
+        .feature-item { display: flex; align-items: flex-start; gap: 18px; padding: 20px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .feature-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .feature-icon {
+            width: 52px; height: 52px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .feature-text h5 { font-family: 'Playfair Display', serif; color: var(--primary); font-weight: 700; margin-bottom: 4px; font-size: 1.05rem; }
+        .feature-text p { color: #777; font-size: 0.9rem; line-height: 1.6; margin: 0; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: #0a3356;
+            color: #ccc;
+            padding: 60px 0 30px;
+            font-size: 0.88rem;
+        }
+        footer .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 14px;
+        }
+        footer .footer-tagline { color: rgba(255,255,255,0.45); font-size: 0.82rem; line-height: 1.6; margin-bottom: 24px; }
+        footer h6 { color: white; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; margin-bottom: 18px; }
+        footer ul { list-style: none; padding: 0; margin: 0; }
+        footer ul li { margin-bottom: 10px; }
+        footer ul li a { color: rgba(255,255,255,0.5); text-decoration: none; transition: 0.2s; font-size: 0.88rem; }
+        footer ul li a:hover { color: white; padding-left: 4px; }
+        footer .social-links a {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            color: rgba(255,255,255,0.6);
+            margin-right: 8px;
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+        footer .social-links a:hover { background: var(--secondary); color: white; }
+        footer .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 24px;
+            margin-top: 50px;
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.8rem;
+        }
+        footer .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; margin: 0 10px; }
+        footer .footer-bottom a:hover { color: white; }
+
+        /* ─── ANIMATIONS ─── */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+    </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════
+     ORIGINAL HERO — UNTOUCHED
+═══════════════════════════════════ -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">FAKE BANK OF INDIA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="fas fa-bars text-primary"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/ex_products_page.html">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="/support_page.html">Support</a></li>
+                <li class="nav-item pl-3"><a class="btn btn-login" href="/login">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="hero-section">
+    <div class="glass-curve"></div>
+    <div class="container hero-content">
+        <div class="row">
+            <div class="col-lg-7">
+                <h1 class="hero-title">
+                    <div class="badge badge-light mb-3 px-3 py-2">#1 AI Bank🤖</div><br>
+                    <span class="text-primary-custom" style="font-style:italic;">Open</span> dil se<br>
+                    <span class="text-primary-custom" style="font-style:italic;">Open</span> to your life goals
+                </h1>
+                <p class="lead mt-3 text-muted">Experience the All New Manless AI Banking Service</p>
+                <div class="mt-4">
+                    <a href="/ai_banking.html" target="_blank" class="btn btn-primary-custom">Learn More</a>
+                    <a href="/ex_products_page.html" target="_blank" class="btn btn-primary-custom">Explore Products</a>
+                </div>
+                <ul class="nav custom-tabs mt-5">
+                    <li class="nav-item"><a class="nav-link active" href="#">Savings Account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Credit Cards</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Loans</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Investments</a></li>
+                </ul>
+                <div class="bg-white p-4 mt-3 shadow-sm rounded d-flex align-items-center" style="max-width: 500px;">
+                    <div class="mr-3 text-primary-custom h2"><i class="fas fa-piggy-bank"></i></div>
+                    <div>
+                        <h6 class="font-weight-bold m-0">Choose your Savings Account</h6>
+                        <small class="text-muted">Rates up to 5.1% p.a*.</small>
+                    </div>
+                    <div class="ml-auto text-primary-custom font-weight-bold" style="cursor:pointer;">VIEW ></div>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-flex justify-content-center">
+                <div style="position:relative;width:350px;height:350px;background:rgba(255,255,255,0.2);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.5);border-radius:30px;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 40px rgba(0,0,0,0.1);animation:float 6s ease-in-out infinite;">
+                    <i class="fas fa-shield-alt" style="font-size:10rem;color:var(--primary);filter:drop-shadow(0 10px 10px rgba(15,76,117,0.2));"></i>
+                    <div style="position:absolute;bottom:40px;right:40px;background:white;padding:20px;border-radius:50%;box-shadow:0 10px 20px rgba(0,0,0,0.15);">
+                        <i class="fas fa-lock" style="font-size:2.5rem;color:var(--secondary);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="stat-strip">
+    <div class="container">
+        <div class="row align-items-center text-center">
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-number">2Cr+</div>
+                <div class="stat-label">Happy Customers</div>
+            </div>
+            <div class="col-md-1 d-none d-md-block"><div class="stat-divider"></div></div>
+            <div class="col-6 col-md-2 stat-item">
+                <div class="stat-number">5.1%</div>
+                <div class="stat-label">Savings Interest p.a.</div>
+            </div>
+            <div class="col-md-1 d-none d-md-block"><div class="stat-divider"></div></div>
+            <div class="col-6 col-md-2 stat-item">
+                <div class="stat-number">3000+</div>
+                <div class="stat-label">Branches Nationwide</div>
+            </div>
+            <div class="col-md-1 d-none d-md-block"><div class="stat-divider"></div></div>
+            <div class="col-6 col-md-2 stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">AI Banking Support</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- QUICK ICONS -->
+<div class="container quick-icons-section">
+    <div class="section-label fade-up">
+        <div class="eyebrow">Quick Access</div>
+        <h2>Everything You Need, In One Place</h2>
+        <p>Tap into any service instantly — no queues, no paperwork, just seamless banking.</p>
+    </div>
+    <div class="row justify-content-center fade-up delay-1">
+        <div class="col-4 col-md-2 icon-wrap">
+            <div class="icon-circle"><i class="fas fa-user-plus"></i></div>
+            <div class="icon-label">Accounts</div>
+        </div>
+        <div class="col-4 col-md-2 icon-wrap">
+            <div class="icon-circle"><i class="fas fa-credit-card"></i></div>
+            <div class="icon-label">Cards</div>
+        </div>
+        <div class="col-4 col-md-2 icon-wrap">
+            <div class="icon-circle"><i class="fas fa-home"></i></div>
+            <div class="icon-label">Home Loan</div>
+        </div>
+        <div class="col-4 col-md-2 icon-wrap">
+            <div class="icon-circle"><i class="fas fa-chart-line"></i></div>
+            <div class="icon-label">Invest</div>
+        </div>
+        <div class="col-4 col-md-2 icon-wrap">
+            <div class="icon-circle"><i class="fas fa-shield-alt"></i></div>
+            <div class="icon-label">Insure</div>
+        </div>
+        <div class="col-4 col-md-2 icon-wrap">
+            <div class="icon-circle"><i class="fas fa-receipt"></i></div>
+            <div class="icon-label">Pay Bills</div>
+        </div>
+    </div>
+</div>
+
+<!-- PROMO BANNER -->
+<div class="container">
+    <div class="promo-banner fade-up">
+        <div>
+            <div class="promo-badge">🔥 Hot Offer</div>
+            <h3>Get 25% Cashback on Your First Transaction</h3>
+            <p>Download the Fake Bank App and enjoy exclusive welcome rewards. Limited time offer.</p>
+        </div>
+        <a href="#" class="btn btn-primary-custom" style="white-space:nowrap;">Claim Offer →</a>
+    </div>
+</div>
+
+<!-- PRODUCTS SECTION -->
+<div class="container products-section">
+    <div class="section-label fade-up">
+        <div class="eyebrow">Our Products</div>
+        <h2>Tailored for Every Life Goal</h2>
+        <p>From your first savings account to your dream home — we have a product for every milestone.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4 fade-up delay-1">
+            <div class="product-card">
+                <i class="fas fa-piggy-bank pc-icon"></i>
+                <div class="pc-tag green">Up to 5.1%</div>
+                <div class="pc-title">Savings Account</div>
+                <div class="pc-desc">India's highest interest savings account with zero minimum balance and instant digital access anytime.</div>
+                <div class="pc-links">
+                    <a href="#">Compare Plans</a>
+                    <a href="#">Open Online</a>
+                    <a href="#">Benefits</a>
+                </div>
+                <a href="/savings_acc.html" class="pc-cta">Open Account →</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4 fade-up delay-2">
+            <div class="product-card">
+                <i class="fas fa-credit-card pc-icon"></i>
+                <div class="pc-tag green">Rewards</div>
+                <div class="pc-title">Debit Cards</div>
+                <div class="pc-desc">Enjoy lifestyle privileges, dining delights, travel miles, and endless rewards with zero annual fee options.</div>
+                <div class="pc-links">
+                    <a href="#">Browse Cards</a>
+                    <a href="#">Rewards Catalogue</a>
+                    <a href="#">Track Application</a>
+                </div>
+                <a href="/debit.html" class="pc-cta">Get Card →</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4 fade-up delay-2">
+            <div class="product-card">
+                <i class="fas fa-credit-card pc-icon"></i>
+                <div class="pc-tag green">Rewards</div>
+                <div class="pc-title">Credit Cards</div>
+                <div class="pc-desc">Enjoy lifestyle privileges, dining delights, travel miles, and endless rewards with zero annual fee options.</div>
+                <div class="pc-links">
+                    <a href="#">Browse Cards</a>
+                    <a href="#">Rewards Catalogue</a>
+                    <a href="#">Track Application</a>
+                </div>
+                <a href="/credit_cards.html" class="pc-cta">Get Card →</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4 fade-up delay-1">
+            <div class="product-card">
+                <i class="fas fa-money-bill-wave pc-icon"></i>
+                <div class="pc-tag">Hot Offer</div>
+                <div class="pc-title">Personal Loan</div>
+                <div class="pc-desc">Get instant funds up to ₹40 Lakhs. Paperless approval in 30 minutes with competitive interest rates.</div>
+                <div class="pc-links">
+                    <a href="#">Check Eligibility</a>
+                    <a href="#">Interest Rates</a>
+                    <a href="#">EMI Calculator</a>
+                </div>
+                <a href="/personal_loans.html" class="pc-cta">Apply Now →</a>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4 fade-up delay-3">
+            <div class="product-card">
+                <i class="fas fa-home pc-icon"></i>
+                <div class="pc-tag green">Low Rates</div>
+                <div class="pc-title">Home Loans</div>
+                <div class="pc-desc">Zero processing fee for salaried employees. Rates starting at 8.5% p.a. Turn your dream home into reality.</div>
+                <div class="pc-links">
+                    <a href="#">Eligibility</a>
+                    <a href="#">Documents Required</a>
+                    <a href="#">Transfer Loan</a>
+                </div>
+                <a href="/home_loans.html" class="pc-cta">Apply Now →</a>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4 fade-up delay-2">
+            <div class="product-card">
+                <i class="fas fa-chart-line pc-icon"></i>
+                <div class="pc-tag">New</div>
+                <div class="pc-title">Investments & SIP</div>
+                <div class="pc-desc">Start your SIP from just ₹500/month. Mutual funds, FDs, bonds — all managed by AI-powered advisors.</div>
+                <div class="pc-links">
+                    <a href="#">Explore Funds</a>
+                    <a href="#">SIP Calculator</a>
+                    <a href="#">Risk Profile</a>
+                </div>
+                <a href="/groww.html" class="pc-cta">Start Investing →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PROMISE / CTA STRIP -->
+<div class="container">
+    <div class="promise-strip fade-up">
+        <h2>The Best of Digital Banking is Here</h2>
+        <p>Join over 2 crore Indians who trust Fake Bank of India for seamless, secure, and smart banking every single day.</p>
+        <a href="#" class="btn-promise">Open Your Account Today</a>
+    </div>
+</div>
+
+<!-- EMI CALCULATOR -->
+<div class="container">
+    <div class="calc-section fade-up">
+        <div class="s-title">Calculate Your EMI</div>
+        <div class="s-sub">Adjust the sliders below to get an instant estimate of your monthly payments.</div>
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="mb-4">
+                    <div class="slider-label">Loan Amount: <span id="loanAmountDisplay">₹25,00,000</span></div>
+                    <input type="range" id="loanAmountSlider" class="slider-custom" min="100000" max="50000000" step="100000" value="2500000">
+                    <div class="d-flex justify-content-between mt-2">
+                        <small class="text-muted">₹1 Lakh</small>
+                        <small class="text-muted">₹5 Crore</small>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="slider-label">Interest Rate: <span id="rateDisplay">8.5%</span></div>
+                    <input type="range" id="rateSlider" class="slider-custom" min="6" max="18" step="0.1" value="8.5">
+                    <div class="d-flex justify-content-between mt-2">
+                        <small class="text-muted">6%</small>
+                        <small class="text-muted">18%</small>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="slider-label">Tenure: <span id="tenureDisplay">15 Years</span></div>
+                    <input type="range" id="tenureSlider" class="slider-custom" min="1" max="35" step="1" value="15">
+                    <div class="d-flex justify-content-between mt-2">
+                        <small class="text-muted">1 Year</small>
+                        <small class="text-muted">35 Years</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="emi-dial">
+                    <div class="emi-dial-inner">
+                        <h4 id="emiDisplay">₹21,400</h4>
+                        <small>Monthly EMI</small>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="d-flex justify-content-center flex-wrap" style="gap:30px;">
+                        <div>
+                            <div style="font-size:0.75rem;color:#999;text-transform:uppercase;letter-spacing:1px;">Total Interest</div>
+                            <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--secondary);font-weight:700;" id="totalInterest">₹13.5L</div>
+                        </div>
+                        <div>
+                            <div style="font-size:0.75rem;color:#999;text-transform:uppercase;letter-spacing:1px;">Total Payable</div>
+                            <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--primary);font-weight:700;" id="totalPayable">₹38.5L</div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary-custom mt-4">Apply for Loan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- APP DOWNLOAD -->
+<div class="container">
+    <div class="app-section fade-up">
+        <div class="app-text">
+            <div class="app-badge">Mobile Banking</div>
+            <h2>Experience Freedom with FBOI's AI Banking</h2>
+            <p>Seamless payments, smart investments, instant loans, and real-time support — all from your phone. Rated 4.8 ★ by over 10 lakh users.</p>
+            <div>
+                <button class="app-btn"><i class="fab fa-apple"></i><div><span class="btn-sub">Download on the</span><span class="btn-main">App Store</span></div></button>
+                <button class="app-btn"><i class="fab fa-google-play"></i><div><span class="btn-sub">Get it on</span><span class="btn-main">Google Play</span></div></button>
+            </div>
+        </div>
+        <div class="app-visual">
+            <i class="fas fa-mobile-alt"></i>
+        </div>
+        <!-- Feature highlights beside app -->
+        <div style="flex:1;min-width:220px;">
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                <div class="feature-text">
+                    <h5>Instant Transfers</h5>
+                    <p>Internal Money Transfer — all in under 10 seconds, 24/7.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                <div class="feature-text">
+                    <h5>Bank-Grade Security</h5>
+                    <p>256-bit encryption with biometric authentication on every login.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                <div class="feature-text">
+                    <h5>AI Financial Advisor</h5>
+                    <p>Personalised insights, spend tracking, and smart savings goals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <div class="footer-brand">FAKE BANK OF INDIA</div>
+                <div class="footer-tagline">India's #1 AI-powered bank. Open dil se, open to your life goals — banking reimagined for a digital India.</div>
+                <div class="social-links mt-4">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>About Us</h6>
+                <ul>
+                    <li><a href="#">Overview</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Code of Conduct</a></li>
+                    <li><a href="#">Press Room</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Services</h6>
+                <ul>
+                    <li><a href="#">Savings Account</a></li>
+                    <li><a href="#">Current Account</a></li>
+                    <li><a href="#">Forex Cards</a></li>
+                    <li><a href="#">FASTag</a></li>
+                    <li><a href="#">Lockers</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Products</h6>
+                <ul>
+                    <li><a href="#">Personal Loan</a></li>
+                    <li><a href="#">Home Loan</a></li>
+                    <li><a href="#">Credit Cards</a></li>
+                    <li><a href="#">Investments</a></li>
+                    <li><a href="#">Insurance</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Support</h6>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Locate Branch/ATM</a></li>
+                    <li><a href="#">Grievance Redressal</a></li>
+                    <li><a href="#">Security Tips</a></li>
+                    <li><a href="#">NRI Helpline</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2025 Fake Bank of India. All Rights Reserved.</span>
+            <div class="mt-2">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Security</a>
+                <a href="#">Accessibility</a>
+                <a href="#">Sitemap</a>
+            </div>
+            <div class="mt-2" style="font-size:0.72rem;color:rgba(255,255,255,0.2);">
+                Fake Bank of India is a fictional institution created for UI/UX demonstration purposes only. DICGC insured up to ₹5,00,000. RBI Reg. No. FAKE/2025/001.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // ── EMI Calculator ──
+    const loanSlider = document.getElementById('loanAmountSlider');
+    const rateSlider = document.getElementById('rateSlider');
+    const tenureSlider = document.getElementById('tenureSlider');
+
+    function fmt(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+    function fmtL(n) {
+        if (n >= 10000000) return '₹' + (n/10000000).toFixed(1) + 'Cr';
+        if (n >= 100000) return '₹' + (n/100000).toFixed(1) + 'L';
+        return fmt(n);
+    }
+
+    function calcEMI() {
+        const P = parseFloat(loanSlider.value);
+        const R = parseFloat(rateSlider.value) / 100 / 12;
+        const N = parseInt(tenureSlider.value) * 12;
+        const emi = P * R * Math.pow(1+R,N) / (Math.pow(1+R,N)-1);
+        const total = emi * N;
+        const interest = total - P;
+
+        document.getElementById('loanAmountDisplay').textContent = fmtL(P);
+        document.getElementById('rateDisplay').textContent = parseFloat(rateSlider.value).toFixed(1) + '%';
+        document.getElementById('tenureDisplay').textContent = tenureSlider.value + (tenureSlider.value == 1 ? ' Year' : ' Years');
+        document.getElementById('emiDisplay').textContent = fmt(emi);
+        document.getElementById('totalInterest').textContent = fmtL(interest);
+        document.getElementById('totalPayable').textContent = fmtL(total);
+    }
+
+    loanSlider.addEventListener('input', calcEMI);
+    rateSlider.addEventListener('input', calcEMI);
+    tenureSlider.addEventListener('input', calcEMI);
+    calcEMI();
+
+    // ── Pill Tabs ──
+    document.querySelectorAll('.custom-tabs .nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.custom-tabs .nav-link').forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // ── Scroll fade-up ──
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

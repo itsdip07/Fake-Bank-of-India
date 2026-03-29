@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Account - Fake Bank of India</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS remains identical to maintain the specific UI brand identity */
+        :root {
+            --primary:   #0f4c75;
+            --secondary: #3282b8;
+            --accent:    #1b9aaa;
+            --gold:      #f0a500;
+            --light-bg:  linear-gradient(160deg, #e8f4fd 0%, #ffffff 40%, #f0f8ff 100%);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--light-bg);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar-custom {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+        }
+        .navbar-brand { color: var(--primary) !important; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.15rem; }
+        .nav-link { color: #555 !important; font-weight: 500; }
+        .btn-login { background: var(--primary); color: white !important; border-radius: 50px; padding: 6px 22px; font-weight: 600; }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #0a3356 0%, var(--primary) 50%, #1b6ca8 100%);
+            padding: 100px 0 80px;
+            overflow: hidden;
+        }
+        .hero-bg-circle {
+            position: absolute; border-radius: 50%; background: rgba(255,255,255,0.04); pointer-events: none;
+        }
+        .hero-bg-circle.c1 { width: 500px; height: 500px; top: -150px; right: -100px; }
+        .hero-bg-circle.c2 { width: 300px; height: 300px; bottom: -80px; left: -60px; }
+        .hero-bg-circle.c3 { width: 200px; height: 200px; top: 60px; right: 300px; background: rgba(255,255,255,0.03); }
+
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px; padding: 6px 18px; font-size: 0.75rem; font-weight: 600;
+            color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px;
+        }
+        .hero-eyebrow i { color: var(--gold); }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 900; color: white; line-height: 1.1; margin-bottom: 20px;
+        }
+        .hero h1 em { font-style: italic; color: #bbe1fa; }
+
+        .hero-sub {
+            font-size: 1.05rem; color: rgba(255,255,255,0.7);
+            max-width: 520px; line-height: 1.75; margin-bottom: 36px;
+        }
+
+        .hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+        .btn-hero-primary {
+            background: white; color: var(--primary); font-weight: 700; border-radius: 50px; 
+            padding: 13px 34px; font-size: 0.92rem; border: none; cursor: pointer; transition: 0.3s;
+        }
+        .btn-hero-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(0,0,0,0.25); text-decoration: none; color: var(--primary); }
+
+        .hero-stats { display: flex; gap: 20px; flex-wrap: wrap; }
+        .hero-stat-chip {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 14px; padding: 14px 22px; color: white;
+        }
+        .hero-stat-chip .val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: #bbe1fa; line-height: 1; }
+        .hero-stat-chip .lbl { font-size: 0.72rem; opacity: 0.65; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+        .hero-card-mockup {
+            background: rgba(255,255,255,0.12); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.22); border-radius: 24px;
+            padding: 34px; color: white; max-width: 340px; margin: 0 auto;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.25); animation: floatCard 6s ease-in-out infinite;
+        }
+        @keyframes floatCard { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+        .mockup-bal { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: #bbe1fa; margin-bottom: 24px; }
+
+        /* Shared Section Styles */
+        .section-wrap { padding: 90px 0; }
+        .section-eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+        .section-heading { font-family: 'Playfair Display', serif; font-size: 2.1rem; font-weight: 900; color: var(--primary); margin-bottom: 14px; }
+        .section-sub { color: #777; max-width: 500px; line-height: 1.75; font-size: 0.95rem; }
+
+        /* Feature Cards */
+        .feature-card {
+            background: linear-gradient(135deg, rgba(15,76,117,0.95), rgba(50,130,184,0.9));
+            border: 1px solid rgba(255,255,255,0.18); border-radius: 22px;
+            padding: 36px 28px; color: white; height: 100%; transition: all 0.35s;
+            box-shadow: 0 10px 30px rgba(15,76,117,0.18); position: relative; overflow: hidden;
+        }
+        .feature-card:hover { transform: translateY(-8px); }
+        .fc-icon { font-size: 2.2rem; margin-bottom: 18px; display: block; color: #bbe1fa; }
+        .fc-number { position: absolute; top: 24px; right: 28px; font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; opacity: 0.07; color: white; }
+        .fc-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; }
+        .fc-highlight { display: inline-block; margin-top: 16px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); border-radius: 8px; padding: 6px 14px; font-size: 0.78rem; font-weight: 600; color: #bbe1fa; }
+
+        /* Comparison, KYC and Footer are mapped exactly from source */
+        .comparison-wrap { background: rgba(255,255,255,0.9); border-radius: 24px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.06); border: 1px solid white; }
+        .comp-head-row { display: grid; grid-template-columns: 1.6fr 1fr 1fr; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
+        .comp-row { display: grid; grid-template-columns: 1.6fr 1fr 1fr; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .comp-cell { padding: 18px 28px; font-size: 0.88rem; color: #555; display: flex; align-items: center; }
+
+        footer { background: #0a3356; color: #ccc; padding: 55px 0 28px; }
+        .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">FAKE BANK OF INDIA</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#">Savings Account</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Support</a></li>
+                <li class="nav-item pl-3"><a class="btn btn-login" href="#">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="hero">
+    <div class="hero-bg-circle c1"></div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="hero-eyebrow"><i class="fas fa-user"></i> Personal Banking</div>
+                <h1>Savings Account<br><em>Grow Your Wealth.</em></h1>
+                <p class="hero-sub">Earn high interest, enjoy zero-balance flexibility, and get rewarded for every rupee you save with India's most digital-friendly savings plan.</p>
+                <div class="hero-cta-row">
+                    <a href="#" class="btn-hero-primary">Start Saving Today</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat-chip"><div class="val">7.2%</div><div class="lbl">Max Interest p.a.</div></div>
+                    <div class="hero-stat-chip"><div class="val">₹0</div><div class="lbl">Min. Balance Starts</div></div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="hero-card-mockup">
+                    <div class="mockup-label">Fake Bank of India</div>
+                    <div class="mockup-acct">Savings Account — Platinum</div>
+                    <div class="mockup-bal-label">Total Savings</div>
+                    <div class="mockup-bal">₹4,20,500</div>
+                    <div class="mockup-divider"></div>
+                    <div class="mockup-row mb-2">
+                        <span class="mk-key">Interest Earned</span>
+                        <span class="mk-val">₹2,450 / mo</span>
+                    </div>
+                    <div class="mockup-tag">● Individual Account</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Core Features</div>
+            <div class="section-heading">Why Save With Us?</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-4 fade-up">
+                <div class="feature-card">
+                    <span class="fc-number">01</span>
+                    <i class="fas fa-chart-line fc-icon"></i>
+                    <div class="fc-title">High Interest Rates</div>
+                    <div class="fc-desc">Earn up to 7.2% interest per annum, credited quarterly to your account.</div>
+                    <div class="fc-highlight">Compound Monthly</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up">
+                <div class="feature-card">
+                    <span class="fc-number">02</span>
+                    <i class="fas fa-credit-card fc-icon"></i>
+                    <div class="fc-title">Platinum Debit Card</div>
+                    <div class="fc-desc">Get a contactless Visa Platinum card with airport lounge access and 5% cashback.</div>
+                    <div class="fc-highlight">Free for Year 1</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up">
+                <div class="feature-card">
+                    <span class="fc-number">03</span>
+                    <i class="fas fa-mobile-alt fc-icon"></i>
+                    <div class="fc-title">Digital First</div>
+                    <div class="fc-desc">Manage everything via our app. Open Fixed Deposits or pay bills in two taps.</div>
+                    <div class="fc-highlight">24/7 Mobile Access</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up">
+                <div class="feature-card">
+                    <span class="fc-number">04</span>
+                    <i class="fas fa-shield-alt fc-icon"></i>
+                    <div class="fc-title">Safety & Insurance</div>
+                    <div class="fc-desc">Your deposits are DICGC insured up to ₹5 Lakhs, ensuring total peace of mind.</div>
+                    <div class="fc-highlight">RBI Regulated</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-heading">Savings vs. Current Account</div>
+        </div>
+        <div class="comparison-wrap fade-up">
+            <div class="comp-head-row">
+                <div class="comp-head-cell">Feature</div>
+                <div class="comp-head-cell">Savings Account</div>
+                <div class="comp-head-cell">Current Account</div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Interest Rate</div>
+                <div class="comp-cell" style="color:#16a34a; font-weight:bold;">3% - 7% p.a.</div>
+                <div class="comp-cell">0%</div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Transaction Limit</div>
+                <div class="comp-cell">Limited per month</div>
+                <div class="comp-cell" style="color:#16a34a; font-weight:bold;">Unlimited</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-wrap pt-0">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-heading">KYC for Individuals</div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 mb-4 fade-up">
+                <div class="kyc-entity">
+                    <div class="kyc-entity-icon"><i class="fas fa-id-card"></i></div>
+                    <div class="kyc-entity-title">Documents Needed</div>
+                    <ul class="kyc-doc-list" style="list-style:none; padding:0;">
+                        <li><i class="fas fa-check text-success mr-2"></i> Aadhaar Card (Linked to Mobile)</li>
+                        <li><i class="fas fa-check text-success mr-2"></i> PAN Card</li>
+                        <li><i class="fas fa-check text-success mr-2"></i> Passport size photograph</li>
+                        <li><i class="fas fa-check text-success mr-2"></i> Address Proof (Utility bill / Voter ID)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container text-center">
+        <div class="footer-brand">FAKE BANK OF INDIA</div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Fake Bank of India. All Rights Reserved. For UI Demo Purposes.</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

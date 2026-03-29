@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Bank - Elite Wealth & Investments</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- PREMIUM WEALTH VARIABLES --- */
+        :root {
+            --primary: #0a192f;        /* Deep Treasury Blue */
+            --secondary: #172a45;      /* Lighter Navy */
+            --accent: #64ffda;         /* Profit Green */
+            --gold: #d4af37;           /* Metallic Gold */
+            --gold-light: #f3e5ab;
+            --text-main: #ccd6f6;
+            --bg-dark: #020c1b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar-custom {
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .navbar-brand { color: var(--gold) !important; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.2rem; letter-spacing: 1px; }
+        .nav-link { color: var(--text-main) !important; font-weight: 500; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;}
+        .nav-link.active { color: var(--gold) !important; font-weight: 700; }
+        .btn-invest {
+            background: linear-gradient(135deg, var(--gold), #aa8000);
+            color: #000 !important;
+            border-radius: 50px;
+            padding: 8px 24px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s;
+        }
+        .btn-invest:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5); }
+
+        /* --- LIVE MARKET TICKER --- */
+        .market-ticker {
+            background: #000;
+            color: var(--accent);
+            padding: 8px 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+        }
+        .ticker-wrapper {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 25s linear infinite;
+        }
+        .ticker-item { margin-right: 40px; }
+        .ticker-up { color: var(--accent); }
+        .ticker-down { color: #ff4d4d; }
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            padding: 120px 0 80px;
+            text-align: center;
+            background: radial-gradient(circle at center, var(--secondary) 0%, var(--bg-dark) 70%);
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 900;
+            background: linear-gradient(to right, var(--gold-light), var(--gold), #aa8000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: #8892b0;
+            max-width: 650px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        /* --- INVESTMENT CARDS (GLASSMORPHISM) --- */
+        .section-title { text-align: center; margin: 80px 0 50px; }
+        .section-title h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--text-main); }
+        .section-title span { color: var(--gold); }
+
+        .portfolio-card {
+            background: rgba(23, 42, 69, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-top: 4px solid var(--gold);
+            border-radius: 16px;
+            padding: 40px 30px;
+            height: 100%;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(212, 175, 55, 0.1) inset;
+        }
+        .portfolio-card::after {
+            content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            border-radius: 50%; pointer-events: none;
+        }
+        .icon-gold { font-size: 2.5rem; color: var(--gold); margin-bottom: 20px; }
+        .card-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #fff; margin-bottom: 15px; }
+        .card-desc { font-size: 0.95rem; color: #8892b0; line-height: 1.6; margin-bottom: 25px; }
+        
+        .yield-badge {
+            display: inline-flex; align-items: center; justify-content: space-between;
+            width: 100%; background: rgba(0,0,0,0.3); padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+        .yield-label { font-size: 0.8rem; text-transform: uppercase; color: #8892b0; letter-spacing: 1px; }
+        .yield-value { font-family: 'Fira Code', monospace; font-size: 1.1rem; color: var(--accent); font-weight: bold; }
+
+        /* --- AI ROBO-ADVISOR SECTION --- */
+        .ai-robo-container {
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.9), rgba(23, 42, 69, 0.9));
+            border: 1px solid #30363d;
+            border-radius: 20px;
+            padding: 50px;
+            margin: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .matrix-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(100, 255, 218, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(100, 255, 218, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px; z-index: 0; pointer-events: none;
+        }
+        .ai-content { position: relative; z-index: 1; }
+        .ai-feature-list { list-style: none; padding: 0; }
+        .ai-feature-list li { margin-bottom: 20px; display: flex; align-items: flex-start; }
+        .ai-feature-list i { color: var(--accent); margin-right: 15px; font-size: 1.2rem; margin-top: 3px; }
+        
+        /* --- ANIMATIONS --- */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+    </style>
+</head>
+
+<body>
+
+    <div class="market-ticker">
+        <div class="ticker-wrapper" id="ticker-content">
+            </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">FAKE BANK <span style="font-weight: 300;">WEALTH</span></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#">Portfolios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">AI Advisory</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Market Insights</a></li>
+                    <li class="nav-item pl-3">
+                        <a class="btn btn-invest" href="#">Open Wealth Account</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container fade-up visible">
+            <div class="mb-4">
+                <i class="fas fa-gem" style="font-size: 3rem; color: var(--gold); filter: drop-shadow(0 0 15px rgba(212,175,55,0.6));"></i>
+            </div>
+            <h1>Automated Wealth.<br>Expertly Curated.</h1>
+            <p>Deploy your capital into highly optimized, AI-managed portfolios including Sovereign Gold, Tier-1 Corporate Bonds, and tax-efficient NPS. Zero emotional bias, pure mathematical growth.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section-title fade-up">
+            <h2>The <span>Elite</span> Assets</h2>
+            <p style="color: #8892b0;">Handpicked instruments for capital preservation and aggressive compounding.</p>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-4 mb-4 fade-up delay-1">
+                <div class="portfolio-card">
+                    <i class="fas fa-coins icon-gold"></i>
+                    <h3 class="card-title">Digital Gold & SGB</h3>
+                    <p class="card-desc">Hedge against inflation. Invest in Sovereign Gold Bonds (SGB) backed by the Govt. of India, offering capital appreciation plus a guaranteed fixed interest payout.</p>
+                    <div class="yield-badge">
+                        <span class="yield-label">Proj. Annual Return</span>
+                        <span class="yield-value">~10.5% <i class="fas fa-arrow-up text-success ml-1" style="font-size: 0.8rem;"></i></span>
+                    </div>
+                    <button class="btn btn-outline-light w-100 mt-4" style="border-color: var(--gold); color: var(--gold);">Invest in Gold</button>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 fade-up delay-2">
+                <div class="portfolio-card">
+                    <i class="fas fa-piggy-bank icon-gold" style="color: #64ffda;"></i>
+                    <h3 class="card-title">National Pension Sys.</h3>
+                    <p class="card-desc">The ultimate tax-saving retirement vehicle. Our AI automatically shifts your NPS equity-debt ratio based on your exact age and market volatility indices.</p>
+                    <div class="yield-badge">
+                        <span class="yield-label">Tax Saved (Sec 80CCD)</span>
+                        <span class="yield-value" style="color: #64ffda;">₹50,000</span>
+                    </div>
+                    <button class="btn btn-outline-light w-100 mt-4" style="border-color: #64ffda; color: #64ffda;">Setup NPS</button>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 fade-up delay-3">
+                <div class="portfolio-card">
+                    <i class="fas fa-file-contract icon-gold" style="color: #ccd6f6;"></i>
+                    <h3 class="card-title">Govt & Corp Bonds</h3>
+                    <p class="card-desc">Generate predictable, high-yield passive income. Access deeply researched corporate bonds, treasury bills, and state development loans with AAA ratings.</p>
+                    <div class="yield-badge">
+                        <span class="yield-label">Fixed Yield Rate</span>
+                        <span class="yield-value" style="color: #ccd6f6;">8.2% - 11.4%</span>
+                    </div>
+                    <button class="btn btn-outline-light w-100 mt-4">Browse Bonds</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="ai-robo-container fade-up">
+            <div class="matrix-bg"></div>
+            <div class="row align-items-center ai-content">
+                <div class="col-md-6">
+                    <h2 style="font-family: 'Playfair Display', serif; color: var(--gold); margin-bottom: 20px;">
+                        <i class="fas fa-robot mr-2"></i> The Robo-Advisor Matrix 💀
+                    </h2>
+                    <p style="color: #8892b0; font-size: 1.1rem; margin-bottom: 30px;">
+                        Why guess the market when you have our backend computing power? Our Llama 3.2 and FAISS integration doesn't just answer questions—it analyzes global macroeconomic data to protect your wealth.
+                    </p>
+                    <ul class="ai-feature-list" style="color: var(--text-main);">
+                        <li>
+                            <i class="fas fa-bolt"></i>
+                            <div><strong>Real-Time Rebalancing:</strong> If equity markets crash, the AI instantly sweeps your liquid funds into high-yield short-term Govt Bonds.</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-shield-alt"></i>
+                            <div><strong>SBERT Sentiment Analysis:</strong> Our engine reads global financial news to detect early signs of inflation, adjusting your Gold allocations proactively.</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-chart-line"></i>
+                            <div><strong>Zero Emotional Bias:</strong> Pure mathematical compounding executed via our secure Spring Boot transactional endpoints.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6 text-center mt-4 mt-md-0">
+                    <div style="background: rgba(0,0,0,0.5); border: 1px solid #30363d; border-radius: 12px; padding: 20px; text-align: left; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #8892b0;">
+                        <div style="color: var(--accent); margin-bottom: 10px;">> initializing_wealth_engine.sh</div>
+                        <div>[SYSTEM] Connecting to Market API... <span class="text-success">OK</span></div>
+                        <div>[AI] Analyzing NIFTY 50 volatility... High risk detected.</div>
+                        <div>[ACTION] Re-allocating 15% Equity -> Sovereign Gold Bonds.</div>
+                        <div>[SECURITY] Generating OTP for transaction authorization...</div>
+                        <div style="margin-top: 15px; border-top: 1px dashed #30363d; padding-top: 15px;">
+                            <span style="color: var(--gold);">Predicted Portfolio Health: OPTIMAL</span><br>
+                            <span style="color: #64ffda;">Compound Trajectory: +14.2% YoY</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background: #020c1b; color: #495670; padding: 40px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05);">
+        <div class="container">
+            <p>&copy; 2026 Fake Bank of India Wealth Management. Investments are subject to market risks. Read all scheme related documents carefully.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+        // --- SCROLL ANIMATION OBSERVER ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // --- LIVE MARKET TICKER SIMULATOR ---
+        const tickerData = [
+            { name: "GOLD 24K (10g)", price: "₹72,450", change: "+1.2%", up: true },
+            { name: "SGB Series III", price: "₹6,199/g", change: "+0.4%", up: true },
+            { name: "NIFTY 50", price: "22,450.15", change: "-0.8%", up: false },
+            { name: "10Y GOVT BOND YIELD", price: "7.12%", change: "+0.02", up: true },
+            { name: "HDFC CORP BOND", price: "₹1,045", change: "+0.1%", up: true },
+            { name: "NPS TIER 1 (EQUITY)", price: "NAV 45.21", change: "+2.1%", up: true }
+        ];
+
+        const tickerWrapper = document.getElementById('ticker-content');
+        
+        function populateTicker() {
+            let html = '';
+            // Duplicate array multiple times to create an infinite scrolling illusion
+            const extendedData = [...tickerData, ...tickerData, ...tickerData, ...tickerData];
+            
+            extendedData.forEach(item => {
+                const icon = item.up ? '<i class="fas fa-caret-up"></i>' : '<i class="fas fa-caret-down"></i>';
+                const colorClass = item.up ? 'ticker-up' : 'ticker-down';
+                html += `<span class="ticker-item"><strong>${item.name}</strong>: ${item.price} <span class="${colorClass}">${icon} ${item.change}</span></span>`;
+            });
+            tickerWrapper.innerHTML = html;
+        }
+
+        populateTicker();
+    </script>
+</body>
+
+</html>

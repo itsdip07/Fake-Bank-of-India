@@ -1,0 +1,54 @@
+[
+    {
+        "source": "accounts.md",
+        "text": "# Accounts \u2014 Overview ## Short Description This document explains types of bank accounts, key attributes, lifecycle events, and common user scenarios. ## Account Types - **Savings Account (SA)**: For individuals, limited withdrawals, interest-bearing. - **Current Account (CA)**: For businesses, no/low interest, higher transactional allowances. - **Fixed Deposit (FD)**: Locked-term deposit with higher interest. - **Recurring Deposit (RD)**: Monthly deposits with fixed tenor. - **Loan Accounts**: Personal, Home, Auto, Education \u2014 credit accounts with amortization schedules. ## Core Attributes (per account) - Account number, IFSC, branch code - Account holder name(s) - Account type, status (active, dormant, closed) - Balance, available balance, ledger balance - KYC status, nominee details, product code ## Typical User Flows 1. **Open account**: KYC verification"
+    },
+    {
+        "source": "accounts.md",
+        "text": "\u2192 initial deposit \u2192 account provisioning \u2192 welcome message. 2. **Close account**: Validate outstanding dues \u2192 mark closed \u2192 settle funds \u2192 generate closure letter. 3. **Dormancy**: No transaction for 12/24 months \u2192 send reminders \u2192 mark dormant \u2192 reactivation on KYC + transaction. ## Troubleshooting / FAQs - **Why is my account showing less balance?** - Pending debits, holds, uncleared checks, or merchant authorizations. - **Why can\u2019t I open an account online?** - Missing KYC, document mismatch, system downtime. ## Chunk marker [[CHUNK_END]]"
+    },
+    {
+        "source": "cards.md",
+        "text": "# Cards \u2014 Debit and Credit ## Overview Covers debit and credit card lifecycle, limits, blocking, disputes, and common user actions. ## Key Concepts - **Debit Card**: Linked to account; immediate debit on payments/ATM. - **Credit Card**: Bank extends a credit line; monthly billing cycle, minimum due. - **Card Status**: Active, blocked, lost/stolen, replaced, expired. - **EMV / Chip & PIN / Contactless**: Card tech variants. ## Operations - **Block card**: Temporary/permanent block API \u2192 disable authorization. - **Replace card**: Issue new PAN, link to same account, invalidate old PAN. - **Change PIN**: Authenticate with OTP \u2192 remote PIN change or in-ATM process. ## Fraud & Chargebacks - Merchant dispute \u2192 provisional credit \u2192 investigation \u2192 final resolution. - Unauthorized"
+    },
+    {
+        "source": "cards.md",
+        "text": "transaction workflow: user complaint \u2192 block card \u2192 investigate \u2192 possible refund. ## Sample API actions (for integration) - `POST /api/card/block` {accountId, reason} - `POST /api/card/replace` {accountId, address} - `GET /api/card/transactions?cardId=` ## Chunk marker [[CHUNK_END]]"
+    },
+    {
+        "source": "disputes.md",
+        "text": "# Disputes & Chargebacks ## What is a Dispute? A customer challenge to a posted charge \u2014 may result in provisional credit, investigation, and final settlement. ## Dispute Types - **Card charge dispute** (merchant vs customer) - **ACH/NACH dispute** - **UPI/IMPS reversal requests** ## Dispute Lifecycle 1. **Raise dispute**: Customer provides transaction ID, reason, and evidence. 2. **Acknowledge**: System issues dispute ID and timelines. 3. **Investigate**: Contact merchant acquirer, request evidence. 4. **Resolution**: Refund / partial refund / rejection. Notify customer. ## Required Data - Transaction ID, timestamp, merchant ID/MCC, amount, card/account details, screenshots, communication logs. ## SLAs & Timeframes - Acknowledge within 24 hours. - Investigations typically 7\u201345 days depending on rails and evidence. ## UI/UX for Assistant -"
+    },
+    {
+        "source": "disputes.md",
+        "text": "Collect the minimum required fields via chat form. - Provide expected resolution date and escalation options. ## Chunk marker [[CHUNK_END]]"
+    },
+    {
+        "source": "fraud.md",
+        "text": "# Fraud \u2014 Detection, Reporting, & Prevention ## Overview Defines fraud patterns, initial detection steps, and customer-facing instructions. ## Common Fraud Types - **Phishing / Vishing**: Credential or OTP theft via social engineering. - **Card Skimming**: Physical capture of card data. - **Account Takeover**: Unauthorized login / change of beneficiary. - **Synthetic Identity Fraud**: Fake identities assembled from real & fake data. ## Detection Signals - Unusual login locations / IPs - Large transactions to new beneficiaries - Rapid small value transactions (testing) - Device fingerprint mismatch ## Response Workflow 1. **Alert**: Flag transaction, mark as suspicious. 2. **Block**: Temporary block on account or card if high risk. 3. **Investigate**: Collect logs, device fingerprints, merchant details. 4. **Remediate**: Reverse unauthorized"
+    },
+    {
+        "source": "fraud.md",
+        "text": "transactions if validated, notify customer, change credentials. ## Customer Guidance (what the assistant should say) - \u201cWe\u2019ve temporarily blocked your card. Please confirm recent transactions: [list]. To proceed, call our fraud helpline or approve identity via OTP.\u201d - Always advise change of credentials and checking for unauthorized beneficiary additions. ## Regulatory Notes - Keep audit trail, timestamps, and escalation matrix for any reversal. - KYC & transaction reporting requirements per local regulator must be followed. ## Chunk marker [[CHUNK_END]]"
+    },
+    {
+        "source": "limits.md",
+        "text": "# Limits \u2014 Transactional & Account Limits ## Types of Limits - **Per-transaction limit** - **Daily limit** - **Monthly limit** - **Card ATM withdrawal limit** - **UPI merchant single TX / daily limits** ## Where limits live - Product / account tier configuration (savings gold/premium) - Regulatory caps (e.g., RBI circulars) - Per-customer customized limits (risk profiles) ## How to change limits - Identify user role & entitlement - Require re-authentication (OTP / 2FA) - Log audit trail for limit changes - Trigger notification to customer (SMS / Email) ## Common Failure Reasons - Exceeded daily limit - Transaction exceeds per-merchant limit - Temporary fraud hold reducing available limit ## Chunk marker [[CHUNK_END]]"
+    },
+    {
+        "source": "payments.md",
+        "text": "# Payments \u2014 Basic & Electronic Channels ## Description Explains payment rails, how they behave, and sender/receiver experience. ## Payment Rails - **NEFT**: Batch settlement through RBI \u2014 generally hours (non-real-time historically). - **RTGS**: For high-value real-time gross settlement (threshold applies). - **IMPS**: Immediate Payment Service \u2014 real-time, 24x7 small/medium transfers. - **UPI**: Real-time RTP using VPA/QR \u2014 overlay on IMPS; supports collect, push, mandates. - **NACH/ACH**: Bulk debit/credit instructions (salaries, mandates). ## Payment Attributes - Transaction ID, timestamp, debit/credit indicator - Status codes: INITIATED / PENDING / SUCCESS / FAILED / REVERSED - Settlement ledger entries, clearing reference, bank reference - Failure reasons: insufficient funds, beneficiary mismatch, network timeout, RBI/NPCI rule rejection ## Common Scenarios - **Payment stuck**: Check"
+    },
+    {
+        "source": "payments.md",
+        "text": "status via transaction ID \u2192 if PENDING for >X hrs, raise manual reconciliation. - **Failed debit but account debited**: Could be reversal pending; reconcile with bank logs. ## Security & Checks - Validate recipient account + IFSC / VPA on entry - OTP / 2FA confirmation for initiations - Limits enforcement (per transaction / per day) ## Chunk marker [[CHUNK_END]]"
+    },
+    {
+        "source": "upi.md",
+        "text": "# UPI \u2014 Concepts & Troubleshooting ## Overview Unified Payments Interface: real-time instant payment system using VPAs (user@bank) or QR. ## Key Components - **VPA (Virtual Payment Address)** - **NPCI switch** (handles routing and settlement) - **Collect vs Pay** flows - **ON-MOBILE / Merchant QR flows** ## Common Success/Failure Reasons - **Success**: Sufficient balance, correct VPA, beneficiary confirmation, valid 2FA. - **Failure**: Wrong VPA, NPCI timeout, payer bank outage, NPCI limits, UPI PIN error. ## Stuck Transactions - If status = PENDING for > X minutes: - Query acquirer switch for transaction status. - If debited but no credit: open ticket with NPCI/settlement team. - Provide customer with transaction ID & advice to wait 24 hrs before reversal unless bank"
+    },
+    {
+        "source": "upi.md",
+        "text": "confirms. ## Security & Best Practices - Never share UPI PIN. - Validate QR scanned data before paying. - MFA for high value transactions. ## Chunk marker [[CHUNK_END]]"
+    }
+]

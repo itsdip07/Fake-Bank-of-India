@@ -1,0 +1,32 @@
+Modification -->
+
+1. Manually Generating 8-9 Digit Account Number using Java only.
+2. Deposit, Withdraw, Transfer all button --> OK
+3. Dashboard, Transactions, Logout --> New Yellow Round Button added --> All OK NO Errors !!
+4. New UI Of Login Page
+5. Some Improvements in the Registration Page (Aadhaar Card, 
+					       PAN Card, 
+				           Email Id,
+					       Mobile Number Validation & Checks for If it is Valid or not --> Javascripts)
+
+6. Transactions Statement --> PDF Download Button Integration !!
+7. Transactions Page --> Header Issue solved !! Gave a Javascripts Logic to Smooth Scrolling !! 
+8. Login Page, Dashboard Page --> New Glowing UI + Wave and Hover Glowing effect for Login Button !!!
+9. New Accounts Details Page Added !! --> OTP issue Fixed  !!! --> Fully in Working Condition !!
+10. New UI Launched --> Blue Bg
+11. Email Setup Done !! 
+
+In 100% Working Condition !! No Flaws !!
+
+12. ADMIN PANEL --> (ADMIN ACCESS/ USER ACCESS)
+13. AI ASSISTANT BASIC
+14. Used New ai_service_files : Intent detection + Llama3.2 via Ollama used, giving response, transferring payments --> ok Status
+	Natural Human Like Responses --> Status Ok
+	NLP in Working Condition --> Status Ok
+	Minor issues:
+		1. Balance is not Fetching --> 100% Fixed --> Status OK
+		2. Account details only showing fetching but no response !! --> 100% Fixed --> Status OK
+		3. Download statement (Able to Found Intent, but no forward action !!)--> Status OK
+		4. Transaction History Not Fetching ! --> Now fetching issue resolved 100% Working --> Status OK
+15. New UI Unlocked !!
+16. Transaction History is now working

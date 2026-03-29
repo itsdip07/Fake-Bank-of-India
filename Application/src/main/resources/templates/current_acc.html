@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Account - Fake Bank of India</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary:   #0f4c75;
+            --secondary: #3282b8;
+            --accent:    #1b9aaa;
+            --gold:      #f0a500;
+            --light-bg:  linear-gradient(160deg, #e8f4fd 0%, #ffffff 40%, #f0f8ff 100%);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--light-bg);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar-custom {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+        }
+        .navbar-brand { color: var(--primary) !important; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.15rem; }
+        .nav-link { color: #555 !important; font-weight: 500; }
+        .btn-login { background: var(--primary); color: white !important; border-radius: 50px; padding: 6px 22px; font-weight: 600; }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #0a3356 0%, var(--primary) 50%, #1b6ca8 100%);
+            padding: 100px 0 80px;
+            overflow: hidden;
+        }
+        .hero-bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            pointer-events: none;
+        }
+        .hero-bg-circle.c1 { width: 500px; height: 500px; top: -150px; right: -100px; }
+        .hero-bg-circle.c2 { width: 300px; height: 300px; bottom: -80px; left: -60px; }
+        .hero-bg-circle.c3 { width: 200px; height: 200px; top: 60px; right: 300px; background: rgba(255,255,255,0.03); }
+
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            padding: 6px 18px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+        .hero-eyebrow i { color: var(--gold); }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        .hero h1 em { font-style: italic; color: #bbe1fa; }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 520px;
+            line-height: 1.75;
+            margin-bottom: 36px;
+        }
+
+        .hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+        .btn-hero-primary {
+            background: white; color: var(--primary);
+            font-weight: 700; border-radius: 50px; padding: 13px 34px;
+            font-size: 0.92rem; border: none; cursor: pointer;
+            transition: 0.3s; text-decoration: none; display: inline-block;
+        }
+        .btn-hero-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(0,0,0,0.25); text-decoration: none; color: var(--primary); }
+        .btn-hero-outline {
+            background: transparent; color: white;
+            font-weight: 600; border-radius: 50px; padding: 13px 34px;
+            font-size: 0.92rem; border: 1.5px solid rgba(255,255,255,0.4); cursor: pointer;
+            transition: 0.3s; text-decoration: none; display: inline-block;
+        }
+        .btn-hero-outline:hover { background: rgba(255,255,255,0.12); color: white; text-decoration: none; border-color: white; }
+
+        /* Hero stat chips */
+        .hero-stats { display: flex; gap: 20px; flex-wrap: wrap; }
+        .hero-stat-chip {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 14px;
+            padding: 14px 22px;
+            color: white;
+        }
+        .hero-stat-chip .val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: #bbe1fa; line-height: 1; }
+        .hero-stat-chip .lbl { font-size: 0.72rem; opacity: 0.65; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+        /* Hero right — floating card mockup */
+        .hero-card-mockup {
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 24px;
+            padding: 34px;
+            color: white;
+            max-width: 340px;
+            margin: 0 auto;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+            animation: floatCard 6s ease-in-out infinite;
+        }
+        @keyframes floatCard { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+        .mockup-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; margin-bottom: 6px; }
+        .mockup-acct { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 24px; }
+        .mockup-bal-label { font-size: 0.72rem; opacity: 0.55; text-transform: uppercase; letter-spacing: 1px; }
+        .mockup-bal { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: #bbe1fa; margin-bottom: 24px; }
+        .mockup-divider { height: 1px; background: rgba(255,255,255,0.15); margin-bottom: 20px; }
+        .mockup-row { display: flex; justify-content: space-between; font-size: 0.8rem; }
+        .mockup-row .mk-key { opacity: 0.55; }
+        .mockup-row .mk-val { font-weight: 600; }
+        .mockup-tag {
+            display: inline-block; background: rgba(34,197,94,0.2);
+            border: 1px solid rgba(34,197,94,0.5); border-radius: 50px;
+            padding: 3px 12px; font-size: 0.68rem; font-weight: 700;
+            color: #86efac; text-transform: uppercase; letter-spacing: 1px; margin-top: 18px;
+        }
+
+        /* ── SECTION SHARED ── */
+        .section-wrap { padding: 90px 0; }
+        .section-eyebrow {
+            font-size: 0.72rem; text-transform: uppercase; letter-spacing: 3px;
+            color: var(--accent); font-weight: 600; margin-bottom: 10px;
+        }
+        .section-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.1rem; font-weight: 900; color: var(--primary); margin-bottom: 14px;
+        }
+        .section-sub { color: #777; max-width: 500px; line-height: 1.75; font-size: 0.95rem; }
+
+        /* ── CORE FEATURES CARDS ── */
+        .feature-card {
+            background: linear-gradient(135deg, rgba(15,76,117,0.95), rgba(50,130,184,0.9));
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 22px;
+            padding: 36px 28px;
+            color: white;
+            height: 100%;
+            transition: all 0.35s;
+            box-shadow: 0 10px 30px rgba(15,76,117,0.18);
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute; top: -40px; right: -40px;
+            width: 150px; height: 150px; border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+        }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 22px 46px rgba(15,76,117,0.34); border-color: rgba(255,255,255,0.45); }
+
+        .fc-icon {
+            font-size: 2.2rem; margin-bottom: 18px; display: block;
+            background: -webkit-linear-gradient(#fff, #bbe1fa);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .fc-number {
+            position: absolute; top: 24px; right: 28px;
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem; font-weight: 900; opacity: 0.07; color: white; line-height: 1;
+        }
+        .fc-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; }
+        .fc-desc { font-size: 0.88rem; color: rgba(255,255,255,0.76); line-height: 1.7; }
+        .fc-highlight {
+            display: inline-block; margin-top: 16px;
+            background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 8px; padding: 6px 14px; font-size: 0.78rem; font-weight: 600;
+            color: #bbe1fa; letter-spacing: 0.5px;
+        }
+
+        /* ── TYPES TABLE ── */
+        .types-section { background: rgba(255,255,255,0) ; }
+        .type-row {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,1);
+            border-radius: 18px;
+            padding: 28px 32px;
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            margin-bottom: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.04);
+        }
+        .type-row:hover { transform: translateX(8px); box-shadow: 0 8px 30px rgba(15,76,117,0.12); border-color: rgba(50,130,184,0.25); }
+        .type-icon-wrap {
+            width: 56px; height: 56px; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.3rem;
+            box-shadow: 0 6px 16px rgba(15,76,117,0.25);
+        }
+        .type-content { flex: 1; }
+        .type-name { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--primary); font-size: 1.05rem; margin-bottom: 4px; }
+        .type-best { font-size: 0.8rem; color: #999; margin-bottom: 6px; }
+        .type-best strong { color: var(--secondary); }
+        .type-desc { font-size: 0.88rem; color: #666; line-height: 1.6; }
+        .type-badge {
+            flex-shrink: 0;
+            padding: 6px 16px; border-radius: 50px;
+            font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        .badge-blue { background: rgba(15,76,117,0.1); color: var(--primary); border: 1px solid rgba(15,76,117,0.2); }
+        .badge-teal { background: rgba(27,154,170,0.1); color: var(--accent); border: 1px solid rgba(27,154,170,0.25); }
+        .badge-gold { background: rgba(240,165,0,0.1); color: #b37a00; border: 1px solid rgba(240,165,0,0.3); }
+        .badge-green { background: rgba(34,197,94,0.1); color: #16a34a; border: 1px solid rgba(34,197,94,0.3); }
+
+        /* ── COSTS ACCORDION ── */
+        .costs-section { background: linear-gradient(160deg, #f0f8ff 0%, #fff 100%); }
+        .cost-item {
+            background: white; border-radius: 18px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.04);
+            margin-bottom: 14px; overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+        .cost-item:hover { box-shadow: 0 8px 28px rgba(15,76,117,0.1); }
+        .cost-header {
+            display: flex; align-items: center; gap: 18px;
+            padding: 22px 28px; cursor: pointer; user-select: none;
+        }
+        .cost-icon-wrap {
+            width: 44px; height: 44px; flex-shrink: 0;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; color: white;
+        }
+        .ci-red   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .ci-amber { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .ci-blue  { background: linear-gradient(135deg, var(--secondary), var(--primary)); }
+        .ci-gray  { background: linear-gradient(135deg, #6b7280, #4b5563); }
+
+        .cost-title { font-weight: 700; color: var(--primary); font-size: 1rem; flex: 1; }
+        .cost-chevron { color: #bbb; font-size: 0.8rem; transition: transform 0.3s; }
+        .cost-item.open .cost-chevron { transform: rotate(180deg); }
+        .cost-body { padding: 0 28px 24px 90px; font-size: 0.9rem; color: #666; line-height: 1.75; display: none; }
+        .cost-body.visible { display: block; }
+        .cost-body strong { color: var(--primary); }
+
+        /* ── COMPARISON TABLE ── */
+        .comparison-wrap {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+            border: 1px solid white;
+        }
+        .comp-head-row {
+            display: grid; grid-template-columns: 1.6fr 1fr 1fr;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; padding: 0;
+        }
+        .comp-head-cell {
+            padding: 22px 28px; font-weight: 700; font-size: 0.92rem;
+            letter-spacing: 0.4px;
+        }
+        .comp-head-cell:not(:first-child) { text-align: center; font-family: 'Playfair Display', serif; font-size: 1.05rem; }
+        .comp-head-cell .ch-sub { font-size: 0.7rem; opacity: 0.7; font-weight: 400; font-family: 'DM Sans', sans-serif; margin-top: 3px; }
+
+        .comp-row {
+            display: grid; grid-template-columns: 1.6fr 1fr 1fr;
+            border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.2s;
+        }
+        .comp-row:last-child { border-bottom: none; }
+        .comp-row:hover { background: rgba(15,76,117,0.03); }
+        .comp-cell { padding: 18px 28px; font-size: 0.88rem; color: #555; display: flex; align-items: center; }
+        .comp-cell:first-child { font-weight: 600; color: #444; }
+        .comp-cell:not(:first-child) { justify-content: center; }
+        .comp-cell .yes { color: #16a34a; font-weight: 700; }
+        .comp-cell .no  { color: #dc2626; font-weight: 700; }
+        .comp-cell .neutral { color: var(--secondary); font-weight: 600; }
+        .comp-cell i.fa-check-circle { color: #16a34a; margin-right: 6px; }
+        .comp-cell i.fa-times-circle  { color: #dc2626; margin-right: 6px; }
+
+        /* ── KYC TIMELINE ── */
+        .kyc-entity {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 22px;
+            padding: 36px;
+            height: 100%;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+            border: 1px solid white;
+            transition: 0.3s;
+        }
+        .kyc-entity:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(15,76,117,0.12); }
+        .kyc-entity-icon {
+            width: 52px; height: 52px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.3rem; margin-bottom: 18px;
+            box-shadow: 0 6px 16px rgba(15,76,117,0.28);
+        }
+        .kyc-entity-title { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--primary); font-size: 1.1rem; margin-bottom: 14px; }
+        .kyc-doc-list { list-style: none; padding: 0; }
+        .kyc-doc-list li {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 9px 0; border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.88rem; color: #555; line-height: 1.55;
+        }
+        .kyc-doc-list li:last-child { border-bottom: none; }
+        .kyc-doc-list li i { color: var(--accent); margin-top: 3px; flex-shrink: 0; }
+
+        /* ── SWEEP-IN EXPLAINER ── */
+        .sweep-section {
+            background: linear-gradient(135deg, #0a3356, var(--primary));
+            border-radius: 28px;
+            padding: 64px 56px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 90px;
+        }
+        .sweep-section::after {
+            content: '₹';
+            position: absolute; right: -20px; bottom: -40px;
+            font-family: 'Playfair Display', serif;
+            font-size: 20rem; font-weight: 900; opacity: 0.04; color: white; line-height: 1; pointer-events: none;
+        }
+        .sweep-section .sw-eyebrow {
+            font-size: 0.72rem; text-transform: uppercase; letter-spacing: 3px;
+            color: #bbe1fa; font-weight: 600; margin-bottom: 12px;
+        }
+        .sweep-section h2 {
+            font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; margin-bottom: 16px;
+        }
+        .sweep-section p { opacity: 0.78; max-width: 480px; line-height: 1.8; font-size: 0.95rem; }
+        .sweep-steps { display: flex; gap: 0; margin-top: 40px; position: relative; z-index: 1; flex-wrap: wrap; }
+        .sweep-step {
+            flex: 1; min-width: 160px;
+            text-align: center; padding: 28px 20px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 18px; margin-right: 14px; margin-bottom: 14px;
+            border: 1px solid rgba(255,255,255,0.12);
+            transition: 0.3s;
+        }
+        .sweep-step:hover { background: rgba(255,255,255,0.13); transform: translateY(-4px); }
+        .sweep-step:last-child { margin-right: 0; }
+        .sweep-step .ss-icon { font-size: 1.8rem; margin-bottom: 12px; color: #bbe1fa; }
+        .sweep-step .ss-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+        .sweep-step .ss-desc { font-size: 0.78rem; opacity: 0.65; line-height: 1.6; }
+        .sweep-arrow {
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,0.3); font-size: 1.2rem;
+            align-self: center; padding-bottom: 14px;
+        }
+
+        /* ── HOW TO CHOOSE ── */
+        .choose-card {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px; padding: 30px 28px;
+            border: 1px solid white;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.05);
+            height: 100%; transition: 0.3s;
+            display: flex; gap: 18px; align-items: flex-start;
+        }
+        .choose-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(15,76,117,0.12); }
+        .choose-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem; font-weight: 900;
+            color: rgba(15,76,117,0.12); line-height: 1; flex-shrink: 0; margin-top: -4px;
+        }
+        .choose-content h5 { font-family: 'Playfair Display', serif; color: var(--primary); font-weight: 700; margin-bottom: 8px; font-size: 1.05rem; }
+        .choose-content p { font-size: 0.88rem; color: #666; line-height: 1.7; margin: 0; }
+
+        /* ── CTA BANNER ── */
+        .cta-banner {
+            background: linear-gradient(135deg, rgba(15,76,117,0.06), rgba(27,154,170,0.07));
+            border: 1px solid rgba(27,154,170,0.18);
+            border-radius: 24px; padding: 56px 48px;
+            text-align: center; margin-bottom: 90px;
+        }
+        .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: 2.1rem; color: var(--primary); font-weight: 900; margin-bottom: 14px; }
+        .cta-banner p { color: #777; max-width: 460px; margin: 0 auto 32px; line-height: 1.75; }
+        .btn-cta-main {
+            background: var(--primary); color: white; font-weight: 700; border-radius: 50px;
+            padding: 14px 40px; border: none; cursor: pointer; text-decoration: none;
+            font-size: 0.95rem; display: inline-block; transition: 0.3s;
+        }
+        .btn-cta-main:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(15,76,117,0.35); text-decoration: none; color: white; }
+        .btn-cta-outline {
+            background: transparent; color: var(--primary); font-weight: 600; border-radius: 50px;
+            padding: 14px 36px; border: 2px solid var(--primary); cursor: pointer;
+            text-decoration: none; font-size: 0.95rem; display: inline-block; margin-left: 14px;
+            transition: 0.3s;
+        }
+        .btn-cta-outline:hover { background: var(--primary); color: white; text-decoration: none; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #0a3356; color: #ccc; padding: 55px 0 28px; font-size: 0.88rem;
+        }
+        footer .footer-brand {
+            font-family: 'Playfair Display', serif; font-size: 1.15rem;
+            font-weight: 900; color: white; margin-bottom: 12px;
+        }
+        footer .footer-tagline { color: rgba(255,255,255,0.4); font-size: 0.8rem; line-height: 1.65; margin-bottom: 22px; }
+        footer h6 { color: white; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.72rem; margin-bottom: 16px; }
+        footer ul { list-style: none; padding: 0; }
+        footer ul li { margin-bottom: 10px; }
+        footer ul li a { color: rgba(255,255,255,0.45); text-decoration: none; transition: 0.2s; }
+        footer ul li a:hover { color: white; padding-left: 4px; }
+        footer .social-links a {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 34px; height: 34px; background: rgba(255,255,255,0.08);
+            border-radius: 50%; color: rgba(255,255,255,0.55); margin-right: 8px;
+            text-decoration: none; transition: 0.2s; font-size: 0.85rem;
+        }
+        footer .social-links a:hover { background: var(--secondary); color: white; }
+        footer .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.07); padding-top: 22px; margin-top: 46px;
+            text-align: center; color: rgba(255,255,255,0.3); font-size: 0.78rem;
+        }
+        footer .footer-bottom a { color: rgba(255,255,255,0.35); text-decoration: none; margin: 0 10px; }
+        footer .footer-bottom a:hover { color: white; }
+
+        /* ── ANIMATIONS ── */
+        .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+    </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">FAKE BANK OF INDIA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="fas fa-bars text-primary"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/ex_products_page.html">Products</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#">Current Account</a></li>
+                <li class="nav-item"><a class="nav-link" href="/support_page.html">Support</a></li>
+                <li class="nav-item pl-3"><a class="btn btn-login" href="/login">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+    <div class="hero-bg-circle c1"></div>
+    <div class="hero-bg-circle c2"></div>
+    <div class="hero-bg-circle c3"></div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 mb-5 mb-lg-0">
+                <div class="hero-eyebrow"><i class="fas fa-building"></i> Business Banking</div>
+                <h1>Current Account<br><em>Built for Business.</em></h1>
+                <p class="hero-sub">Unlimited transactions, overdraft facilities, and AI-powered tools designed for businesses, firms, and professionals who move fast.</p>
+                <div class="hero-cta-row">
+                    <a href="#" class="btn-hero-primary">Open Account Now</a>
+                    <a href="#" class="btn-hero-outline">Talk to an Expert</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat-chip"><div class="val">₹0</div><div class="lbl">Processing Fee</div></div>
+                    <div class="hero-stat-chip"><div class="val">∞</div><div class="lbl">Transactions / Day</div></div>
+                    <div class="hero-stat-chip"><div class="val">48h</div><div class="lbl">Account Activation</div></div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="hero-card-mockup">
+                    <div class="mockup-label">Fake Bank of India</div>
+                    <div class="mockup-acct">Current Account — Business Pro</div>
+                    <div class="mockup-bal-label">Available Balance</div>
+                    <div class="mockup-bal">₹14,52,300</div>
+                    <div class="mockup-divider"></div>
+                    <div class="mockup-row mb-2">
+                        <span class="mk-key">Overdraft Limit</span>
+                        <span class="mk-val">₹5,00,000</span>
+                    </div>
+                    <div class="mockup-row mb-2">
+                        <span class="mk-key">Free Cash Deposit</span>
+                        <span class="mk-val">₹2L / Month</span>
+                    </div>
+                    <div class="mockup-row">
+                        <span class="mk-key">NEFT / RTGS</span>
+                        <span class="mk-val">Unlimited Free</span>
+                    </div>
+                    <div class="mockup-tag">● Active &nbsp;|&nbsp; All Systems Normal</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── CORE FEATURES ── -->
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Core Features</div>
+            <div class="section-heading">What Makes It Different</div>
+            <p class="section-sub mx-auto">Everything a business account should be — powerful, flexible, and always available.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-1">
+                <div class="feature-card">
+                    <span class="fc-number">01</span>
+                    <i class="fas fa-infinity fc-icon"></i>
+                    <div class="fc-title">Unlimited Transactions</div>
+                    <div class="fc-desc">No daily caps on deposits or withdrawals via internet banking, NEFT, RTGS, or cheques.</div>
+                    <div class="fc-highlight">No transaction limit</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-2">
+                <div class="feature-card">
+                    <span class="fc-number">02</span>
+                    <i class="fas fa-percentage fc-icon"></i>
+                    <div class="fc-title">Zero Interest</div>
+                    <div class="fc-desc">Current accounts are purely transactional instruments. Idle cash can be swept to FDs automatically for interest.</div>
+                    <div class="fc-highlight">Use Sweep-in Facility →</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-3">
+                <div class="feature-card">
+                    <span class="fc-number">03</span>
+                    <i class="fas fa-hand-holding-usd fc-icon"></i>
+                    <div class="fc-title">Overdraft Facility</div>
+                    <div class="fc-desc">Withdraw beyond your balance up to a pre-agreed limit. Your safety net for working capital emergencies.</div>
+                    <div class="fc-highlight">Up to ₹5 Cr OD available</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-4">
+                <div class="feature-card">
+                    <span class="fc-number">04</span>
+                    <i class="fas fa-balance-scale fc-icon"></i>
+                    <div class="fc-title">Higher Min. Balance</div>
+                    <div class="fc-desc">MAB ranges from ₹5,000 (basic) to ₹50 Lakhs (premium tiers). Higher balance = more free services.</div>
+                    <div class="fc-highlight">Starts at ₹5,000 MAB</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── TYPES ── -->
+<div class="section-wrap pt-0">
+    <div class="container">
+        <div class="row align-items-center mb-5 fade-up">
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="section-eyebrow">Account Types</div>
+                <div class="section-heading">Pick the Tier<br>Right for You</div>
+                <p class="section-sub">Banks offer different current account variants depending on the size, nature, and cash flow of your business.</p>
+            </div>
+            <div class="col-lg-7">
+                <div class="fade-up delay-1">
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-store"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Standard / Basic</div>
+                            <div class="type-best">Best for <strong>Small shop owners, freelancers</strong></div>
+                            <div class="type-desc">Low Minimum Average Balance, basic cheque limits. Ideal for starting out.</div>
+                        </div>
+                        <div class="type-badge badge-blue">Entry Level</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-briefcase"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Premium</div>
+                            <div class="type-best">Best for <strong>Mid-sized businesses</strong></div>
+                            <div class="type-desc">Higher MAB but unlocks free NEFT/RTGS, better cash deposit limits, and a dedicated RM.</div>
+                        </div>
+                        <div class="type-badge badge-teal">Popular</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-rocket"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Packaged / Industry Specific</div>
+                            <div class="type-best">Best for <strong>Startups, Importers/Exporters</strong></div>
+                            <div class="type-desc">Tailored features — forex rates for exporters, zero balance for startups for the first year.</div>
+                        </div>
+                        <div class="type-badge badge-gold">Tailored</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-globe"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Foreign Currency (EEFC)</div>
+                            <div class="type-best">Best for <strong>Businesses dealing overseas</strong></div>
+                            <div class="type-desc">Hold foreign currency directly to hedge against exchange rate fluctuations.</div>
+                        </div>
+                        <div class="type-badge badge-green">Global</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── HIDDEN COSTS ── -->
+<div class="section-wrap costs-section">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Fee Schedule</div>
+            <div class="section-heading">The "Hidden" Costs</div>
+            <p class="section-sub mx-auto">Transactions are unlimited — but not always free. Always read the Schedule of Charges carefully.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="cost-item fade-up delay-1">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-red"><i class="fas fa-money-bill-wave"></i></div>
+                        <div class="cost-title">Cash Deposit Charges</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        Most common friction point. Banks give a <strong>free limit</strong> (e.g., ₹2 Lakhs or 10× MAB/month). Deposits beyond this incur a fee of approximately <strong>₹3 per ₹1,000</strong>. If your business is cash-heavy, always compare this limit first.
+                    </div>
+                </div>
+                <div class="cost-item fade-up delay-2">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-amber"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="cost-title">Non-Maintenance (MAB) Penalty</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        If your balance falls below the Minimum Average Balance, the penalty is <strong>significantly steeper</strong> than savings accounts. These can range from ₹500 to ₹5,000+ per month depending on the shortfall and bank tier.
+                    </div>
+                </div>
+                <div class="cost-item fade-up delay-3">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-blue"><i class="fas fa-file-invoice"></i></div>
+                        <div class="cost-title">Cheque Return Charges</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        Penalties for <strong>bounced cheques</strong> are high to discourage bad credit behaviour. Inward cheque return can cost ₹350–750 per instance; outward return is typically ₹150–500. Multiple bounces can also affect your credit score.
+                    </div>
+                </div>
+                <div class="cost-item fade-up delay-4">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-gray"><i class="fas fa-book"></i></div>
+                        <div class="cost-title">Folio Charges</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        Some banks charge a nominal fee based on the number of <strong>ledger entries (folio pages)</strong> generated per quarter. This is increasingly rare with digital banking, but worth checking in the fee schedule for older account types.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── COMPARISON TABLE ── -->
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Side-by-Side</div>
+            <div class="section-heading">Current vs. Savings Account</div>
+            <p class="section-sub mx-auto">Not sure which account fits you? Here's a clear breakdown of the two.</p>
+        </div>
+        <div class="comparison-wrap fade-up">
+            <div class="comp-head-row">
+                <div class="comp-head-cell">Feature</div>
+                <div class="comp-head-cell">Current Account<div class="ch-sub">For Businesses</div></div>
+                <div class="comp-head-cell">Savings Account<div class="ch-sub">For Individuals</div></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Primary Purpose</div>
+                <div class="comp-cell"><span class="neutral">Business Transactions & Liquidity</span></div>
+                <div class="comp-cell"><span class="neutral">Saving & Wealth Accumulation</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Interest Rate</div>
+                <div class="comp-cell"><span class="no"><i class="fas fa-times-circle"></i>0%</span></div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>3% – 7% p.a.</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Transaction Limit</div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>Unlimited</span></div>
+                <div class="comp-cell"><span class="no"><i class="fas fa-times-circle"></i>Capped Monthly</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Overdraft Facility</div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>Available</span></div>
+                <div class="comp-cell"><span class="no"><i class="fas fa-times-circle"></i>Generally Not</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Minimum Opening Balance</div>
+                <div class="comp-cell"><span class="neutral">Higher Requirement</span></div>
+                <div class="comp-cell"><span class="neutral">Lower Requirement</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── KYC DOCUMENTS ── -->
+<div class="section-wrap pt-0">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">KYC & Compliance</div>
+            <div class="section-heading">Documents Required</div>
+            <p class="section-sub mx-auto">Documentation is strict under RBI guidelines to prevent money laundering. Requirements vary by entity type.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4 fade-up delay-1">
+                <div class="kyc-entity">
+                    <div class="kyc-entity-icon"><i class="fas fa-user-tie"></i></div>
+                    <div class="kyc-entity-title">Sole Proprietorship</div>
+                    <ul class="kyc-doc-list">
+                        <li><i class="fas fa-file-alt"></i>PAN Card of the Proprietor</li>
+                        <li><i class="fas fa-id-card"></i>Aadhaar / Address Proof</li>
+                        <li><i class="fas fa-certificate"></i>GST Registration Certificate</li>
+                        <li><i class="fas fa-store"></i>Shop & Establishment Act License</li>
+                        <li><i class="fas fa-industry"></i>MSME Registration (alternative)</li>
+                        <li><i class="fas fa-stamp"></i>CA Certificate (if none of above)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-2">
+                <div class="kyc-entity">
+                    <div class="kyc-entity-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="kyc-entity-title">Partnership Firm</div>
+                    <ul class="kyc-doc-list">
+                        <li><i class="fas fa-file-contract"></i>Registered Partnership Deed</li>
+                        <li><i class="fas fa-file-alt"></i>PAN Card of the Firm</li>
+                        <li><i class="fas fa-users"></i>ID & Address Proof — all partners</li>
+                        <li><i class="fas fa-signature"></i>Authority Letter — signed by all partners</li>
+                        <li><i class="fas fa-certificate"></i>GST/MSME Certificate</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-3">
+                <div class="kyc-entity">
+                    <div class="kyc-entity-icon"><i class="fas fa-building"></i></div>
+                    <div class="kyc-entity-title">Private Limited Company</div>
+                    <ul class="kyc-doc-list">
+                        <li><i class="fas fa-certificate"></i>Certificate of Incorporation</li>
+                        <li><i class="fas fa-file-contract"></i>MOA & AOA</li>
+                        <li><i class="fas fa-gavel"></i>Board Resolution for account opening</li>
+                        <li><i class="fas fa-users"></i>List of Directors + their KYC</li>
+                        <li><i class="fas fa-file-alt"></i>Company PAN Card</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── SWEEP-IN ── -->
+<div class="container fade-up">
+    <div class="sweep-section">
+        <div class="sw-eyebrow">Advanced Feature</div>
+        <h2>The Sweep-In / Sweep-Out Facility</h2>
+        <p>Current Accounts earn zero interest — which means idle money silently loses value against inflation. The Sweep-In solves this automatically.</p>
+        <div class="sweep-steps">
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-piggy-bank"></i></div>
+                <div class="ss-title">Idle Balance</div>
+                <div class="ss-desc">Cash above your set threshold (e.g. ₹1 Lakh) sits idle in your Current Account</div>
+            </div>
+            <div class="sweep-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-exchange-alt"></i></div>
+                <div class="ss-title">Auto Sweep Out</div>
+                <div class="ss-desc">Bank automatically moves surplus funds into a high-interest Fixed Deposit</div>
+            </div>
+            <div class="sweep-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-percentage"></i></div>
+                <div class="ss-title">Earn Interest</div>
+                <div class="ss-desc">FD earns 5–7% p.a. while you retain on-demand liquidity</div>
+            </div>
+            <div class="sweep-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-magic"></i></div>
+                <div class="ss-title">Auto Sweep In</div>
+                <div class="ss-desc">When a cheque is written, the FD is broken automatically to fund it</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── HOW TO CHOOSE ── -->
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Decision Guide</div>
+            <div class="section-heading">How to Choose the Right Bank</div>
+            <p class="section-sub mx-auto">Don't just pick the nearest branch. These three factors will save you thousands in hidden fees.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4 fade-up delay-1">
+                <div class="choose-card">
+                    <div class="choose-num">01</div>
+                    <div class="choose-content">
+                        <h5>Cash Deposit Limits</h5>
+                        <p>If your business is cash-heavy (retail, restaurants), choose the bank with the <strong>highest free cash deposit limit</strong>. Going over costs ₹3 per ₹1,000 — it adds up fast.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-2">
+                <div class="choose-card">
+                    <div class="choose-num">02</div>
+                    <div class="choose-content">
+                        <h5>Digital Interface Quality</h5>
+                        <p>Corporate Net Banking interfaces vary wildly. Look for one supporting <strong>bulk salary payments</strong> and integration with Tally, Zoho, or your accounting software.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-3">
+                <div class="choose-card">
+                    <div class="choose-num">03</div>
+                    <div class="choose-content">
+                        <h5>Overdraft Eligibility</h5>
+                        <p>Some banks offer <strong>unsecured overdrafts</strong> based entirely on your GST return history — no collateral needed. Compare OD limits and interest rates before deciding.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── CTA BANNER ── -->
+<div class="container fade-up">
+    <div class="cta-banner">
+        <h2>Ready to Open Your Current Account?</h2>
+        <p>Get started online in under 10 minutes. Zero processing fees, instant approval for eligible businesses, and a dedicated relationship manager from day one.</p>
+        <a href="#" class="btn-cta-main">Open Account Online</a>
+        <a href="#" class="btn-cta-outline">Talk to an Expert</a>
+    </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <div class="footer-brand">FAKE BANK OF INDIA</div>
+                <div class="footer-tagline">India's #1 AI-powered bank. Open dil se, open to your life goals — banking reimagined for a digital India.</div>
+                <div class="social-links mt-3">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Products</h6>
+                <ul>
+                    <li><a href="#">Savings Account</a></li>
+                    <li><a href="#">Current Account</a></li>
+                    <li><a href="#">Credit Cards</a></li>
+                    <li><a href="#">Personal Loan</a></li>
+                    <li><a href="#">Home Loan</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Business</h6>
+                <ul>
+                    <li><a href="#">EEFC Account</a></li>
+                    <li><a href="#">Trade Finance</a></li>
+                    <li><a href="#">GST Solutions</a></li>
+                    <li><a href="#">Salary Accounts</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Support</h6>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Find Branch/ATM</a></li>
+                    <li><a href="#">Grievance Redressal</a></li>
+                    <li><a href="#">Security Tips</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>About</h6>
+                <ul>
+                    <li><a href="#">Overview</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press Room</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2025 Fake Bank of India. All Rights Reserved.</span>
+            <div class="mt-2">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Security</a>
+                <a href="#">Sitemap</a>
+            </div>
+            <div class="mt-2" style="color:rgba(255,255,255,0.18);">
+                Fake Bank of India is a fictional institution for UI/UX demonstration purposes only. DICGC insured up to ₹5,00,000.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Accordion
+    function toggleCost(header) {
+        const item = header.parentElement;
+        const body = item.querySelector('.cost-body');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.cost-item').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.cost-body').classList.remove('visible');
+        });
+        if (!isOpen) { item.classList.add('open'); body.classList.add('visible'); }
+    }
+
+    // Scroll fade-up
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

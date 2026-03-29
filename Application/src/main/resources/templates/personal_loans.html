@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Loans - Fake Bank of India</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary:   #0f4c75;
+            --secondary: #3282b8;
+            --accent:    #1b9aaa;
+            --gold:      #f0a500;
+            --light-bg:  linear-gradient(160deg, #e8f4fd 0%, #ffffff 40%, #f0f8ff 100%);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--light-bg);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar-custom {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+        }
+        .navbar-brand { color: var(--primary) !important; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.15rem; }
+        .nav-link { color: #555 !important; font-weight: 500; }
+        .btn-login { background: var(--primary); color: white !important; border-radius: 50px; padding: 6px 22px; font-weight: 600; }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #0a3356 0%, var(--primary) 50%, #1b6ca8 100%);
+            padding: 100px 0 80px;
+            overflow: hidden;
+        }
+        .hero-bg-circle { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.04); pointer-events: none; }
+        .hero-bg-circle.c1 { width: 500px; height: 500px; top: -150px; right: -100px; }
+        .hero-bg-circle.c2 { width: 300px; height: 300px; bottom: -80px; left: -60px; }
+        .hero-bg-circle.c3 { width: 200px; height: 200px; top: 60px; right: 300px; background: rgba(255,255,255,0.03); }
+
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px; padding: 6px 18px; font-size: 0.75rem; font-weight: 600;
+            color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px;
+        }
+        .hero-eyebrow i { color: var(--gold); }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900;
+            color: white; line-height: 1.1; margin-bottom: 20px;
+        }
+        .hero h1 em { font-style: italic; color: #bbe1fa; }
+
+        .hero-sub { font-size: 1.05rem; color: rgba(255,255,255,0.7); max-width: 520px; line-height: 1.75; margin-bottom: 36px; }
+
+        .hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+        .btn-hero-primary {
+            background: white; color: var(--primary); font-weight: 700; border-radius: 50px;
+            padding: 13px 34px; font-size: 0.92rem; border: none; cursor: pointer;
+            transition: 0.3s; text-decoration: none; display: inline-block;
+        }
+        .btn-hero-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(0,0,0,0.25); text-decoration: none; color: var(--primary); }
+        .btn-hero-outline {
+            background: transparent; color: white; font-weight: 600; border-radius: 50px;
+            padding: 13px 34px; font-size: 0.92rem; border: 1.5px solid rgba(255,255,255,0.4);
+            cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block;
+        }
+        .btn-hero-outline:hover { background: rgba(255,255,255,0.12); color: white; text-decoration: none; border-color: white; }
+
+        .hero-stats { display: flex; gap: 20px; flex-wrap: wrap; }
+        .hero-stat-chip {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 14px; padding: 14px 22px; color: white;
+        }
+        .hero-stat-chip .val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: #bbe1fa; line-height: 1; }
+        .hero-stat-chip .lbl { font-size: 0.72rem; opacity: 0.65; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+        /* ── LOAN MOCKUP CARD ── */
+        .hero-card-mockup {
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 24px;
+            padding: 34px;
+            color: white;
+            max-width: 340px;
+            margin: 0 auto;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+            animation: floatCard 6s ease-in-out infinite;
+        }
+        @keyframes floatCard { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+        .mockup-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; margin-bottom: 6px; }
+        .mockup-acct { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 24px; }
+        .mockup-bal-label { font-size: 0.72rem; opacity: 0.55; text-transform: uppercase; letter-spacing: 1px; }
+        .mockup-bal { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: #bbe1fa; margin-bottom: 24px; }
+        .mockup-divider { height: 1px; background: rgba(255,255,255,0.15); margin-bottom: 20px; }
+        .mockup-row { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 10px; }
+        .mockup-row .mk-key { opacity: 0.55; }
+        .mockup-row .mk-val { font-weight: 600; }
+        .mockup-tag {
+            display: inline-block; background: rgba(34,197,94,0.2);
+            border: 1px solid rgba(34,197,94,0.5); border-radius: 50px;
+            padding: 3px 12px; font-size: 0.68rem; font-weight: 700;
+            color: #86efac; text-transform: uppercase; letter-spacing: 1px; margin-top: 18px;
+        }
+        /* EMI bar */
+        .emi-progress-label { display: flex; justify-content: space-between; font-size: 0.72rem; margin-top: 20px; margin-bottom: 6px; opacity: 0.65; }
+        .emi-bar { height: 6px; background: rgba(255,255,255,0.15); border-radius: 10px; overflow: hidden; }
+        .emi-bar-fill { height: 100%; width: 35%; background: linear-gradient(90deg, #bbe1fa, #60c9f8); border-radius: 10px; }
+
+        /* ── SECTION SHARED ── */
+        .section-wrap { padding: 90px 0; }
+        .section-eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+        .section-heading { font-family: 'Playfair Display', serif; font-size: 2.1rem; font-weight: 900; color: var(--primary); margin-bottom: 14px; }
+        .section-sub { color: #777; max-width: 500px; line-height: 1.75; font-size: 0.95rem; }
+
+        /* ── FEATURE CARDS ── */
+        .feature-card {
+            background: linear-gradient(135deg, rgba(15,76,117,0.95), rgba(50,130,184,0.9));
+            border: 1px solid rgba(255,255,255,0.18); border-radius: 22px; padding: 36px 28px;
+            color: white; height: 100%; transition: all 0.35s;
+            box-shadow: 0 10px 30px rgba(15,76,117,0.18); position: relative; overflow: hidden; cursor: default;
+        }
+        .feature-card::before { content:''; position:absolute; top:-40px; right:-40px; width:150px; height:150px; border-radius:50%; background:rgba(255,255,255,0.05); }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 22px 46px rgba(15,76,117,0.34); border-color: rgba(255,255,255,0.45); }
+        .fc-icon { font-size:2.2rem; margin-bottom:18px; display:block; background:-webkit-linear-gradient(#fff,#bbe1fa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .fc-number { position:absolute; top:24px; right:28px; font-family:'Playfair Display',serif; font-size:4rem; font-weight:900; opacity:0.07; color:white; line-height:1; }
+        .fc-title { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700; margin-bottom:10px; }
+        .fc-desc { font-size:0.88rem; color:rgba(255,255,255,0.76); line-height:1.7; }
+        .fc-highlight { display:inline-block; margin-top:16px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); border-radius:8px; padding:6px 14px; font-size:0.78rem; font-weight:600; color:#bbe1fa; letter-spacing:0.5px; }
+
+        /* ── LOAN TYPE ROWS ── */
+        .type-row {
+            background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,1); border-radius: 18px; padding: 28px 32px;
+            display: flex; align-items: center; gap: 28px; margin-bottom: 16px;
+            transition: all 0.3s; box-shadow: 0 4px 18px rgba(0,0,0,0.04);
+        }
+        .type-row:hover { transform: translateX(8px); box-shadow: 0 8px 30px rgba(15,76,117,0.12); border-color: rgba(50,130,184,0.25); }
+        .type-icon-wrap { width:56px; height:56px; flex-shrink:0; background:linear-gradient(135deg,var(--primary),var(--secondary)); border-radius:16px; display:flex; align-items:center; justify-content:center; color:white; font-size:1.3rem; box-shadow:0 6px 16px rgba(15,76,117,0.25); }
+        .type-content { flex:1; }
+        .type-name { font-family:'Playfair Display',serif; font-weight:700; color:var(--primary); font-size:1.05rem; margin-bottom:4px; }
+        .type-best { font-size:0.8rem; color:#999; margin-bottom:6px; }
+        .type-best strong { color: var(--secondary); }
+        .type-desc { font-size:0.88rem; color:#666; line-height:1.6; }
+        .type-badge { flex-shrink:0; padding:6px 16px; border-radius:50px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; white-space:nowrap; }
+        .badge-blue   { background:rgba(15,76,117,0.1); color:var(--primary); border:1px solid rgba(15,76,117,0.2); }
+        .badge-teal   { background:rgba(27,154,170,0.1); color:var(--accent); border:1px solid rgba(27,154,170,0.25); }
+        .badge-gold   { background:rgba(240,165,0,0.1); color:#b37a00; border:1px solid rgba(240,165,0,0.3); }
+        .badge-green  { background:rgba(34,197,94,0.1); color:#16a34a; border:1px solid rgba(34,197,94,0.3); }
+        .badge-purple { background:rgba(139,92,246,0.1); color:#7c3aed; border:1px solid rgba(139,92,246,0.25); }
+
+        /* ── ACCORDION ── */
+        .costs-section { background: linear-gradient(160deg,#f0f8ff 0%,#fff 100%); }
+        .cost-item { background:white; border-radius:18px; box-shadow:0 4px 18px rgba(0,0,0,0.05); border:1px solid rgba(0,0,0,0.04); margin-bottom:14px; overflow:hidden; transition:box-shadow 0.3s; }
+        .cost-item:hover { box-shadow:0 8px 28px rgba(15,76,117,0.1); }
+        .cost-header { display:flex; align-items:center; gap:18px; padding:22px 28px; cursor:pointer; user-select:none; }
+        .cost-icon-wrap { width:44px; height:44px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; color:white; }
+        .ci-red    { background:linear-gradient(135deg,#ef4444,#dc2626); }
+        .ci-amber  { background:linear-gradient(135deg,#f59e0b,#d97706); }
+        .ci-blue   { background:linear-gradient(135deg,var(--secondary),var(--primary)); }
+        .ci-gray   { background:linear-gradient(135deg,#6b7280,#4b5563); }
+        .ci-green  { background:linear-gradient(135deg,#22c55e,#16a34a); }
+        .ci-purple { background:linear-gradient(135deg,#8b5cf6,#7c3aed); }
+        .cost-title { font-weight:700; color:var(--primary); font-size:1rem; flex:1; }
+        .cost-chevron { color:#bbb; font-size:0.8rem; transition:transform 0.3s; }
+        .cost-item.open .cost-chevron { transform:rotate(180deg); }
+        .cost-body { padding:0 28px 24px 90px; font-size:0.9rem; color:#666; line-height:1.75; display:none; }
+        .cost-body.visible { display:block; }
+        .cost-body strong { color:var(--primary); }
+
+        /* ── COMPARISON TABLE ── */
+        .comparison-wrap { background:rgba(255,255,255,0.9); backdrop-filter:blur(20px); border-radius:24px; overflow:hidden; box-shadow:0 15px 40px rgba(0,0,0,0.06); border:1px solid white; }
+        .comp-head-row { display:grid; grid-template-columns:1.6fr 1fr 1fr; background:linear-gradient(135deg,var(--primary),var(--secondary)); color:white; }
+        .comp-head-cell { padding:22px 28px; font-weight:700; font-size:0.92rem; letter-spacing:0.4px; }
+        .comp-head-cell:not(:first-child) { text-align:center; font-family:'Playfair Display',serif; font-size:1.05rem; }
+        .comp-head-cell .ch-sub { font-size:0.7rem; opacity:0.7; font-weight:400; font-family:'DM Sans',sans-serif; margin-top:3px; }
+        .comp-row { display:grid; grid-template-columns:1.6fr 1fr 1fr; border-bottom:1px solid rgba(0,0,0,0.05); transition:background 0.2s; }
+        .comp-row:last-child { border-bottom:none; }
+        .comp-row:hover { background:rgba(15,76,117,0.03); }
+        .comp-cell { padding:18px 28px; font-size:0.88rem; color:#555; display:flex; align-items:center; }
+        .comp-cell:first-child { font-weight:600; color:#444; }
+        .comp-cell:not(:first-child) { justify-content:center; }
+        .comp-cell .yes { color:#16a34a; font-weight:700; }
+        .comp-cell .no  { color:#dc2626; font-weight:700; }
+        .comp-cell .neutral { color:var(--secondary); font-weight:600; }
+        .comp-cell i.fa-check-circle { color:#16a34a; margin-right:6px; }
+        .comp-cell i.fa-times-circle  { color:#dc2626; margin-right:6px; }
+
+        /* ── ELIGIBILITY CARDS ── */
+        .kyc-entity { background:rgba(255,255,255,0.9); backdrop-filter:blur(20px); border-radius:22px; padding:36px; height:100%; box-shadow:0 8px 28px rgba(0,0,0,0.05); border:1px solid white; transition:0.3s; }
+        .kyc-entity:hover { transform:translateY(-6px); box-shadow:0 18px 40px rgba(15,76,117,0.12); }
+        .kyc-entity-icon { width:52px; height:52px; background:linear-gradient(135deg,var(--primary),var(--secondary)); border-radius:15px; display:flex; align-items:center; justify-content:center; color:white; font-size:1.3rem; margin-bottom:18px; box-shadow:0 6px 16px rgba(15,76,117,0.28); }
+        .kyc-entity-title { font-family:'Playfair Display',serif; font-weight:700; color:var(--primary); font-size:1.1rem; margin-bottom:14px; }
+        .kyc-doc-list { list-style:none; padding:0; }
+        .kyc-doc-list li { display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid rgba(0,0,0,0.05); font-size:0.88rem; color:#555; line-height:1.55; }
+        .kyc-doc-list li:last-child { border-bottom:none; }
+        .kyc-doc-list li i { color:var(--accent); margin-top:3px; flex-shrink:0; }
+
+        /* ── REDUCING BALANCE EXPLAINER ── */
+        .sweep-section {
+            background: linear-gradient(135deg, #0a3356, var(--primary));
+            border-radius: 28px; padding: 64px 56px; color: white;
+            position: relative; overflow: hidden; margin-bottom: 90px;
+        }
+        .sweep-section::after {
+            content: '₹'; position: absolute; right: -10px; bottom: -40px;
+            font-family: 'Playfair Display', serif; font-size: 22rem; font-weight: 900;
+            opacity: 0.04; color: white; line-height: 1; pointer-events: none;
+        }
+        .sweep-section .sw-eyebrow { font-size:0.72rem; text-transform:uppercase; letter-spacing:3px; color:#bbe1fa; font-weight:600; margin-bottom:12px; }
+        .sweep-section h2 { font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; margin-bottom:16px; }
+        .sweep-section p { opacity:0.78; max-width:520px; line-height:1.8; font-size:0.95rem; }
+        .sweep-steps { display:flex; gap:0; margin-top:40px; position:relative; z-index:1; flex-wrap:wrap; }
+        .sweep-step { flex:1; min-width:160px; text-align:center; padding:28px 20px; background:rgba(255,255,255,0.07); border-radius:18px; margin-right:14px; margin-bottom:14px; border:1px solid rgba(255,255,255,0.12); transition:0.3s; }
+        .sweep-step:hover { background:rgba(255,255,255,0.13); transform:translateY(-4px); }
+        .sweep-step:last-child { margin-right:0; }
+        .sweep-step .ss-icon { font-size:1.8rem; margin-bottom:12px; color:#bbe1fa; }
+        .sweep-step .ss-title { font-weight:700; font-size:0.9rem; margin-bottom:6px; }
+        .sweep-step .ss-desc { font-size:0.78rem; opacity:0.65; line-height:1.6; }
+        .sweep-arrow { display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.3); font-size:1.2rem; align-self:center; padding-bottom:14px; }
+
+        /* ── HOW TO CHOOSE ── */
+        .choose-card { background:rgba(255,255,255,0.9); backdrop-filter:blur(20px); border-radius:20px; padding:30px 28px; border:1px solid white; box-shadow:0 6px 22px rgba(0,0,0,0.05); height:100%; transition:0.3s; display:flex; gap:18px; align-items:flex-start; }
+        .choose-card:hover { transform:translateY(-6px); box-shadow:0 18px 40px rgba(15,76,117,0.12); }
+        .choose-num { font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:900; color:rgba(15,76,117,0.12); line-height:1; flex-shrink:0; margin-top:-4px; }
+        .choose-content h5 { font-family:'Playfair Display',serif; color:var(--primary); font-weight:700; margin-bottom:8px; font-size:1.05rem; }
+        .choose-content p { font-size:0.88rem; color:#666; line-height:1.7; margin:0; }
+
+        /* ── EMI CALCULATOR ── */
+        .calculator-wrap {
+            background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
+            border-radius: 24px; padding: 44px 48px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06); border: 1px solid white;
+        }
+        .calc-label { font-size: 0.78rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; justify-content: space-between; }
+        .calc-label span { color: var(--secondary); font-size: 0.9rem; }
+        .calc-range {
+            width: 100%; -webkit-appearance: none; appearance: none;
+            height: 6px; border-radius: 10px; outline: none; cursor: pointer;
+            background: linear-gradient(90deg, var(--secondary) 0%, #dce9f5 0%);
+            margin-bottom: 28px;
+        }
+        .calc-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--primary); cursor: pointer; box-shadow: 0 3px 10px rgba(15,76,117,0.35); border: 3px solid white; }
+        .calc-range::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--primary); cursor: pointer; box-shadow: 0 3px 10px rgba(15,76,117,0.35); border: 3px solid white; }
+        .calc-result-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 18px; padding: 30px 36px; color: white; text-align: center;
+        }
+        .calc-emi-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.65; margin-bottom: 8px; }
+        .calc-emi-value { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900; color: #bbe1fa; line-height: 1; margin-bottom: 20px; }
+        .calc-breakdown { display: flex; justify-content: space-around; }
+        .calc-breakdown-item .cb-label { font-size: 0.68rem; opacity: 0.55; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .calc-breakdown-item .cb-val { font-size: 0.95rem; font-weight: 700; }
+
+        /* ── CTA BANNER ── */
+        .cta-banner { background:linear-gradient(135deg,rgba(15,76,117,0.06),rgba(27,154,170,0.07)); border:1px solid rgba(27,154,170,0.18); border-radius:24px; padding:56px 48px; text-align:center; margin-bottom:90px; }
+        .cta-banner h2 { font-family:'Playfair Display',serif; font-size:2.1rem; color:var(--primary); font-weight:900; margin-bottom:14px; }
+        .cta-banner p { color:#777; max-width:460px; margin:0 auto 32px; line-height:1.75; }
+        .btn-cta-main { background:var(--primary); color:white; font-weight:700; border-radius:50px; padding:14px 40px; border:none; cursor:pointer; text-decoration:none; font-size:0.95rem; display:inline-block; transition:0.3s; }
+        .btn-cta-main:hover { transform:translateY(-3px); box-shadow:0 14px 30px rgba(15,76,117,0.35); text-decoration:none; color:white; }
+        .btn-cta-outline { background:transparent; color:var(--primary); font-weight:600; border-radius:50px; padding:14px 36px; border:2px solid var(--primary); cursor:pointer; text-decoration:none; font-size:0.95rem; display:inline-block; margin-left:14px; transition:0.3s; }
+        .btn-cta-outline:hover { background:var(--primary); color:white; text-decoration:none; }
+
+        /* ── FOOTER ── */
+        footer { background:#0a3356; color:#ccc; padding:55px 0 28px; font-size:0.88rem; }
+        footer .footer-brand { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:900; color:white; margin-bottom:12px; }
+        footer .footer-tagline { color:rgba(255,255,255,0.4); font-size:0.8rem; line-height:1.65; margin-bottom:22px; }
+        footer h6 { color:white; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; font-size:0.72rem; margin-bottom:16px; }
+        footer ul { list-style:none; padding:0; }
+        footer ul li { margin-bottom:10px; }
+        footer ul li a { color:rgba(255,255,255,0.45); text-decoration:none; transition:0.2s; }
+        footer ul li a:hover { color:white; padding-left:4px; }
+        footer .social-links a { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; background:rgba(255,255,255,0.08); border-radius:50%; color:rgba(255,255,255,0.55); margin-right:8px; text-decoration:none; transition:0.2s; font-size:0.85rem; }
+        footer .social-links a:hover { background:var(--secondary); color:white; }
+        footer .footer-bottom { border-top:1px solid rgba(255,255,255,0.07); padding-top:22px; margin-top:46px; text-align:center; color:rgba(255,255,255,0.3); font-size:0.78rem; }
+        footer .footer-bottom a { color:rgba(255,255,255,0.35); text-decoration:none; margin:0 10px; }
+        footer .footer-bottom a:hover { color:white; }
+
+        /* ── ANIMATIONS ── */
+        .fade-up { opacity:0; transform:translateY(28px); transition:opacity 0.6s ease,transform 0.6s ease; }
+        .fade-up.visible { opacity:1; transform:translateY(0); }
+        .delay-1 { transition-delay:0.1s; }
+        .delay-2 { transition-delay:0.2s; }
+        .delay-3 { transition-delay:0.3s; }
+        .delay-4 { transition-delay:0.4s; }
+        .delay-5 { transition-delay:0.5s; }
+    </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">FAKE BANK OF INDIA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="fas fa-bars text-primary"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/ex_products_page.html">Products</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#">Personal Loans</a></li>
+                <li class="nav-item"><a class="nav-link" href="/support_page.html">Support</a></li>
+                <li class="nav-item pl-3"><a class="btn btn-login" href="/login">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+    <div class="hero-bg-circle c1"></div>
+    <div class="hero-bg-circle c2"></div>
+    <div class="hero-bg-circle c3"></div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 mb-5 mb-lg-0">
+                <div class="hero-eyebrow"><i class="fas fa-hand-holding-usd"></i> Retail Lending</div>
+                <h1>Personal Loan<br><em>Funds in 10 Seconds.</em></h1>
+                <p class="hero-sub">No collateral, no branch visit. Get up to ₹40 Lakhs instantly for any purpose — travel, medical, wedding, or debt consolidation.</p>
+                <div class="hero-cta-row">
+                    <a href="#" class="btn-hero-primary">Check Your Offer Now</a>
+                    <a href="#" class="btn-hero-outline">Calculate EMI</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat-chip"><div class="val">10.5%</div><div class="lbl">Starting Interest p.a.</div></div>
+                    <div class="hero-stat-chip"><div class="val">₹40L</div><div class="lbl">Max Loan Amount</div></div>
+                    <div class="hero-stat-chip"><div class="val">60</div><div class="lbl">Month Max Tenure</div></div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="hero-card-mockup">
+                    <div class="mockup-label">Fake Bank of India</div>
+                    <div class="mockup-acct">Personal Loan — Instant Approval</div>
+                    <div class="mockup-bal-label">Approved Loan Amount</div>
+                    <div class="mockup-bal">₹8,50,000</div>
+                    <div class="mockup-divider"></div>
+                    <div class="mockup-row">
+                        <span class="mk-key">Interest Rate</span>
+                        <span class="mk-val">11.25% p.a.</span>
+                    </div>
+                    <div class="mockup-row">
+                        <span class="mk-key">Tenure</span>
+                        <span class="mk-val">48 Months</span>
+                    </div>
+                    <div class="mockup-row">
+                        <span class="mk-key">Monthly EMI</span>
+                        <span class="mk-val">₹22,140</span>
+                    </div>
+                    <div class="emi-progress-label">
+                        <span>EMIs Paid: 17 / 48</span>
+                        <span>35% complete</span>
+                    </div>
+                    <div class="emi-bar"><div class="emi-bar-fill"></div></div>
+                    <div class="mockup-tag">● Active &nbsp;|&nbsp; Next EMI: 5th Aug</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── CORE FEATURES ── -->
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Core Features</div>
+            <div class="section-heading">Why It Works for You</div>
+            <p class="section-sub mx-auto">Designed for speed and simplicity — from application to disbursal in minutes, not days.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-1">
+                <div class="feature-card">
+                    <span class="fc-number">01</span>
+                    <i class="fas fa-bolt fc-icon"></i>
+                    <div class="fc-title">10-Second Disbursal</div>
+                    <div class="fc-desc">Pre-approved customers receive funds directly in their account within seconds of acceptance.</div>
+                    <div class="fc-highlight">100% digital journey</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-2">
+                <div class="feature-card">
+                    <span class="fc-number">02</span>
+                    <i class="fas fa-shield-alt fc-icon"></i>
+                    <div class="fc-title">Zero Collateral</div>
+                    <div class="fc-desc">Fully unsecured. No need to pledge gold, property, or any asset. Your creditworthiness is enough.</div>
+                    <div class="fc-highlight">No asset at risk</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-3">
+                <div class="feature-card">
+                    <span class="fc-number">03</span>
+                    <i class="fas fa-umbrella-beach fc-icon"></i>
+                    <div class="fc-title">No End-Use Restriction</div>
+                    <div class="fc-desc">Travel, medical, wedding, education, gadgets, debt consolidation — spend exactly as you need.</div>
+                    <div class="fc-highlight">Completely flexible use</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-4">
+                <div class="feature-card">
+                    <span class="fc-number">04</span>
+                    <i class="fas fa-sliders-h fc-icon"></i>
+                    <div class="fc-title">Flexible Tenure</div>
+                    <div class="fc-desc">Tailor your EMI comfort by choosing any tenure between 12 and 60 months at the time of application.</div>
+                    <div class="fc-highlight">12 – 60 months</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── LOAN VARIANTS ── -->
+<div class="section-wrap pt-0">
+    <div class="container">
+        <div class="row align-items-center mb-5 fade-up">
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="section-eyebrow">Loan Variants</div>
+                <div class="section-heading">Find the Loan<br>Built for Your Need</div>
+                <p class="section-sub">We offer purpose-specific personal loan variants with faster approvals and better rates for each use case.</p>
+            </div>
+            <div class="col-lg-7">
+                <div class="fade-up delay-1">
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-stethoscope"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Medical Emergency Loan</div>
+                            <div class="type-best">Best for <strong>Hospitalisation, surgery, or critical care</strong></div>
+                            <div class="type-desc">Disbursal within 2 hours. Pre-approved for existing customers. Hospital bills accepted as proof.</div>
+                        </div>
+                        <div class="type-badge badge-blue">Fastest</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-rings-wedding"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Wedding Loan</div>
+                            <div class="type-best">Best for <strong>Ceremonies, catering, venue, jewellery</strong></div>
+                            <div class="type-desc">Higher amounts up to ₹40L, longer tenure options up to 60 months, and a moratorium of 3 months available.</div>
+                        </div>
+                        <div class="type-badge badge-gold">High Amount</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-plane"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Travel Loan</div>
+                            <div class="type-best">Best for <strong>International & domestic holidays</strong></div>
+                            <div class="type-desc">Quick approval for ₹50K – ₹5L. Comes with complimentary travel insurance cover and forex card offer.</div>
+                        </div>
+                        <div class="type-badge badge-teal">Popular</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-sync-alt"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Debt Consolidation Loan</div>
+                            <div class="type-best">Best for <strong>Closing multiple high-interest debts</strong></div>
+                            <div class="type-desc">Merge credit card dues, existing EMIs into one low-rate personal loan. Reduce monthly outflow significantly.</div>
+                        </div>
+                        <div class="type-badge badge-purple">Smart Money</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-laptop"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Consumer Durable Loan</div>
+                            <div class="type-best">Best for <strong>Gadgets, appliances, electronics</strong></div>
+                            <div class="type-desc">Point-of-sale loans available at 10,000+ partner stores. Often 0% interest for up to 9 months via cashback.</div>
+                        </div>
+                        <div class="type-badge badge-green">0% EMI Option</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── EMI CALCULATOR ── -->
+<div class="section-wrap pt-0">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Planning Tool</div>
+            <div class="section-heading">EMI Calculator</div>
+            <p class="section-sub mx-auto">Move the sliders to instantly see your monthly EMI, total interest, and total payable amount.</p>
+        </div>
+        <div class="row justify-content-center fade-up">
+            <div class="col-lg-10">
+                <div class="calculator-wrap">
+                    <div class="row">
+                        <div class="col-lg-7 pr-lg-5">
+                            <div class="calc-label">Loan Amount <span id="lbl-amount">₹5,00,000</span></div>
+                            <input type="range" class="calc-range" id="range-amount" min="50000" max="4000000" step="50000" value="500000">
+
+                            <div class="calc-label">Interest Rate (p.a.) <span id="lbl-rate">12%</span></div>
+                            <input type="range" class="calc-range" id="range-rate" min="9" max="24" step="0.25" value="12">
+
+                            <div class="calc-label">Loan Tenure <span id="lbl-tenure">36 months</span></div>
+                            <input type="range" class="calc-range" id="range-tenure" min="12" max="60" step="6" value="36">
+                        </div>
+                        <div class="col-lg-5 d-flex align-items-center mt-4 mt-lg-0">
+                            <div class="calc-result-box w-100">
+                                <div class="calc-emi-label">Monthly EMI</div>
+                                <div class="calc-emi-value" id="emi-result">₹16,607</div>
+                                <div class="calc-breakdown">
+                                    <div class="calc-breakdown-item">
+                                        <div class="cb-label">Principal</div>
+                                        <div class="cb-val" id="cb-principal">₹5,00,000</div>
+                                    </div>
+                                    <div class="calc-breakdown-item">
+                                        <div class="cb-label">Total Interest</div>
+                                        <div class="cb-val" id="cb-interest">₹97,852</div>
+                                    </div>
+                                    <div class="calc-breakdown-item">
+                                        <div class="cb-label">Total Payable</div>
+                                        <div class="cb-val" id="cb-total">₹5,97,852</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── HIDDEN COSTS ACCORDION ── -->
+<div class="section-wrap costs-section">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Fee Schedule</div>
+            <div class="section-heading">Charges You Must Know</div>
+            <p class="section-sub mx-auto">The interest rate headline is just the beginning. Read the fine print on these five charges.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="cost-item fade-up delay-1">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-blue"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <div class="cost-title">Processing Fee</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        Banks deduct a <strong>processing fee of 1% – 2.5% of the loan amount + 18% GST</strong> before crediting the funds. On a ₹10 Lakh loan, this could be ₹10,000–25,000 deducted upfront. Always check whether the fee is deducted from disbursal or collected separately, and <strong>factor this into your actual cost of borrowing</strong>.
+                    </div>
+                </div>
+                <div class="cost-item fade-up delay-2">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-amber"><i class="fas fa-stopwatch"></i></div>
+                        <div class="cost-title">Foreclosure / Prepayment Penalty</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        If you clear the loan early, banks charge a <strong>foreclosure penalty of 2% – 4% on the outstanding principal</strong>. Some banks allow prepayment only after 12 EMIs. RBI has mandated no foreclosure charges for floating-rate loans — but <strong>personal loans are fixed-rate, so this exemption does not apply</strong>.
+                    </div>
+                </div>
+                <div class="cost-item fade-up delay-3">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-red"><i class="fas fa-calendar-times"></i></div>
+                        <div class="cost-title">EMI Bounce / Late Payment Charges</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        A returned EMI (insufficient funds) attracts a <strong>bounce charge of ₹500 – ₹1,000 per instance</strong>, plus penal interest on the overdue EMI at <strong>2% per month</strong>. Even a single bounce gets reported to CIBIL, immediately impacting your credit score. Always keep 2 months' EMI as a buffer in your linked account.
+                    </div>
+                </div>
+                <div class="cost-item fade-up delay-4">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-purple"><i class="fas fa-exclamation-circle"></i></div>
+                        <div class="cost-title">Flat Rate vs. Reducing Balance Trap</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        Some lenders (DSAs and NBFCs especially) quote a <strong>"Flat Rate"</strong> which sounds lower but is costlier. A Flat Rate of <strong>10% on ₹5L for 3 years = ₹1.5L interest</strong>, while a Reducing Balance rate of 10% on the same = ₹83,000. The flat-rate equivalent APR is roughly <strong>1.8× the stated rate</strong>. Always confirm which method the lender uses.
+                    </div>
+                </div>
+                <div class="cost-item fade-up delay-5">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-gray"><i class="fas fa-umbrella"></i></div>
+                        <div class="cost-title">Loan Insurance (Optional but Pushed)</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        Banks often bundle a <strong>credit life insurance policy</strong> with personal loans, adding ₹5,000–40,000 to the loan principal. While coverage is useful, <strong>it is legally optional</strong> — you cannot be denied a loan for refusing insurance. The premium is typically added to your loan amount, meaning you pay interest on the insurance cost too.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── COMPARISON TABLE ── -->
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Side-by-Side</div>
+            <div class="section-heading">Personal Loan vs. Alternatives</div>
+            <p class="section-sub mx-auto">Is a personal loan really your best option? Compare it against the two most common alternatives.</p>
+        </div>
+        <div class="comparison-wrap fade-up">
+            <div class="comp-head-row">
+                <div class="comp-head-cell">Feature</div>
+                <div class="comp-head-cell">Personal Loan<div class="ch-sub">Unsecured, fixed EMI</div></div>
+                <div class="comp-head-cell">Credit Card Loan / EMI<div class="ch-sub">From existing limit</div></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Interest Rate</div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>10.5% – 18% p.a.</span></div>
+                <div class="comp-cell"><span class="no"><i class="fas fa-times-circle"></i>14% – 28% p.a.</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Max Loan Amount</div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>Up to ₹40 Lakhs</span></div>
+                <div class="comp-cell"><span class="no"><i class="fas fa-times-circle"></i>Capped at Card Limit</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Disbursal Speed</div>
+                <div class="comp-cell"><span class="neutral">10 sec – 2 hours</span></div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>Instant (already in limit)</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Repayment Structure</div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>Fixed EMI — predictable</span></div>
+                <div class="comp-cell"><span class="neutral">Revolving / EMI conversion</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Credit Score Impact</div>
+                <div class="comp-cell"><span class="neutral">New loan enquiry lowers score</span></div>
+                <div class="comp-cell"><span class="neutral">High utilisation lowers score</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── ELIGIBILITY DOCUMENTS ── -->
+<div class="section-wrap pt-0">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">KYC & Eligibility</div>
+            <div class="section-heading">Who Can Apply & What to Bring</div>
+            <p class="section-sub mx-auto">Eligibility for an unsecured loan is stricter. Here's exactly what each applicant type needs.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4 fade-up delay-1">
+                <div class="kyc-entity">
+                    <div class="kyc-entity-icon"><i class="fas fa-briefcase"></i></div>
+                    <div class="kyc-entity-title">Salaried Employees</div>
+                    <ul class="kyc-doc-list">
+                        <li><i class="fas fa-file-alt"></i>PAN Card (mandatory)</li>
+                        <li><i class="fas fa-id-card"></i>Aadhaar / Passport / Voter ID</li>
+                        <li><i class="fas fa-money-check-alt"></i>Last 3 months' salary slips</li>
+                        <li><i class="fas fa-university"></i>6 months' bank statements (salary account)</li>
+                        <li><i class="fas fa-file-invoice"></i>Form 16 or latest ITR</li>
+                        <li><i class="fas fa-building"></i>Employment ID / Offer Letter</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-2">
+                <div class="kyc-entity">
+                    <div class="kyc-entity-icon"><i class="fas fa-store"></i></div>
+                    <div class="kyc-entity-title">Self-Employed</div>
+                    <ul class="kyc-doc-list">
+                        <li><i class="fas fa-file-alt"></i>PAN Card of Individual & Business</li>
+                        <li><i class="fas fa-id-card"></i>Aadhaar / Address Proof</li>
+                        <li><i class="fas fa-file-invoice-dollar"></i>Last 2 years' ITR with computation</li>
+                        <li><i class="fas fa-chart-bar"></i>Audited Profit & Loss + Balance Sheet</li>
+                        <li><i class="fas fa-university"></i>12 months' bank statements</li>
+                        <li><i class="fas fa-certificate"></i>GST / MSME / Trade License</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-3">
+                <div class="kyc-entity">
+                    <div class="kyc-entity-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="kyc-entity-title">Eligibility at a Glance</div>
+                    <ul class="kyc-doc-list">
+                        <li><i class="fas fa-user"></i>Age: 21–60 yrs (salaried) / 25–65 yrs (self-employed)</li>
+                        <li><i class="fas fa-rupee-sign"></i>Min income: ₹25,000/month or ₹4L p.a. (ITR)</li>
+                        <li><i class="fas fa-history"></i>Work exp: 2 yrs total, 1 yr current employer</li>
+                        <li><i class="fas fa-star"></i>CIBIL Score: 750+ preferred for best rates</li>
+                        <li><i class="fas fa-building"></i>Existing customer: Pre-approved at lower rate</li>
+                        <li><i class="fas fa-ban"></i>No active loan defaults or DPDs in last 12 months</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── REDUCING BALANCE EXPLAINER ── -->
+<div class="container fade-up">
+    <div class="sweep-section">
+        <div class="sw-eyebrow">Key Concept</div>
+        <h2>Reducing Balance vs. Flat Rate — The ₹50,000 Difference</h2>
+        <p>The single most important thing to check before signing your loan agreement. Most banks use reducing balance — but always verify, because the difference is massive.</p>
+        <div class="sweep-steps">
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-rupee-sign"></i></div>
+                <div class="ss-title">Flat Rate Quoted</div>
+                <div class="ss-desc">Lender says "10% p.a. flat" — sounds low. Interest is calculated on the original principal every month</div>
+            </div>
+            <div class="sweep-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-calculator"></i></div>
+                <div class="ss-title">True Cost = 18%+</div>
+                <div class="ss-desc">A 10% flat rate on ₹5L for 3 years = ₹1.5L interest. The effective APR is ~18%, not 10%</div>
+            </div>
+            <div class="sweep-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="ss-title">Reducing Balance</div>
+                <div class="ss-desc">Interest is charged only on the outstanding principal — so it drops every month as you repay</div>
+            </div>
+            <div class="sweep-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-check-double"></i></div>
+                <div class="ss-title">Always Confirm</div>
+                <div class="ss-desc">Ask: "Is this reducing balance or flat rate?" before signing. Fake Bank uses reducing balance only</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── HOW TO CHOOSE ── -->
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Decision Guide</div>
+            <div class="section-heading">Borrow Smart — 3 Rules</div>
+            <p class="section-sub mx-auto">A personal loan is a powerful tool — but only if you use it right. These three principles keep you in control.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4 fade-up delay-1">
+                <div class="choose-card">
+                    <div class="choose-num">01</div>
+                    <div class="choose-content">
+                        <h5>Keep EMI Below 40% of Income</h5>
+                        <p>The golden rule of borrowing. If your total EMIs (all loans combined) exceed 40% of your take-home salary, you're <strong>over-leveraged</strong>. Lenders use this ratio (FOIR) and may reject your application too.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-2">
+                <div class="choose-card">
+                    <div class="choose-num">02</div>
+                    <div class="choose-content">
+                        <h5>Don't Borrow More Than You Need</h5>
+                        <p>Pre-approved offers may tempt you with higher amounts. <strong>Borrow only what you'll use</strong> — the processing fee, interest, and potential prepayment penalty make every unused rupee costly.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-3">
+                <div class="choose-card">
+                    <div class="choose-num">03</div>
+                    <div class="choose-content">
+                        <h5>Compare APR, Not Just the Rate</h5>
+                        <p>The Annual Percentage Rate (APR) includes the interest rate <strong>plus all fees</strong>. Two loans at 12% interest can have APRs of 13.8% and 15.5% depending on processing fees. Always compare APR.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── CTA BANNER ── -->
+<div class="container fade-up">
+    <div class="cta-banner">
+        <h2>Check Your Pre-Approved Offer Now</h2>
+        <p>Existing Fake Bank customers often have instant offers waiting. Zero processing fee for pre-approved applications this month — apply in 3 minutes.</p>
+        <a href="#" class="btn-cta-main">Check My Offer</a>
+        <a href="#" class="btn-cta-outline">Talk to Loan Expert</a>
+    </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <div class="footer-brand">FAKE BANK OF INDIA</div>
+                <div class="footer-tagline">India's #1 AI-powered bank. Open dil se, open to your life goals — banking reimagined for a digital India.</div>
+                <div class="social-links mt-3">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Products</h6>
+                <ul>
+                    <li><a href="#">Savings Account</a></li>
+                    <li><a href="#">Current Account</a></li>
+                    <li><a href="#">Credit Cards</a></li>
+                    <li><a href="#">Personal Loan</a></li>
+                    <li><a href="#">Home Loan</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Loans</h6>
+                <ul>
+                    <li><a href="#">Personal Loan</a></li>
+                    <li><a href="#">Home Loan</a></li>
+                    <li><a href="#">Car Loan</a></li>
+                    <li><a href="#">Education Loan</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Support</h6>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Find Branch/ATM</a></li>
+                    <li><a href="#">Grievance Redressal</a></li>
+                    <li><a href="#">Security Tips</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>About</h6>
+                <ul>
+                    <li><a href="#">Overview</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press Room</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2025 Fake Bank of India. All Rights Reserved.</span>
+            <div class="mt-2">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Security</a>
+                <a href="#">Sitemap</a>
+            </div>
+            <div class="mt-2" style="color:rgba(255,255,255,0.18);">
+                Fake Bank of India is a fictional institution for UI/UX demonstration purposes only. DICGC insured up to ₹5,00,000.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // ── ACCORDION ──
+    function toggleCost(header) {
+        const item = header.parentElement;
+        const body = item.querySelector('.cost-body');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.cost-item').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.cost-body').classList.remove('visible');
+        });
+        if (!isOpen) { item.classList.add('open'); body.classList.add('visible'); }
+    }
+
+    // ── SCROLL FADE ──
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // ── EMI CALCULATOR ──
+    function formatINR(n) {
+        return '₹' + n.toLocaleString('en-IN');
+    }
+    function calcEMI() {
+        const P = parseInt(document.getElementById('range-amount').value);
+        const r = parseFloat(document.getElementById('range-rate').value) / 12 / 100;
+        const n = parseInt(document.getElementById('range-tenure').value);
+
+        const emi = Math.round(P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1));
+        const totalPayable = emi * n;
+        const totalInterest = totalPayable - P;
+
+        document.getElementById('lbl-amount').textContent  = formatINR(P);
+        document.getElementById('lbl-rate').textContent    = parseFloat(document.getElementById('range-rate').value).toFixed(2) + '%';
+        document.getElementById('lbl-tenure').textContent  = n + ' months';
+        document.getElementById('emi-result').textContent  = formatINR(emi);
+        document.getElementById('cb-principal').textContent = formatINR(P);
+        document.getElementById('cb-interest').textContent  = formatINR(totalInterest);
+        document.getElementById('cb-total').textContent     = formatINR(totalPayable);
+
+        // Update gradient fill on range inputs
+        document.querySelectorAll('.calc-range').forEach(r => {
+            const pct = ((r.value - r.min) / (r.max - r.min)) * 100;
+            r.style.background = `linear-gradient(90deg, var(--secondary) ${pct}%, #dce9f5 ${pct}%)`;
+        });
+    }
+
+    document.querySelectorAll('.calc-range').forEach(r => r.addEventListener('input', calcEMI));
+    calcEMI(); // initial render
+</script>
+</body>
+</html>

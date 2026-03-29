@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Beneficiaries - Fake Bank of India</title>
+    <link rel="stylesheet" 
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(180deg,#0f4c75,#5c9bc7,#e3f2fd);
+            min-height:100vh;
+            color:white;
+            padding-top:80px;
+        }
+
+        .card-glass {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+            margin-bottom:20px;
+        }
+
+        input, select {
+            background: rgba(255,255,255,0.15) !important;
+            color: white !important;
+            border: 1px solid rgba(255,255,255,0.3) !important;
+        }
+        input::placeholder { color: #eee; }
+
+        .btn-custom {
+            background: #bbe1fa;
+            color: #0f4c75;
+            font-weight: bold;
+        }
+        .btn-custom:hover {
+            background:white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2 class="text-center mb-4">Manage Beneficiaries</h2>
+
+    <!-- Beneficiary List -->
+    <div class="card-glass">
+        <h4>Your Saved Beneficiaries</h4>
+        <table class="table table-dark table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Nickname</th>
+                    <th>Actual Username</th>
+                    <th>Account Number</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="b : ${beneficiaries}">
+                <td th:text="${b.nickname}"></td>
+                <td th:text="${b.actualUsername}"></td>
+                <td th:text="${b.accountNumber}"></td>
+                <td>
+                <form th:action="@{'/beneficiaries/delete/' + ${b.id}}" method="post">
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add Beneficiary -->
+    <div class="card-glass mt-4">
+        <h4>Add New Beneficiary</h4>
+
+        <form th:action="@{/beneficiaries/add}" method="post">
+            <div class="form-group">
+                <label>Nickname (what you speak)</label>
+                <input name="nickname" class="form-control" placeholder="e.g. Mom, Bikash, Boss" required>
+            </div>
+
+            <div class="form-group">
+                <label>Actual Username (system login username)</label>
+                <input name="actualUsername" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Account Number (optional)</label>
+                <input name="accountNumber" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-custom btn-block">
+                Save Beneficiary
+            </button>
+        </form>
+    </div>
+    <a href="/dashboard" class="btn btn-light mt-3">Back to Dashboard</a>
+</div>
+
+</body>
+</html>

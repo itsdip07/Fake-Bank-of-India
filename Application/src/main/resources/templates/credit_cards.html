@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Cards - Fake Bank of India</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary:   #0f4c75;
+            --secondary: #3282b8;
+            --accent:    #1b9aaa;
+            --gold:      #f0a500;
+            --light-bg:  linear-gradient(160deg, #e8f4fd 0%, #ffffff 40%, #f0f8ff 100%);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--light-bg);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar-custom {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+        }
+        .navbar-brand { color: var(--primary) !important; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.15rem; }
+        .nav-link { color: #555 !important; font-weight: 500; }
+        .btn-login { background: var(--primary); color: white !important; border-radius: 50px; padding: 6px 22px; font-weight: 600; }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #0a3356 0%, var(--primary) 50%, #1b6ca8 100%);
+            padding: 100px 0 80px;
+            overflow: hidden;
+        }
+        .hero-bg-circle {
+            position: absolute; border-radius: 50%;
+            background: rgba(255,255,255,0.04); pointer-events: none;
+        }
+        .hero-bg-circle.c1 { width: 500px; height: 500px; top: -150px; right: -100px; }
+        .hero-bg-circle.c2 { width: 300px; height: 300px; bottom: -80px; left: -60px; }
+        .hero-bg-circle.c3 { width: 200px; height: 200px; top: 60px; right: 300px; background: rgba(255,255,255,0.03); }
+
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px; padding: 6px 18px; font-size: 0.75rem; font-weight: 600;
+            color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px;
+        }
+        .hero-eyebrow i { color: var(--gold); }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900;
+            color: white; line-height: 1.1; margin-bottom: 20px;
+        }
+        .hero h1 em { font-style: italic; color: #bbe1fa; }
+
+        .hero-sub {
+            font-size: 1.05rem; color: rgba(255,255,255,0.7);
+            max-width: 520px; line-height: 1.75; margin-bottom: 36px;
+        }
+
+        .hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+        .btn-hero-primary {
+            background: white; color: var(--primary); font-weight: 700; border-radius: 50px;
+            padding: 13px 34px; font-size: 0.92rem; border: none; cursor: pointer;
+            transition: 0.3s; text-decoration: none; display: inline-block;
+        }
+        .btn-hero-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(0,0,0,0.25); text-decoration: none; color: var(--primary); }
+        .btn-hero-outline {
+            background: transparent; color: white; font-weight: 600; border-radius: 50px;
+            padding: 13px 34px; font-size: 0.92rem; border: 1.5px solid rgba(255,255,255,0.4);
+            cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block;
+        }
+        .btn-hero-outline:hover { background: rgba(255,255,255,0.12); color: white; text-decoration: none; border-color: white; }
+
+        .hero-stats { display: flex; gap: 20px; flex-wrap: wrap; }
+        .hero-stat-chip {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 14px; padding: 14px 22px; color: white;
+        }
+        .hero-stat-chip .val { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: #bbe1fa; line-height: 1; }
+        .hero-stat-chip .lbl { font-size: 0.72rem; opacity: 0.65; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+        /* ── CREDIT CARD STACK MOCKUP ── */
+        .hero-card-mockup {
+            max-width: 380px; margin: 0 auto;
+            position: relative; height: 280px;
+        }
+
+        .cc-card {
+            width: 320px; aspect-ratio: 1.586;
+            border-radius: 20px; padding: 26px 28px;
+            position: absolute; overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 8px 16px rgba(0,0,0,0.2);
+            color: white; cursor: default;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .cc-card:hover { box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
+
+        /* Card 1 — Signature Gold (back) */
+        .cc-card-3 {
+            background: linear-gradient(135deg, #7b4f12 0%, #c8860a 45%, #e8a820 100%);
+            top: 30px; left: 50px;
+            transform: rotate(8deg);
+            animation: floatCard3 6s ease-in-out infinite;
+            z-index: 1;
+        }
+        @keyframes floatCard3 { 0%,100%{transform:rotate(8deg) translateY(0)} 50%{transform:rotate(8deg) translateY(-8px)} }
+
+        /* Card 2 — Platinum (middle) */
+        .cc-card-2 {
+            background: linear-gradient(135deg, #1c2b3a 0%, #2d4a6b 50%, #1a3a5c 100%);
+            top: 16px; left: 25px;
+            transform: rotate(3deg);
+            animation: floatCard2 6s ease-in-out infinite 0.3s;
+            z-index: 2;
+        }
+        @keyframes floatCard2 { 0%,100%{transform:rotate(3deg) translateY(0)} 50%{transform:rotate(3deg) translateY(-11px)} }
+
+        /* Card 3 — Classic Blue (front) */
+        .cc-card-1 {
+            background: linear-gradient(135deg, #0a2744 0%, #1a4a7a 40%, #0d3d6b 100%);
+            top: 0; left: 0;
+            transform: rotate(-2deg);
+            animation: floatCard1 6s ease-in-out infinite 0.6s;
+            z-index: 3;
+        }
+        @keyframes floatCard1 { 0%,100%{transform:rotate(-2deg) translateY(0)} 50%{transform:rotate(-2deg) translateY(-14px)} }
+
+        .cc-card::before {
+            content: ''; position: absolute; top: -60px; right: -60px;
+            width: 220px; height: 220px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+        }
+        .cc-card::after {
+            content: ''; position: absolute; bottom: -70px; left: -40px;
+            width: 240px; height: 240px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+        }
+
+        .cc-chip {
+            width: 38px; height: 28px;
+            background: linear-gradient(135deg, #f0a500, #d4891e, #f0c040, #c47b00);
+            border-radius: 6px; margin-bottom: 18px; position: relative; z-index: 1;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .cc-chip::before { content:''; position:absolute; top:50%; left:0; right:0; height:1px; background:rgba(0,0,0,0.2); transform:translateY(-50%); }
+        .cc-chip::after  { content:''; position:absolute; top:0; bottom:0; left:50%; width:1px; background:rgba(0,0,0,0.2); transform:translateX(-50%); }
+
+        .cc-wifi { position:absolute; top:24px; right:26px; font-size:1.2rem; opacity:0.55; z-index:1; transform:rotate(90deg); }
+        .cc-bank { position:absolute; top:22px; left:26px; font-family:'Playfair Display',serif; font-size:0.62rem; font-weight:700; letter-spacing:2px; opacity:0.6; z-index:1; text-transform:uppercase; }
+        .cc-number { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; letter-spacing:3px; margin-bottom:14px; position:relative; z-index:1; opacity:0.88; }
+        .cc-bottom { display:flex; justify-content:space-between; align-items:flex-end; position:relative; z-index:1; }
+        .cc-label-sm { font-size:0.58rem; opacity:0.5; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:3px; }
+        .cc-value { font-size:0.82rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+        .cc-tier { font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:2px; opacity:0.65; margin-bottom:6px; position:relative; z-index:1; }
+        .cc-network { position:absolute; bottom:20px; right:24px; display:flex; z-index:1; }
+        .cc-network .circle { width:28px; height:28px; border-radius:50%; opacity:0.9; }
+        .cc-network .c-red { background:#eb001b; margin-right:-8px; }
+        .cc-network .c-orange { background:#f79e1b; }
+
+        /* ── SECTION SHARED ── */
+        .section-wrap { padding: 90px 0; }
+        .section-eyebrow { font-size:0.72rem; text-transform:uppercase; letter-spacing:3px; color:var(--accent); font-weight:600; margin-bottom:10px; }
+        .section-heading { font-family:'Playfair Display',serif; font-size:2.1rem; font-weight:900; color:var(--primary); margin-bottom:14px; }
+        .section-sub { color:#777; max-width:500px; line-height:1.75; font-size:0.95rem; }
+
+        /* ── FEATURE CARDS ── */
+        .feature-card {
+            background: linear-gradient(135deg, rgba(15,76,117,0.95), rgba(50,130,184,0.9));
+            border: 1px solid rgba(255,255,255,0.18); border-radius: 22px; padding: 36px 28px;
+            color: white; height: 100%; transition: all 0.35s;
+            box-shadow: 0 10px 30px rgba(15,76,117,0.18); position: relative; overflow: hidden; cursor: default;
+        }
+        .feature-card::before { content:''; position:absolute; top:-40px; right:-40px; width:150px; height:150px; border-radius:50%; background:rgba(255,255,255,0.05); }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 22px 46px rgba(15,76,117,0.34); border-color: rgba(255,255,255,0.45); }
+        .fc-icon { font-size:2.2rem; margin-bottom:18px; display:block; background:-webkit-linear-gradient(#fff,#bbe1fa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .fc-number { position:absolute; top:24px; right:28px; font-family:'Playfair Display',serif; font-size:4rem; font-weight:900; opacity:0.07; color:white; line-height:1; }
+        .fc-title { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700; margin-bottom:10px; }
+        .fc-desc { font-size:0.88rem; color:rgba(255,255,255,0.76); line-height:1.7; }
+        .fc-highlight { display:inline-block; margin-top:16px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); border-radius:8px; padding:6px 14px; font-size:0.78rem; font-weight:600; color:#bbe1fa; letter-spacing:0.5px; }
+
+        /* ── CARD VARIANTS (type rows) ── */
+        .type-row {
+            background:rgba(255,255,255,0.9); backdrop-filter:blur(20px);
+            border:1px solid rgba(255,255,255,1); border-radius:18px; padding:28px 32px;
+            display:flex; align-items:center; gap:28px; margin-bottom:16px;
+            transition:all 0.3s; box-shadow:0 4px 18px rgba(0,0,0,0.04);
+        }
+        .type-row:hover { transform:translateX(8px); box-shadow:0 8px 30px rgba(15,76,117,0.12); border-color:rgba(50,130,184,0.25); }
+        .type-icon-wrap { width:56px; height:56px; flex-shrink:0; background:linear-gradient(135deg,var(--primary),var(--secondary)); border-radius:16px; display:flex; align-items:center; justify-content:center; color:white; font-size:1.3rem; box-shadow:0 6px 16px rgba(15,76,117,0.25); }
+        .type-content { flex:1; }
+        .type-name { font-family:'Playfair Display',serif; font-weight:700; color:var(--primary); font-size:1.05rem; margin-bottom:4px; }
+        .type-best { font-size:0.8rem; color:#999; margin-bottom:6px; }
+        .type-best strong { color:var(--secondary); }
+        .type-desc { font-size:0.88rem; color:#666; line-height:1.6; }
+        .type-badge { flex-shrink:0; padding:6px 16px; border-radius:50px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; white-space:nowrap; }
+        .badge-blue  { background:rgba(15,76,117,0.1); color:var(--primary); border:1px solid rgba(15,76,117,0.2); }
+        .badge-teal  { background:rgba(27,154,170,0.1); color:var(--accent); border:1px solid rgba(27,154,170,0.25); }
+        .badge-gold  { background:rgba(240,165,0,0.1); color:#b37a00; border:1px solid rgba(240,165,0,0.3); }
+        .badge-green { background:rgba(34,197,94,0.1); color:#16a34a; border:1px solid rgba(34,197,94,0.3); }
+        .badge-purple{ background:rgba(139,92,246,0.1); color:#7c3aed; border:1px solid rgba(139,92,246,0.25); }
+
+        /* ── ACCORDION ── */
+        .costs-section { background:linear-gradient(160deg,#f0f8ff 0%,#fff 100%); }
+        .cost-item { background:white; border-radius:18px; box-shadow:0 4px 18px rgba(0,0,0,0.05); border:1px solid rgba(0,0,0,0.04); margin-bottom:14px; overflow:hidden; transition:box-shadow 0.3s; }
+        .cost-item:hover { box-shadow:0 8px 28px rgba(15,76,117,0.1); }
+        .cost-header { display:flex; align-items:center; gap:18px; padding:22px 28px; cursor:pointer; user-select:none; }
+        .cost-icon-wrap { width:44px; height:44px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; color:white; }
+        .ci-red   { background:linear-gradient(135deg,#ef4444,#dc2626); }
+        .ci-amber { background:linear-gradient(135deg,#f59e0b,#d97706); }
+        .ci-blue  { background:linear-gradient(135deg,var(--secondary),var(--primary)); }
+        .ci-gray  { background:linear-gradient(135deg,#6b7280,#4b5563); }
+        .ci-green { background:linear-gradient(135deg,#22c55e,#16a34a); }
+        .ci-purple{ background:linear-gradient(135deg,#8b5cf6,#7c3aed); }
+        .cost-title { font-weight:700; color:var(--primary); font-size:1rem; flex:1; }
+        .cost-chevron { color:#bbb; font-size:0.8rem; transition:transform 0.3s; }
+        .cost-item.open .cost-chevron { transform:rotate(180deg); }
+        .cost-body { padding:0 28px 24px 90px; font-size:0.9rem; color:#666; line-height:1.75; display:none; }
+        .cost-body.visible { display:block; }
+        .cost-body strong { color:var(--primary); }
+
+        /* ── COMPARISON TABLE ── */
+        .comparison-wrap { background:rgba(255,255,255,0.9); backdrop-filter:blur(20px); border-radius:24px; overflow:hidden; box-shadow:0 15px 40px rgba(0,0,0,0.06); border:1px solid white; }
+        .comp-head-row { display:grid; grid-template-columns:1.6fr 1fr 1fr; background:linear-gradient(135deg,var(--primary),var(--secondary)); color:white; }
+        .comp-head-cell { padding:22px 28px; font-weight:700; font-size:0.92rem; letter-spacing:0.4px; }
+        .comp-head-cell:not(:first-child) { text-align:center; font-family:'Playfair Display',serif; font-size:1.05rem; }
+        .comp-head-cell .ch-sub { font-size:0.7rem; opacity:0.7; font-weight:400; font-family:'DM Sans',sans-serif; margin-top:3px; }
+        .comp-row { display:grid; grid-template-columns:1.6fr 1fr 1fr; border-bottom:1px solid rgba(0,0,0,0.05); transition:background 0.2s; }
+        .comp-row:last-child { border-bottom:none; }
+        .comp-row:hover { background:rgba(15,76,117,0.03); }
+        .comp-cell { padding:18px 28px; font-size:0.88rem; color:#555; display:flex; align-items:center; }
+        .comp-cell:first-child { font-weight:600; color:#444; }
+        .comp-cell:not(:first-child) { justify-content:center; }
+        .comp-cell .yes { color:#16a34a; font-weight:700; }
+        .comp-cell .no  { color:#dc2626; font-weight:700; }
+        .comp-cell .neutral { color:var(--secondary); font-weight:600; }
+        .comp-cell i.fa-check-circle { color:#16a34a; margin-right:6px; }
+        .comp-cell i.fa-times-circle  { color:#dc2626; margin-right:6px; }
+
+        /* ── ELIGIBILITY CARDS ── */
+        .kyc-entity { background:rgba(255,255,255,0.9); backdrop-filter:blur(20px); border-radius:22px; padding:36px; height:100%; box-shadow:0 8px 28px rgba(0,0,0,0.05); border:1px solid white; transition:0.3s; }
+        .kyc-entity:hover { transform:translateY(-6px); box-shadow:0 18px 40px rgba(15,76,117,0.12); }
+        .kyc-entity-icon { width:52px; height:52px; background:linear-gradient(135deg,var(--primary),var(--secondary)); border-radius:15px; display:flex; align-items:center; justify-content:center; color:white; font-size:1.3rem; margin-bottom:18px; box-shadow:0 6px 16px rgba(15,76,117,0.28); }
+        .kyc-entity-title { font-family:'Playfair Display',serif; font-weight:700; color:var(--primary); font-size:1.1rem; margin-bottom:14px; }
+        .kyc-doc-list { list-style:none; padding:0; }
+        .kyc-doc-list li { display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid rgba(0,0,0,0.05); font-size:0.88rem; color:#555; line-height:1.55; }
+        .kyc-doc-list li:last-child { border-bottom:none; }
+        .kyc-doc-list li i { color:var(--accent); margin-top:3px; flex-shrink:0; }
+
+        /* ── BILLING CYCLE EXPLAINER ── */
+        .sweep-section {
+            background:linear-gradient(135deg,#0a3356,var(--primary));
+            border-radius:28px; padding:64px 56px; color:white;
+            position:relative; overflow:hidden; margin-bottom:90px;
+        }
+        .sweep-section::after {
+            content:'%'; position:absolute; right:-10px; bottom:-40px;
+            font-family:'Playfair Display',serif; font-size:22rem; font-weight:900;
+            opacity:0.04; color:white; line-height:1; pointer-events:none;
+        }
+        .sweep-section .sw-eyebrow { font-size:0.72rem; text-transform:uppercase; letter-spacing:3px; color:#bbe1fa; font-weight:600; margin-bottom:12px; }
+        .sweep-section h2 { font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; margin-bottom:16px; }
+        .sweep-section p { opacity:0.78; max-width:500px; line-height:1.8; font-size:0.95rem; }
+        .sweep-steps { display:flex; gap:0; margin-top:40px; position:relative; z-index:1; flex-wrap:wrap; }
+        .sweep-step { flex:1; min-width:160px; text-align:center; padding:28px 20px; background:rgba(255,255,255,0.07); border-radius:18px; margin-right:14px; margin-bottom:14px; border:1px solid rgba(255,255,255,0.12); transition:0.3s; }
+        .sweep-step:hover { background:rgba(255,255,255,0.13); transform:translateY(-4px); }
+        .sweep-step:last-child { margin-right:0; }
+        .sweep-step .ss-icon { font-size:1.8rem; margin-bottom:12px; color:#bbe1fa; }
+        .sweep-step .ss-title { font-weight:700; font-size:0.9rem; margin-bottom:6px; }
+        .sweep-step .ss-desc { font-size:0.78rem; opacity:0.65; line-height:1.6; }
+        .sweep-arrow { display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.3); font-size:1.2rem; align-self:center; padding-bottom:14px; }
+
+        /* ── HOW TO CHOOSE ── */
+        .choose-card { background:rgba(255,255,255,0.9); backdrop-filter:blur(20px); border-radius:20px; padding:30px 28px; border:1px solid white; box-shadow:0 6px 22px rgba(0,0,0,0.05); height:100%; transition:0.3s; display:flex; gap:18px; align-items:flex-start; }
+        .choose-card:hover { transform:translateY(-6px); box-shadow:0 18px 40px rgba(15,76,117,0.12); }
+        .choose-num { font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:900; color:rgba(15,76,117,0.12); line-height:1; flex-shrink:0; margin-top:-4px; }
+        .choose-content h5 { font-family:'Playfair Display',serif; color:var(--primary); font-weight:700; margin-bottom:8px; font-size:1.05rem; }
+        .choose-content p { font-size:0.88rem; color:#666; line-height:1.7; margin:0; }
+
+        /* ── CTA BANNER ── */
+        .cta-banner { background:linear-gradient(135deg,rgba(15,76,117,0.06),rgba(27,154,170,0.07)); border:1px solid rgba(27,154,170,0.18); border-radius:24px; padding:56px 48px; text-align:center; margin-bottom:90px; }
+        .cta-banner h2 { font-family:'Playfair Display',serif; font-size:2.1rem; color:var(--primary); font-weight:900; margin-bottom:14px; }
+        .cta-banner p { color:#777; max-width:460px; margin:0 auto 32px; line-height:1.75; }
+        .btn-cta-main { background:var(--primary); color:white; font-weight:700; border-radius:50px; padding:14px 40px; border:none; cursor:pointer; text-decoration:none; font-size:0.95rem; display:inline-block; transition:0.3s; }
+        .btn-cta-main:hover { transform:translateY(-3px); box-shadow:0 14px 30px rgba(15,76,117,0.35); text-decoration:none; color:white; }
+        .btn-cta-outline { background:transparent; color:var(--primary); font-weight:600; border-radius:50px; padding:14px 36px; border:2px solid var(--primary); cursor:pointer; text-decoration:none; font-size:0.95rem; display:inline-block; margin-left:14px; transition:0.3s; }
+        .btn-cta-outline:hover { background:var(--primary); color:white; text-decoration:none; }
+
+        /* ── FOOTER ── */
+        footer { background:#0a3356; color:#ccc; padding:55px 0 28px; font-size:0.88rem; }
+        footer .footer-brand { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:900; color:white; margin-bottom:12px; }
+        footer .footer-tagline { color:rgba(255,255,255,0.4); font-size:0.8rem; line-height:1.65; margin-bottom:22px; }
+        footer h6 { color:white; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; font-size:0.72rem; margin-bottom:16px; }
+        footer ul { list-style:none; padding:0; }
+        footer ul li { margin-bottom:10px; }
+        footer ul li a { color:rgba(255,255,255,0.45); text-decoration:none; transition:0.2s; }
+        footer ul li a:hover { color:white; padding-left:4px; }
+        footer .social-links a { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; background:rgba(255,255,255,0.08); border-radius:50%; color:rgba(255,255,255,0.55); margin-right:8px; text-decoration:none; transition:0.2s; font-size:0.85rem; }
+        footer .social-links a:hover { background:var(--secondary); color:white; }
+        footer .footer-bottom { border-top:1px solid rgba(255,255,255,0.07); padding-top:22px; margin-top:46px; text-align:center; color:rgba(255,255,255,0.3); font-size:0.78rem; }
+        footer .footer-bottom a { color:rgba(255,255,255,0.35); text-decoration:none; margin:0 10px; }
+        footer .footer-bottom a:hover { color:white; }
+
+        /* ── ANIMATIONS ── */
+        .fade-up { opacity:0; transform:translateY(28px); transition:opacity 0.6s ease,transform 0.6s ease; }
+        .fade-up.visible { opacity:1; transform:translateY(0); }
+        .delay-1 { transition-delay:0.1s; }
+        .delay-2 { transition-delay:0.2s; }
+        .delay-3 { transition-delay:0.3s; }
+        .delay-4 { transition-delay:0.4s; }
+        .delay-5 { transition-delay:0.5s; }
+    </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">FAKE BANK OF INDIA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="fas fa-bars text-primary"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/ex_products_page.html">Products</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#">Credit Cards</a></li>
+                <li class="nav-item"><a class="nav-link" href="/support_page.html">Support</a></li>
+                <li class="nav-item pl-3"><a class="btn btn-login" href="/login">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+    <div class="hero-bg-circle c1"></div>
+    <div class="hero-bg-circle c2"></div>
+    <div class="hero-bg-circle c3"></div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 mb-5 mb-lg-0">
+                <div class="hero-eyebrow"><i class="fas fa-credit-card"></i> Premium Banking</div>
+                <h1>Credit Cards<br><em>Rewards Every Swipe.</em></h1>
+                <p class="hero-sub">Earn points, unlock lounges, enjoy zero-cost EMIs, and build a credit score — all with a card that pays you back for spending.</p>
+                <div class="hero-cta-row">
+                    <a href="#" class="btn-hero-primary">Apply Now — Instant Decision</a>
+                    <a href="#" class="btn-hero-outline">Check Eligibility</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat-chip"><div class="val">10%</div><div class="lbl">Max Cashback</div></div>
+                    <div class="hero-stat-chip"><div class="val">45</div><div class="lbl">Interest-Free Days</div></div>
+                    <div class="hero-stat-chip"><div class="val">600+</div><div class="lbl">Reward Partners</div></div>
+                </div>
+            </div>
+            <div class="col-lg-5 d-flex justify-content-center">
+                <div class="hero-card-mockup">
+                    <!-- Card 3 — Gold (back) -->
+                    <div class="cc-card cc-card-3">
+                        <div class="cc-bank">Fake Bank of India</div>
+                        <i class="fas fa-wifi cc-wifi"></i>
+                        <div class="cc-chip"></div>
+                        <div class="cc-tier">Signature Gold</div>
+                        <div class="cc-number">5523 •••• •••• 9810</div>
+                        <div class="cc-bottom">
+                            <div><div class="cc-label-sm">Card Holder</div><div class="cc-value">A. MEHTA</div></div>
+                            <div style="text-align:right"><div class="cc-label-sm">Valid Thru</div><div class="cc-value">11/29</div></div>
+                        </div>
+                        <div class="cc-network"><div class="circle c-red"></div><div class="circle c-orange"></div></div>
+                    </div>
+                    <!-- Card 2 — Platinum (middle) -->
+                    <div class="cc-card cc-card-2">
+                        <div class="cc-bank">Fake Bank of India</div>
+                        <i class="fas fa-wifi cc-wifi"></i>
+                        <div class="cc-chip"></div>
+                        <div class="cc-tier">Platinum</div>
+                        <div class="cc-number">4891 •••• •••• 3347</div>
+                        <div class="cc-bottom">
+                            <div><div class="cc-label-sm">Card Holder</div><div class="cc-value">P. SINGH</div></div>
+                            <div style="text-align:right"><div class="cc-label-sm">Valid Thru</div><div class="cc-value">06/28</div></div>
+                        </div>
+                        <div class="cc-network"><div class="circle c-red"></div><div class="circle c-orange"></div></div>
+                    </div>
+                    <!-- Card 1 — Classic (front) -->
+                    <div class="cc-card cc-card-1">
+                        <div class="cc-bank">Fake Bank of India</div>
+                        <i class="fas fa-wifi cc-wifi"></i>
+                        <div class="cc-chip"></div>
+                        <div class="cc-tier">Classic Rewards</div>
+                        <div class="cc-number">4527 •••• •••• 6614</div>
+                        <div class="cc-bottom">
+                            <div><div class="cc-label-sm">Card Holder</div><div class="cc-value">R. SHARMA</div></div>
+                            <div style="text-align:right"><div class="cc-label-sm">Valid Thru</div><div class="cc-value">08/27</div></div>
+                        </div>
+                        <div class="cc-network"><div class="circle c-red"></div><div class="circle c-orange"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── CORE FEATURES ── -->
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Core Features</div>
+            <div class="section-heading">Why Choose Our Credit Cards</div>
+            <p class="section-sub mx-auto">Packed with benefits designed for every kind of spender — from daily commuters to frequent flyers.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-1">
+                <div class="feature-card">
+                    <span class="fc-number">01</span>
+                    <i class="fas fa-coins fc-icon"></i>
+                    <div class="fc-title">Reward Points</div>
+                    <div class="fc-desc">Earn 2–10X reward points on every purchase. Redeem against flights, hotels, merchandise, or statement credit.</div>
+                    <div class="fc-highlight">Never expiring points</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-2">
+                <div class="feature-card">
+                    <span class="fc-number">02</span>
+                    <i class="fas fa-plane-departure fc-icon"></i>
+                    <div class="fc-title">Lounge Access</div>
+                    <div class="fc-desc">Complimentary airport lounge access at 1,300+ domestic and international terminals with select card tiers.</div>
+                    <div class="fc-highlight">Visa / Mastercard lounges</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-3">
+                <div class="feature-card">
+                    <span class="fc-number">03</span>
+                    <i class="fas fa-calendar-check fc-icon"></i>
+                    <div class="fc-title">45-Day Interest-Free</div>
+                    <div class="fc-desc">Get up to 45 days of interest-free credit on every purchase when you pay your full bill on time each month.</div>
+                    <div class="fc-highlight">0% if paid in full</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4 fade-up delay-4">
+                <div class="feature-card">
+                    <span class="fc-number">04</span>
+                    <i class="fas fa-tag fc-icon"></i>
+                    <div class="fc-title">Zero-Cost EMI</div>
+                    <div class="fc-desc">Convert big purchases (₹3,000+) into 3, 6, 9, or 12-month EMIs at 0% interest at 1,000+ partner brands.</div>
+                    <div class="fc-highlight">No processing fee</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── CARD VARIANTS ── -->
+<div class="section-wrap pt-0">
+    <div class="container">
+        <div class="row align-items-center mb-5 fade-up">
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="section-eyebrow">Card Portfolio</div>
+                <div class="section-heading">Find Your<br>Perfect Card</div>
+                <p class="section-sub">From entry-level cashback cards to ultra-premium travel companions — there's a card for every lifestyle.</p>
+            </div>
+            <div class="col-lg-7">
+                <div class="fade-up delay-1">
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-percent"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Classic Cashback Card</div>
+                            <div class="type-best">Best for <strong>First-time credit card users</strong></div>
+                            <div class="type-desc">5% cashback on online spends, 2% on utilities. Low annual fee of ₹500 (waived on ₹50,000+ annual spend).</div>
+                        </div>
+                        <div class="type-badge badge-blue">Entry Level</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-star"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Platinum Rewards Card</div>
+                            <div class="type-best">Best for <strong>Salaried professionals & daily spenders</strong></div>
+                            <div class="type-desc">5X points on groceries & dining, 2X on all spends, 4 quarterly lounge visits, and fuel surcharge waiver.</div>
+                        </div>
+                        <div class="type-badge badge-teal">Popular</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-plane"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Travel Elite Card</div>
+                            <div class="type-best">Best for <strong>Frequent flyers & hotel loyalists</strong></div>
+                            <div class="type-desc">10X miles on flight bookings, unlimited lounge access, complimentary travel insurance up to ₹1 Crore.</div>
+                        </div>
+                        <div class="type-badge badge-gold">Travel</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-crown"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Signature / Infinite Card</div>
+                            <div class="type-best">Best for <strong>HNIs & ultra-premium lifestyle spenders</strong></div>
+                            <div class="type-desc">Dedicated concierge, golf programme, priority pass, 1% forex markup, and bespoke lifestyle privileges.</div>
+                        </div>
+                        <div class="type-badge badge-purple">Ultra Premium</div>
+                    </div>
+                    <div class="type-row">
+                        <div class="type-icon-wrap"><i class="fas fa-store"></i></div>
+                        <div class="type-content">
+                            <div class="type-name">Co-branded Retail Card</div>
+                            <div class="type-best">Best for <strong>Brand loyalists — Flipkart, Amazon, Swiggy</strong></div>
+                            <div class="type-desc">Up to 10% instant discount on the partner platform, 5X points on partner spends, 1X everywhere else.</div>
+                        </div>
+                        <div class="type-badge badge-green">Co-Branded</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── FEES & CHARGES ACCORDION ── -->
+<div class="section-wrap costs-section">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Fee Schedule</div>
+            <div class="section-heading">The True Cost of Credit</div>
+            <p class="section-sub mx-auto">The rewards are real — but so are the penalties. Know these charges before you swipe.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="cost-item fade-up delay-1">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-red"><i class="fas fa-percentage"></i></div>
+                        <div class="cost-title">Interest Rate (APR)</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        Credit card interest in India typically ranges from <strong>36% – 45% per annum (3–3.75% per month)</strong>. Interest is charged from the transaction date — not the due date — if you carry a balance. Always pay the <strong>full outstanding</strong>, not just the minimum due, to avoid this compounding trap.
+                    </div>
+                </div>
+                <div class="cost-item fade-up delay-2">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-amber"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="cost-title">Late Payment Fee & Minimum Due Trap</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        Missing the payment due date triggers a <strong>late payment fee of ₹500 – ₹1,300</strong> (slab-based on outstanding). Paying only the <strong>Minimum Amount Due (5% of bill)</strong> does NOT stop interest — it simply avoids the late fee while interest accrues on the full balance, creating a debt spiral.
+                    </div>
+                </div>
+                <div class="cost-item fade-up delay-3">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-blue"><i class="fas fa-money-bill-alt"></i></div>
+                        <div class="cost-title">Cash Advance Charges</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        Withdrawing cash from an ATM using your credit card attracts a <strong>cash advance fee of 2.5% (min ₹500)</strong> plus interest at the full APR from day one — there is <strong>no interest-free period</strong> on cash advances. Avoid this unless absolutely necessary.
+                    </div>
+                </div>
+                <div class="cost-item fade-up delay-4">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-purple"><i class="fas fa-globe-asia"></i></div>
+                        <div class="cost-title">Foreign Transaction Markup</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        International transactions are charged a <strong>cross-currency markup of 1.5% – 3.5%</strong> over the base exchange rate, plus 18% GST on the markup amount. Premium travel cards offer reduced markups of 1–1.5%. Always compare this rate before choosing your overseas spending card.
+                    </div>
+                </div>
+                <div class="cost-item fade-up delay-5">
+                    <div class="cost-header" onclick="toggleCost(this)">
+                        <div class="cost-icon-wrap ci-gray"><i class="fas fa-redo"></i></div>
+                        <div class="cost-title">Over-Limit & Balance Transfer Fees</div>
+                        <i class="fas fa-chevron-down cost-chevron"></i>
+                    </div>
+                    <div class="cost-body">
+                        Exceeding your credit limit incurs an <strong>over-limit fee of 2.5% of the excess amount</strong>. Balance transfers from other cards attract a processing fee of <strong>1–3% of the transferred amount</strong>, though promotional 0% BT offers often waive this for the first 6–12 months.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── COMPARISON TABLE ── -->
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Side-by-Side</div>
+            <div class="section-heading">Secured vs. Unsecured Credit Card</div>
+            <p class="section-sub mx-auto">Not sure which type to apply for? Here's how secured and standard credit cards compare.</p>
+        </div>
+        <div class="comparison-wrap fade-up">
+            <div class="comp-head-row">
+                <div class="comp-head-cell">Feature</div>
+                <div class="comp-head-cell">Secured Credit Card<div class="ch-sub">Against FD deposit</div></div>
+                <div class="comp-head-cell">Unsecured Credit Card<div class="ch-sub">Income-based limit</div></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Eligibility</div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>Anyone with an FD</span></div>
+                <div class="comp-cell"><span class="neutral">Income & CIBIL check</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Good for Building Credit</div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>Excellent first step</span></div>
+                <div class="comp-cell"><span class="neutral">Also helps, if managed well</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Approval Speed</div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>Near Instant</span></div>
+                <div class="comp-cell"><span class="neutral">1–7 working days</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Rewards & Cashback</div>
+                <div class="comp-cell"><span class="no"><i class="fas fa-times-circle"></i>Limited</span></div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>Full Rewards Access</span></div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-cell">Collateral Required</div>
+                <div class="comp-cell"><span class="no"><i class="fas fa-times-circle"></i>Yes — Fixed Deposit</span></div>
+                <div class="comp-cell"><span class="yes"><i class="fas fa-check-circle"></i>None</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── ELIGIBILITY & DOCUMENTS ── -->
+<div class="section-wrap pt-0">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">KYC & Eligibility</div>
+            <div class="section-heading">Documents Required</div>
+            <p class="section-sub mx-auto">Requirements vary by employment type. Have these ready before you apply for a faster decision.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4 fade-up delay-1">
+                <div class="kyc-entity">
+                    <div class="kyc-entity-icon"><i class="fas fa-briefcase"></i></div>
+                    <div class="kyc-entity-title">Salaried Applicants</div>
+                    <ul class="kyc-doc-list">
+                        <li><i class="fas fa-file-alt"></i>PAN Card (mandatory)</li>
+                        <li><i class="fas fa-id-card"></i>Aadhaar / Passport / Voter ID</li>
+                        <li><i class="fas fa-building"></i>Latest 3 months' salary slips</li>
+                        <li><i class="fas fa-university"></i>Last 3 months' bank statement</li>
+                        <li><i class="fas fa-envelope"></i>Form 16 or latest ITR</li>
+                        <li><i class="fas fa-map-marker-alt"></i>Utility bill for address proof</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-2">
+                <div class="kyc-entity">
+                    <div class="kyc-entity-icon"><i class="fas fa-store"></i></div>
+                    <div class="kyc-entity-title">Self-Employed / Business</div>
+                    <ul class="kyc-doc-list">
+                        <li><i class="fas fa-file-alt"></i>PAN Card of Individual & Firm</li>
+                        <li><i class="fas fa-id-card"></i>Aadhaar / Address Proof</li>
+                        <li><i class="fas fa-file-invoice-dollar"></i>Last 2 years' ITR with computation</li>
+                        <li><i class="fas fa-chart-line"></i>Audited P&L and Balance Sheet</li>
+                        <li><i class="fas fa-university"></i>Last 6 months' current account statement</li>
+                        <li><i class="fas fa-certificate"></i>GST Registration Certificate</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-3">
+                <div class="kyc-entity">
+                    <div class="kyc-entity-icon"><i class="fas fa-piggy-bank"></i></div>
+                    <div class="kyc-entity-title">Secured Card (Against FD)</div>
+                    <ul class="kyc-doc-list">
+                        <li><i class="fas fa-file-alt"></i>PAN Card</li>
+                        <li><i class="fas fa-id-card"></i>Aadhaar for eKYC</li>
+                        <li><i class="fas fa-lock"></i>Fixed Deposit of min. ₹20,000</li>
+                        <li><i class="fas fa-check-circle"></i>No income proof needed</li>
+                        <li><i class="fas fa-check-circle"></i>No CIBIL score required</li>
+                        <li><i class="fas fa-bolt"></i>Instant digital issuance available</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── BILLING CYCLE EXPLAINER ── -->
+<div class="container fade-up">
+    <div class="sweep-section">
+        <div class="sw-eyebrow">How It Works</div>
+        <h2>The Credit Card Billing Cycle</h2>
+        <p>Understanding your billing cycle is the single most important thing you can do to use a credit card profitably — and avoid paying a single rupee in interest.</p>
+        <div class="sweep-steps">
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-calendar-day"></i></div>
+                <div class="ss-title">Statement Date</div>
+                <div class="ss-desc">Your bill is generated. All transactions of the past 30 days are consolidated into a statement</div>
+            </div>
+            <div class="sweep-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-file-invoice"></i></div>
+                <div class="ss-title">Bill Arrives</div>
+                <div class="ss-desc">Total due, minimum due, and payment deadline are shown. You have 15–20 days to pay</div>
+            </div>
+            <div class="sweep-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-check-double"></i></div>
+                <div class="ss-title">Pay Full Balance</div>
+                <div class="ss-desc">Pay the total due before the deadline. Zero interest charged — you kept the free credit window</div>
+            </div>
+            <div class="sweep-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="sweep-step">
+                <div class="ss-icon"><i class="fas fa-sync-alt"></i></div>
+                <div class="ss-title">Cycle Resets</div>
+                <div class="ss-desc">Your full credit limit is restored and a new 30-day interest-free window begins automatically</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── HOW TO CHOOSE ── -->
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-eyebrow">Decision Guide</div>
+            <div class="section-heading">How to Choose the Right Card</div>
+            <p class="section-sub mx-auto">Apply for the wrong card and you'll leave lakhs of rewards on the table. These three questions narrow it down.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4 fade-up delay-1">
+                <div class="choose-card">
+                    <div class="choose-num">01</div>
+                    <div class="choose-content">
+                        <h5>Where Do You Spend the Most?</h5>
+                        <p>Online shopping → co-branded or cashback card. Travel & dining → Platinum or Travel Elite. Groceries & fuel → general rewards. Match the card's <strong>bonus categories to your top spend buckets</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-2">
+                <div class="choose-card">
+                    <div class="choose-num">02</div>
+                    <div class="choose-content">
+                        <h5>Will You Pay in Full Every Month?</h5>
+                        <p>If yes — maximise rewards. If sometimes no — <strong>choose a low-interest card first</strong>, not a high-rewards one. A 40% APR will erase 12 months of points in a single unpaid billing cycle.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-3">
+                <div class="choose-card">
+                    <div class="choose-num">03</div>
+                    <div class="choose-content">
+                        <h5>Does the Annual Fee Justify Itself?</h5>
+                        <p>A ₹5,000 annual fee card makes sense only if you extract more than ₹5,000 in value from its benefits. <strong>Calculate your break-even spend</strong> using the card's reward rate before applying.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── CTA BANNER ── -->
+<div class="container fade-up">
+    <div class="cta-banner">
+        <h2>Ready to Apply for a Credit Card?</h2>
+        <p>Get an instant in-principle decision online. No branch visit needed. Existing Fake Bank account holders get pre-approved offers with one click.</p>
+        <a href="#" class="btn-cta-main">Apply Now — Takes 3 Minutes</a>
+        <a href="#" class="btn-cta-outline">Check Pre-Approved Offers</a>
+    </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <div class="footer-brand">FAKE BANK OF INDIA</div>
+                <div class="footer-tagline">India's #1 AI-powered bank. Open dil se, open to your life goals — banking reimagined for a digital India.</div>
+                <div class="social-links mt-3">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Products</h6>
+                <ul>
+                    <li><a href="#">Savings Account</a></li>
+                    <li><a href="#">Current Account</a></li>
+                    <li><a href="#">Credit Cards</a></li>
+                    <li><a href="#">Personal Loan</a></li>
+                    <li><a href="#">Home Loan</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Cards</h6>
+                <ul>
+                    <li><a href="#">Debit Cards</a></li>
+                    <li><a href="#">Credit Cards</a></li>
+                    <li><a href="#">Prepaid Cards</a></li>
+                    <li><a href="#">Forex Cards</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>Support</h6>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Find Branch/ATM</a></li>
+                    <li><a href="#">Grievance Redressal</a></li>
+                    <li><a href="#">Security Tips</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2 mb-5">
+                <h6>About</h6>
+                <ul>
+                    <li><a href="#">Overview</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press Room</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2025 Fake Bank of India. All Rights Reserved.</span>
+            <div class="mt-2">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Security</a>
+                <a href="#">Sitemap</a>
+            </div>
+            <div class="mt-2" style="color:rgba(255,255,255,0.18);">
+                Fake Bank of India is a fictional institution for UI/UX demonstration purposes only. DICGC insured up to ₹5,00,000.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function toggleCost(header) {
+        const item = header.parentElement;
+        const body = item.querySelector('.cost-body');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.cost-item').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.cost-body').classList.remove('visible');
+        });
+        if (!isOpen) { item.classList.add('open'); body.classList.add('visible'); }
+    }
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

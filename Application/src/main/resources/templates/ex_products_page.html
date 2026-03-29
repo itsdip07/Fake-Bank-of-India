@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore Products - Fake Bank of India</title>
+
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- THEME VARIABLES --- */
+      :root {
+        --primary: #0f4c75; /* Deep Blue */
+        --secondary: #3282b8; /* Light Blue */
+        --bg-gradient: linear-gradient(
+          180deg,
+          #e3f2fd 0%,
+          #ffffff 20%,
+          #f0f8ff 100%
+        );
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background: var(--bg-gradient);
+        color: #333;
+        min-height: 100vh;
+      }
+
+      /* --- NAVBAR --- */
+      .navbar-custom {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+      .navbar-brand {
+        color: var(--primary) !important;
+        font-weight: 700;
+      }
+      .nav-link {
+        color: #555 !important;
+        font-weight: 500;
+      }
+      .btn-login {
+        background: var(--primary);
+        color: white !important;
+        border-radius: 50px;
+        padding: 5px 20px;
+      }
+
+      /* --- PRODUCT GRID SECTION --- */
+      .products-header {
+        text-align: center;
+        padding: 60px 0 40px;
+      }
+      .products-header h1 {
+        color: var(--primary);
+        font-weight: 700;
+        font-size: 2.5rem;
+      }
+      .products-header p {
+        color: #666;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* --- BLUE GLASS CARD DESIGN --- */
+      .product-card {
+        /* The Deep Blue Gradient Glass Look */
+        background: linear-gradient(
+          135deg,
+          rgba(15, 76, 117, 0.95),
+          rgba(50, 130, 184, 0.9)
+        );
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        padding: 30px 20px;
+        text-align: center;
+        color: white;
+        height: 100%;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(15, 76, 117, 0.2);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      /* Hover Effect: Lift up and glow */
+      .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(15, 76, 117, 0.4);
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* The Icon styling */
+      .card-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+
+        /* Apply the gradient to the text/icon itself */
+        background: linear-gradient(#ffffff, #bbe1fa);
+        background-clip: text;
+        -webkit-background-clip: text; /* For Safari/Chrome */
+
+        /* Make the actual font color transparent so the background shows through */
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+
+        display: inline-block; /* Ensures the gradient applies correctly */
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      }
+
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      .card-desc {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.5;
+      }
+
+      /* Small arrow at bottom */
+      .card-link {
+        margin-top: 20px;
+        display: inline-block;
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #bbe1fa;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        background: #0f4c75;
+        color: #ccc;
+        padding: 40px 0;
+        margin-top: 80px;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">FAKE BANK OF INDIA</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+        >
+          <span class="fas fa-bars text-primary"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto align-items-center">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/ex_products_page.html"
+                >Products</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/support_page.html">Support</a>
+            </li>
+            <li class="nav-item pl-3">
+              <a class="btn btn-login" href="/login">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container products-header">
+      <h1>Our Products</h1>
+      <p>
+        Explore our comprehensive range of banking solutions designed to help
+        you grow, secure, and manage your wealth.
+      </p>
+    </div>
+
+    <div class="container mb-5">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-robot card-icon"></i>
+            <div class="card-title">AI Banking</div>
+            <div class="card-desc">
+              Smart insights on your spending habits and automated savings
+              goals.
+            </div>
+            <a
+              href="/ai_banking.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-briefcase card-icon"></i>
+            <div class="card-title">Current Accounts</div>
+            <div class="card-desc">
+              Seamless business banking with high transaction limits and
+              overdraft support.
+            </div>
+            <a
+              href="/current_acc.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-piggy-bank card-icon"></i>
+            <div class="card-title">Savings Accounts</div>
+            <div class="card-desc">
+              Earn high interest up to 7% p.a. with zero-balance digital
+              options.
+            </div>
+            <a
+              href="/savings_acc.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-coins card-icon"></i>
+            <div class="card-title">Fixed Deposits</div>
+            <div class="card-desc">
+              Secure returns with flexible tenures. Special rates for senior
+              citizens.
+            </div>
+            <a
+              href="/fixed_deposit.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-credit-card card-icon"></i>
+            <div class="card-title">Debit Cards</div>
+            <div class="card-desc">
+              Contactless payments and high withdrawal limits worldwide.
+            </div>
+            <a
+              href="/debit.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-user-tag card-icon"></i>
+            <div class="card-title">Personal Loans</div>
+            <div class="card-desc">
+              Instant approval for funds up to ₹40 Lakhs with minimal
+              documentation.
+            </div>
+            <a
+              href="/personal_loans.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-home card-icon"></i>
+            <div class="card-title">Home Loans</div>
+            <div class="card-desc">
+              Attractive interest rates starting at 8.50% for your dream home.
+            </div>
+            <a
+              href="/home_loans.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-car card-icon"></i>
+            <div class="card-title">Vehicle Loans</div>
+            <div class="card-desc">
+              Drive your dream car with up to 100% on-road funding options.
+            </div>
+            <a
+              href="/vehicle_loans.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-chart-line card-icon"></i>
+            <div class="card-title">Demat Account</div>
+            <div class="card-desc">
+              Trade stocks and securities effortlessly with low brokerage fees.
+            </div>
+            <a
+              href="/demat.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-seedling card-icon"></i>
+            <div class="card-title">Investments</div>
+            <div class="card-desc">
+              Expert-curated portfolios including Bonds, NPS, and Gold.
+            </div>
+            <a
+              href="investments.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-chart-bar card-icon"></i>
+            <div class="card-title">Stocks & Mutual Funds</div>
+            <div class="card-desc">
+              Start SIPs with as low as ₹500. Track performance in real-time.
+            </div>
+            <a
+              href="/groww.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="product-card">
+            <i class="fas fa-headset card-icon"></i>
+            <div class="card-title">24x7 Support</div>
+            <div class="card-desc">
+              Get instant resolution to your queries via our AI Chatbot 'AHA'.
+            </div>
+            <a
+              href="/support_page.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary mt-2"
+              >View Details <i class="fas fa-arrow-right ml-1"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container text-center">
+        <p>&copy; 2026 Fake Bank of India. All Rights Reserved.</p>
+        <div class="small text-white-50">
+          <a href="#" class="text-white-50 mx-2">Privacy Policy</a> |
+          <a href="#" class="text-white-50 mx-2">Terms of Use</a> |
+          <a href="#" class="text-white-50 mx-2">Security</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

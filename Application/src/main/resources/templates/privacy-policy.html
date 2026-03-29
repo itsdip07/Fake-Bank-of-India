@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Privacy Policy</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0f4c75, #3282b8);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .navbar-custom {
+            background-color: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar-custom a {
+            color: #ffffff !important;
+        }
+
+        .navbar-custom .navbar-brand {
+            font-weight: bold;
+        }
+
+        .navbar-custom .btn {
+            margin-right: 10px;
+        }
+
+        .navbar-custom .btn:last-child {
+            margin-right: 0;
+        }
+
+        .navbar-custom ul {
+            display: flex !important;
+            gap: 12px;
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .dashboard-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3),
+                inset 0 0 15px rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 1000px;
+            margin-top: 50px;
+            text-align: center;
+            animation: glowPulseWhite 2s infinite alternate;
+        }
+
+        h2,
+        h3 {
+            margin-bottom: 20px;
+            color: #e0e0e0;
+        }
+
+        .btn-primary {
+            background-color: #3282b8;
+            border-color: #3282b8;
+            transition: background-color 0.3s ease;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0f4c75;
+            border-color: #0f4c75;
+        }
+
+
+        /* Default state for the button */
+        .btn-warning,
+        .btn-warning.btn {
+            background-color: transparent !important;
+            border: 1px solid #ffffff !important;
+            color: #ffffff !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+
+        /* Hover state: When the cursor is over the button */
+        .btn-warning:hover,
+        .btn-warning.btn:hover {
+            background-color: #3282b8 !important;
+            border-color: #3282b8 !important;
+            color: #ffffff !important;
+        }
+
+        /* Active and Focus states: This is the critical part */
+        /* This is more specific and should always override the default Bootstrap behavior */
+        .btn-warning:active,
+        .btn-warning.btn:active,
+        .btn-warning:focus,
+        .btn-warning.btn:focus {
+            background-color: #0f4c75 !important;
+            border-color: #0f4c75 !important;
+            color: #ffffff !important;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .account-details {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .error {
+            color: #ff4c4c;
+        }
+
+        .footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px 0;
+            font-size: 14px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+
+            75% {
+                transform: translateX(-5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes glowPulseWhite {
+            0% {
+                box-shadow: 0 0 25px rgba(255, 255, 255, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.05);
+            }
+
+            100% {
+                box-shadow: 0 0 40px rgba(255, 255, 255, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#">FAKE BANK OF INDIA</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="btn btn-warning" href="/dashboard">Dashboard</a></li>
+            <li class="nav-item"><a class="btn btn-warning" href="/transactions">Transactions</a></li>
+            <li class="nav-item"><a class="btn btn-warning" href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="container dashboard-container">
+        <div class="text-center">
+            <h2>PRIVACY POLICY</h2>
+        </div>
+
+
+        <div class="account-details">
+            <p>
+                Welcome to AI Banking Software. We value your trust and are committed to protecting your personal and
+                financial information. This Privacy Policy explains how we collect, use, store, and safeguard your data
+                when you use our banking services.
+
+                By using our application, you agree to the terms of this Privacy Policy.
+
+                We may collect the following types of information:
+
+                Personal Information: Name, date of birth, address, email, phone number, government-issued ID.
+
+                Account Information: Bank account details, transaction history, balances.
+
+                Authentication Data: Username, password, OTP codes, biometric data (if enabled).
+
+                Device & Usage Information: IP address, device type, operating system, browser type, app usage logs.
+
+                Your data is used for: Providing secure banking services. Processing transactions and payments. Fraud
+                detection and security monitoring. Sending OTPs, alerts, and notifications. Complying with legal and
+                regulatory requirements. Improving user experience and app performance.
+                <br>
+                We do not sell or rent your personal data. We may share information only with:
+
+                Regulatory Authorities: When required by law or court orders.
+
+                Payment Gateways & Partners: For processing secure transactions.
+
+                Fraud Prevention Agencies: To prevent financial crimes.
+
+                Data Security:
+                We use advanced encryption, firewalls, and secure servers to protect your information. Features include:
+
+                End-to-End Encrypted Transactions.
+
+                Multi-Factor Authentication (MFA).
+
+                Regular Security Audits.
+
+                Secure Data Backups.
+
+                You have the right to:
+
+                Access and review your data.
+
+                Update or correct personal information.
+
+                Request deletion of your account (subject to legal requirements).
+
+                Opt-out of marketing communications.
+
+                Our app may use cookies and analytics tools to enhance user experience. These do not store sensitive
+                banking information.
+
+                We may update this Privacy Policy from time to time. Changes will be notified via email or app
+                notifications.
+
+                Contact Us:
+                If you have any questions regarding this Privacy Policy, you can contact us at:
+                📧 mybankingapplicationsoftware@gmail.com
+                📞 +91-XXXXXXXXXX
+
+            </p>
+
+
+            <p th:if="${error != null}" th:text="${error}" class="error text-center mt-3"></p>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <footer class="footer">
+            <p>&copy; 2026 Copyright Aakash & Team. All rights reserved. | <a th:href="@{/privacy-policy}">Privacy
+                    Policy</a> | <a th:href="@{/termsofservice}">Terms of Service</a></p>
+        </footer>
+
+</body>
+
+</html>

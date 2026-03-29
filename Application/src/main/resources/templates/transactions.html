@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Transaction History - FAKE BANK OF INDIA</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- GLOBAL STYLES --- */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0f4c75, #1b262c);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- GLASSMORPHISM CARD --- */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            margin-top: 30px;
+            margin-bottom: 80px;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar-custom {
+            background: rgba(15, 76, 117, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: top 0.3s ease-in-out;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #bbe1fa !important;
+        }
+
+        .navbar-custom .nav-item .btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 20px;
+            padding: 5px 15px;
+            transition: all 0.3s;
+        }
+
+        .navbar-custom .nav-item .btn:hover {
+            background: #bbe1fa;
+            color: #0f4c75;
+            box-shadow: 0 0 15px rgba(187, 225, 250, 0.4);
+        }
+
+        /* --- FORMS & INPUTS --- */
+        .filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        label {
+            font-weight: 500;
+            color: #bbe1fa;
+            margin-bottom: 0;
+        }
+
+        input[type="date"] {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            padding: 8px 12px;
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        input[type="date"]:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #bbe1fa;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-glass-success {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            padding: 8px 20px;
+            box-shadow: 0 4px 15px rgba(56, 239, 125, 0.3);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        
+        /* ✅ NEW: Email Button Style */
+        .btn-glass-info {
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            padding: 8px 20px;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+            transition: transform 0.2s;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-glass-primary {
+            background: linear-gradient(135deg, #3282b8, #0f4c75);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            box-shadow: 0 4px 15px rgba(50, 130, 184, 0.4);
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .btn-glass-success:hover, .btn-glass-primary:hover, .btn-glass-info:hover {
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* --- TABLE STYLING --- */
+        .table-responsive {
+            border-radius: 15px;
+        }
+
+        .table {
+            margin-bottom: 0;
+            color: #e1f1fd;
+        }
+
+        .table thead th {
+            border: none;
+            background: rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            padding: 15px;
+            color: #bbe1fa;
+        }
+
+        .table tbody tr {
+            background: transparent;
+            transition: background 0.2s;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .table td {
+            padding: 15px;
+            vertical-align: middle;
+            border: none;
+            font-weight: 400;
+        }
+
+        .text-success { color: #2ecc71 !important; font-weight: bold; text-shadow: 0 0 10px rgba(46, 204, 113, 0.3); }
+        .text-danger { color: #e74c3c !important; font-weight: bold; text-shadow: 0 0 10px rgba(231, 76, 60, 0.3); }
+
+        /* --- PAGINATION --- */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .pagination a {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .pagination a:hover {
+            background: #bbe1fa;
+            color: #0f4c75;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            color: #a0a0a0;
+            padding: 15px 0;
+            font-size: 13px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s;
+            z-index: 999;
+        }
+
+        .footer a { color: #bbe1fa; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        .container-main {
+            padding-top: 100px;
+            flex: 1;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 95%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="/dashboard">FAKE BANK OF INDIA</a>
+            <ul class="navbar-nav ml-auto" style="flex-direction: row; gap: 10px;">
+                <li class="nav-item"><a class="btn" href="/dashboard">Home</a></li>
+                <li class="nav-item"><a class="btn" href="/acc/details">Account Details</a></li>
+                <li class="nav-item"><a class="btn" href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-main">
+        <div class="glass-panel">
+            <h2 class="text-center mb-4" style="color: #bbe1fa; font-weight: 300;">Transaction History</h2>
+
+            <div th:if="${successMessage}" class="alert alert-success text-center" style="border-radius: 15px; background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71;">
+                <span th:text="${successMessage}"></span>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger text-center" style="border-radius: 15px; background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c;">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <form method="get" class="filter-form">
+                <div>
+                    <label class="mr-2">From:</label>
+                    <input type="date" name="fromDate" required>
+                </div>
+                <div>
+                    <label class="mr-2">To:</label>
+                    <input type="date" name="toDate" required>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" formaction="/transactions/download" class="btn-glass-success">
+                        📄 Download
+                    </button>
+                    <button type="submit" formaction="/transactions/email" class="btn-glass-info">
+                        ✉️ Email
+                    </button>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tx : ${transactions}">
+                            <td th:text="${tx.id}"></td>
+                            <td th:text="${tx.type}"></td>
+                            <td th:text="${tx.amount}"
+                                th:classappend="${tx.type.equalsIgnoreCase('DEPOSIT') or tx.type.startsWith('Recieved_from')} ? 'text-success' : 'text-danger'">
+                                <span th:text="${tx.type.contains('Transfer In') || tx.type == 'Deposit'} ? '+$' + tx.amount : '-$' + tx.amount"></span>
+                            </td>
+                            <td th:text="${tx.timestamp}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <a th:if="${currentPage > 0}" th:href="@{/transactions(page=${currentPage - 1})}">← Previous</a>
+                <span style="color: #bbe1fa;">Page [[${currentPage + 1}]] of [[${totalPages}]]</span>
+                <a th:if="${currentPage + 1 < totalPages}" th:href="@{/transactions(page=${currentPage + 1})}">Next →</a>
+            </div>
+
+            <div class="text-center mt-4" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <a href="/transactions/download" class="btn-glass-primary">
+                    📄 Download Full Statement
+                </a>
+                <a href="/transactions/email" class="btn-glass-info" style="padding: 12px 30px;">
+                    ✉️ Email Full Statement
+                </a>
+            </div>
+            
+            <div class="text-center mt-3">
+                <a href="/dashboard" style="color: #bbe1fa; text-decoration: none; opacity: 0.8;">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 Copyright Aakash & Team. All rights reserved. | 
+            <a th:href="@{/privacy-policy}">Privacy Policy</a> | 
+            <a th:href="@{/termsofservice}">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script>
+        let lastScrollTop = 0;
+        const footer = document.querySelector('.footer');
+        const header = document.querySelector('.navbar-custom');
+
+        window.addEventListener('scroll', function () {
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (currentScroll > lastScrollTop) {
+                header.style.top = "-80px";
+                footer.style.transform = "translateY(100%)";
+            } else {
+                header.style.top = "0";
+                footer.style.transform = "translateY(0)";
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        }, false);
+    </script>
+
+</body>
+</html>

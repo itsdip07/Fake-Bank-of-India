@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Bank - AI Vehicle Loans</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- AUTOMOTIVE THEME VARIABLES --- */
+        :root {
+            --primary: #0f4c75;
+            --secondary: #1b2a47; /* Darker Navy/Carbon */
+            --accent-cyan: #00f2fe; /* Speed/Electric Cyan */
+            --bg-dark: #050b14;
+            --text-light: #e2e8f0;
+            --gold: #f0a500;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar-custom {
+            background: rgba(5, 11, 20, 0.9);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 242, 254, 0.15);
+        }
+        .navbar-brand { color: var(--accent-cyan) !important; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.2rem; letter-spacing: 1px; }
+        .nav-link { color: #cbd5e1 !important; font-weight: 500; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;}
+        .nav-link.active { color: var(--accent-cyan) !important; font-weight: 700; }
+        .btn-drive {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #000 !important;
+            border-radius: 50px;
+            padding: 8px 24px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+            transition: all 0.3s;
+            border: none;
+        }
+        .btn-drive:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(0, 242, 254, 0.6); }
+
+        /* --- HERO SECTION: THE SPEED TUNNEL --- */
+        .hero {
+            position: relative;
+            padding: 140px 0 100px;
+            text-align: center;
+            overflow: hidden;
+            background: radial-gradient(circle at top, var(--secondary), var(--bg-dark));
+        }
+        
+        /* Grid lines for motion effect */
+        .hero::before {
+            content: '';
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
+            background: 
+                linear-gradient(transparent 0%, rgba(0, 242, 254, 0.1) 2%, transparent 3%),
+                linear-gradient(90deg, transparent 0%, rgba(0, 242, 254, 0.05) 2%, transparent 3%);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: bottom;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 500px; }
+        }
+
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #fff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem; color: #94a3b8; max-width: 600px; margin: 0 auto 40px; line-height: 1.8;
+        }
+
+        /* --- LOAN TIERS (GLASS CARDS) --- */
+        .section-title { text-align: center; margin: 80px 0 50px; }
+        .section-title h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #fff; }
+
+        .car-card {
+            background: rgba(15, 76, 117, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 2px solid var(--accent-cyan);
+            border-radius: 20px;
+            padding: 40px 30px;
+            height: 100%;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .car-card:hover {
+            transform: translateY(-10px);
+            background: rgba(15, 76, 117, 0.3);
+            border-color: rgba(0, 242, 254, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.15);
+        }
+        .icon-car { font-size: 2.8rem; margin-bottom: 20px; display: block; }
+        .ev-glow { color: #10b981; text-shadow: 0 0 15px rgba(16, 185, 129, 0.5); }
+        .lux-glow { color: var(--gold); text-shadow: 0 0 15px rgba(240, 165, 0, 0.5); }
+        .std-glow { color: var(--accent-cyan); text-shadow: 0 0 15px rgba(0, 242, 254, 0.5); }
+        
+        .rate-badge {
+            display: inline-block; background: rgba(0, 0, 0, 0.5);
+            padding: 6px 15px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Fira Code', monospace; font-size: 0.9rem; color: #fff; margin-bottom: 20px;
+        }
+
+        /* --- AI EMI MATRIX --- */
+        .calculator-box {
+            background: linear-gradient(145deg, rgba(27, 42, 71, 0.6), rgba(5, 11, 20, 0.8));
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 24px;
+            padding: 50px;
+            margin: 60px 0;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .range-slider {
+            width: 100%;
+            -webkit-appearance: none; background: transparent; margin: 15px 0;
+        }
+        .range-slider::-webkit-slider-runnable-track {
+            width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 5px;
+        }
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%;
+            background: var(--accent-cyan); box-shadow: 0 0 15px var(--accent-cyan);
+            margin-top: -7px; cursor: pointer;
+        }
+        .emi-result {
+            font-family: 'Fira Code', monospace; font-size: 3.5rem; color: var(--accent-cyan);
+            font-weight: bold; line-height: 1; margin-bottom: 10px;
+        }
+
+        /* --- AI TERMINAL --- */
+        .terminal-container {
+            background: #0d1117; border-radius: 12px; border: 1px solid #30363d;
+            overflow: hidden; font-family: 'Fira Code', monospace; font-size: 0.85rem; height: 300px;
+            display: flex; flex-direction: column;
+        }
+        .terminal-header { background: #161b22; padding: 10px 15px; border-bottom: 1px solid #30363d; color: #8b949e; }
+        .terminal-body { padding: 15px; overflow-y: auto; flex-grow: 1; color: #c9d1d9; }
+        .log-time { color: #8b949e; margin-right: 10px; }
+        .log-sys { color: #58a6ff; }
+        .log-success { color: #3fb950; }
+        .log-warn { color: #d29922; }
+
+        /* --- ANIMATIONS --- */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 0.8s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">FAKE BANK <span style="font-weight: 300; color: #fff;">AUTO</span></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#">Loan Types</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">AI Calculator</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Underwriting</a></li>
+                    <li class="nav-item pl-3"><button class="btn-drive">Get Pre-Approved</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container hero-content fade-up visible">
+            <i class="fas fa-tachometer-alt" style="font-size: 3.5rem; color: var(--accent-cyan); margin-bottom: 20px; filter: drop-shadow(0 0 15px rgba(0,242,254,0.6));"></i>
+            <h1>0 to Approved in <span>0.04s</span></h1>
+            <p>Skip the paperwork. Our SBERT AI reads your documents, analyzes your risk profile, and credits your account before you even finish your test drive.</p>
+            <button class="btn-drive" style="font-size: 1.1rem; padding: 12px 35px;">Start AI Application <i class="fas fa-arrow-right ml-2"></i></button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section-title fade-up">
+            <h2>Select Your Class</h2>
+            <p style="color: #94a3b8;">Interest rates dynamically optimized by Llama 3.2 based on vehicle depreciation models.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4 fade-up delay-1">
+                <div class="car-card">
+                    <i class="fas fa-leaf icon-car ev-glow"></i>
+                    <h3 class="text-white">Electric (EV)</h3>
+                    <div class="rate-badge">Start at 7.15% p.a.</div>
+                    <p style="color: #94a3b8; font-size: 0.95rem;">Zero emissions, zero hassle. Get massive interest subsidies and instant Spring Boot verified green-credits for choosing a sustainable future.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 fade-up delay-2">
+                <div class="car-card">
+                    <i class="fas fa-car icon-car std-glow"></i>
+                    <h3 class="text-white">Sedan & SUV</h3>
+                    <div class="rate-badge">Start at 8.40% p.a.</div>
+                    <p style="color: #94a3b8; font-size: 0.95rem;">The perfect daily driver. Up to 100% on-road funding. Our NLP engine automatically extracts pro-forma invoice details to sanction the exact amount.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 fade-up delay-3">
+                <div class="car-card">
+                    <i class="fas fa-gem icon-car lux-glow"></i>
+                    <h3 class="text-white">Luxury & Sports</h3>
+                    <div class="rate-badge">Custom AI Pricing</div>
+                    <p style="color: #94a3b8; font-size: 0.95rem;">For the elite. Tailored amortization schedules. The system cross-references your global assets via FAISS vector search to approve multi-crore limits instantly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="calculator-box fade-up">
+            <div class="row">
+                <div class="col-md-6 pr-md-5">
+                    <h3 class="text-white mb-4"><i class="fas fa-sliders-h mr-2" style="color: var(--accent-cyan);"></i> Dynamic EMI Engine</h3>
+                    
+                    <div class="mb-4">
+                        <label class="d-flex justify-content-between text-light">
+                            <span>Loan Amount</span>
+                            <span id="amt-val" style="color: var(--accent-cyan); font-weight: bold;">₹15,00,000</span>
+                        </label>
+                        <input type="range" class="range-slider" id="amt-slider" min="100000" max="10000000" step="50000" value="1500000">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="d-flex justify-content-between text-light">
+                            <span>Tenure (Months)</span>
+                            <span id="tenure-val" style="color: var(--accent-cyan); font-weight: bold;">48 Months</span>
+                        </label>
+                        <input type="range" class="range-slider" id="tenure-slider" min="12" max="84" step="6" value="48">
+                    </div>
+
+                    <div class="mt-5">
+                        <p class="mb-1 text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px; color: #94a3b8;">Predicted Monthly EMI</p>
+                        <div class="emi-result" id="emi-result">₹36,924</div>
+                        <p style="color: #10b981; font-size: 0.85rem;"><i class="fas fa-check-circle mr-1"></i> Rate locked at 8.4% by AI Risk Assessor</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mt-5 mt-md-0">
+                    <h3 class="text-white mb-4"><i class="fas fa-server mr-2" style="color: #58a6ff;"></i> Underwriting Logs 💀</h3>
+                    <div class="terminal-container">
+                        <div class="terminal-header">
+                            <i class="fas fa-terminal mr-2"></i> root@bank-ai:/engine/loan_sanction
+                        </div>
+                        <div class="terminal-body" id="term-logs">
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background: #02060c; padding: 40px 0; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px;">
+        <div class="container text-muted" style="font-size: 0.9rem;">
+            <p>&copy; 2026 Fake Bank Auto Finance. Fast. Ruthless. Intelligent.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+        // --- SCROLL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // --- EMI CALCULATOR ---
+        const amtSlider = document.getElementById('amt-slider');
+        const tenureSlider = document.getElementById('tenure-slider');
+        const amtVal = document.getElementById('amt-val');
+        const tenureVal = document.getElementById('tenure-val');
+        const emiResult = document.getElementById('emi-result');
+
+        function calculateEMI() {
+            const P = parseFloat(amtSlider.value);
+            const N = parseFloat(tenureSlider.value);
+            const R = 8.4 / 12 / 100; // 8.4% annual rate
+            
+            amtVal.innerText = '₹' + P.toLocaleString('en-IN');
+            tenureVal.innerText = N + ' Months';
+
+            const emi = P * R * (Math.pow(1 + R, N) / (Math.pow(1 + R, N) - 1));
+            emiResult.innerText = '₹' + Math.round(emi).toLocaleString('en-IN');
+        }
+
+        amtSlider.addEventListener('input', calculateEMI);
+        tenureSlider.addEventListener('input', calculateEMI);
+        calculateEMI();
+
+        // --- TERMINAL SIMULATION ---
+        const termLogs = document.getElementById('term-logs');
+        const logs = [
+            { type: 'log-sys', msg: 'Initiating auto_loan_pipeline.py...' },
+            { type: 'log-sys', msg: 'Intercepting user application via Spring Boot Gateway.' },
+            { type: 'log-warn', msg: '[SBERT] Extracting vector embeddings from Salary Slip PDF...' },
+            { type: 'log-success', msg: '[NLP_MATCH] Income verified. Confidence: 99.8%' },
+            { type: 'log-sys', msg: 'Querying external API: CIBIL_Score_Bureau...' },
+            { type: 'log-success', msg: 'Returned CIBIL: 815 (Excellent)' },
+            { type: 'log-warn', msg: 'Bypassing human underwriter entity (Manual_Check == FALSE)' },
+            { type: 'log-sys', msg: 'Calculating depreciation risk using FAISS historical data...' },
+            { type: 'log-success', msg: '[APPROVED] Sanctioning amount via TransactionDTO.' },
+            { type: 'log-success', msg: 'Status: DISBURSED. Total time: 0.041s' }
+        ];
+
+        let i = 0;
+        function pushLog() {
+            if (i < logs.length) {
+                const time = new Date().toISOString().substring(11, 23);
+                const p = document.createElement('div');
+                p.innerHTML = `<span class="log-time">[${time}]</span> <span class="${logs[i].type}">${logs[i].msg}</span>`;
+                termLogs.appendChild(p);
+                termLogs.scrollTop = termLogs.scrollHeight;
+                i++;
+                setTimeout(pushLog, Math.random() * 800 + 300);
+            } else {
+                setTimeout(() => { termLogs.innerHTML = ''; i = 0; pushLog(); }, 6000);
+            }
+        }
+        setTimeout(pushLog, 1500);
+    </script>
+</body>
+
+</html>

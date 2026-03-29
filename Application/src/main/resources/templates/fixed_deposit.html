@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Deposits - Fake Bank of India</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary:   #0f4c75;
+            --secondary: #3282b8;
+            --accent:    #1b9aaa;
+            --gold:      #f0a500;
+            --light-bg:  linear-gradient(160deg, #f0f4f8 0%, #ffffff 40%, #eef2f7 100%);
+        }
+
+        body { font-family: 'DM Sans', sans-serif; background: var(--light-bg); color: #333; overflow-x: hidden; }
+
+        /* Reuse Hero Styles from Current Account */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #052c4a 0%, var(--primary) 50%, #0f4c75 100%);
+            padding: 100px 0 80px;
+            color: white;
+        }
+
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; }
+        .hero h1 em { color: var(--gold); font-style: italic; }
+
+        .btn-hero-primary {
+            background: var(--gold); color: #fff; font-weight: 700; border-radius: 50px; padding: 13px 34px;
+            transition: 0.3s; text-decoration: none; display: inline-block; border: none;
+        }
+        .btn-hero-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(240,165,0,0.3); color: white; }
+
+        /* FD Mockup Card */
+        .hero-card-mockup {
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 24px; padding: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        .interest-badge {
+            background: var(--gold); color: #000; font-weight: 800; padding: 5px 15px; border-radius: 50px; font-size: 0.8rem;
+        }
+
+        /* Section Styling */
+        .section-wrap { padding: 80px 0; }
+        .section-heading { font-family: 'Playfair Display', serif; font-weight: 900; color: var(--primary); font-size: 2.2rem; }
+
+        /* Feature Card (Consistent with current_acc.html) */
+        .feature-card {
+            background: white; border-radius: 20px; padding: 30px; height: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #eee;
+        }
+        .feature-card:hover { transform: translateY(-10px); border-color: var(--secondary); }
+        .fc-icon { font-size: 2rem; color: var(--secondary); margin-bottom: 15px; }
+        .fc-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 10px; }
+
+        /* Rates Table */
+        .rates-table {
+            background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+        }
+        .rates-header { background: var(--primary); color: white; padding: 15px; font-weight: 700; }
+        .rates-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid #eee; padding: 15px; }
+        .rates-row:last-child { border-bottom: none; }
+        .rate-val { font-weight: 700; color: var(--accent); }
+
+        /* Footer from original UI */
+        footer { background: #0a3356; color: rgba(255,255,255,0.6); padding: 60px 0 30px; }
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 0.6s all ease-out; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" style="font-family:'Playfair Display'; font-weight:900; color:#0f4c75;" href="#">FAKE BANK</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Savings</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#">Fixed Deposits</a></li>
+                <li class="nav-item pl-3"><a class="btn btn-primary rounded-pill px-4" href="#">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="mb-3"><span class="interest-badge">HIGHEST RATES IN 2026</span></div>
+                <h1>Secure Your Future with <em>Fixed Deposits.</em></h1>
+                <p class="lead opacity-75 mb-4">Invest once, earn forever. Guaranteed returns up to 8.5% for senior citizens and 7.75% for regular investors.</p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="btn-hero-primary mr-3">Open FD Online</a>
+                    <a href="#" class="btn btn-outline-light rounded-pill px-4 py-2">Check Rates</a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="hero-card-mockup text-white mt-5 mt-lg-0">
+                    <p class="small text-uppercase tracking-wider opacity-50">Deposit Certificate</p>
+                    <h4 class="font-weight-bold">Platinum Growth FD</h4>
+                    <hr class="bg-white opacity-25">
+                    <div class="row">
+                        <div class="col-6"><small class="opacity-50">Principal</small><p class="h5">₹5,00,000</p></div>
+                        <div class="col-6"><small class="opacity-50">Maturity Value</small><p class="h5 text-warning">₹7,42,000</p></div>
+                    </div>
+                    <div class="mt-3">
+                        <small class="opacity-50">Tenure: 5 Years | Rate: 7.75%</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-wrap">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <h2 class="section-heading">Why Choose Fixed Deposits?</h2>
+            <p class="text-muted">The safest harbor for your hard-earned money.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4 fade-up">
+                <div class="feature-card">
+                    <i class="fas fa-shield-check fc-icon"></i>
+                    <h5 class="fc-title">Zero Risk</h5>
+                    <p class="small text-muted">Unlike market-linked investments, your principal and interest are 100% guaranteed by the bank.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up">
+                <div class="feature-card">
+                    <i class="fas fa-clock fc-icon"></i>
+                    <h5 class="fc-title">Flexible Tenure</h5>
+                    <p class="small text-muted">Invest for as little as 7 days or as long as 10 years to suit your financial goals.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up">
+                <div class="feature-card">
+                    <i class="fas fa-hand-holding-heart fc-icon"></i>
+                    <h5 class="fc-title">Senior Citizen Bonus</h5>
+                    <p class="small text-muted">An additional 0.50% to 0.75% interest rate for our customers aged 60 and above.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-wrap bg-light">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <h2 class="section-heading">Interest Rate Card</h2>
+            <p class="text-muted">Effective from March 2026</p>
+        </div>
+        <div class="rates-table fade-up">
+            <div class="rates-header d-none d-md-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
+                <span>Tenure</span>
+                <span>General (p.a.)</span>
+                <span>Senior Citizen (p.a.)</span>
+            </div>
+            <div class="rates-row">
+                <span>7 days to 45 days</span>
+                <span class="rate-val">3.50%</span>
+                <span class="rate-val">4.00%</span>
+            </div>
+            <div class="rates-row">
+                <span>1 Year to < 2 Years</span>
+                <span class="rate-val">6.75%</span>
+                <span class="rate-val">7.25%</span>
+            </div>
+            <div class="rates-row" style="background: #fdfae6; border-left: 4px solid var(--gold);">
+                <span>400 Days (Special)</span>
+                <span class="rate-val">7.50%</span>
+                <span class="rate-val">8.10%</span>
+            </div>
+            <div class="rates-row">
+                <span>5 Years to 10 Years</span>
+                <span class="rate-val">7.00%</span>
+                <span class="rate-val">7.75%</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="p-5 text-white rounded-lg shadow-lg" style="background: linear-gradient(45deg, #0f4c75, #1b9aaa);">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h3 class="font-weight-bold">Save ₹46,800 in Taxes!</h3>
+                <p class="mb-0">Our 5-Year Tax Saver FD allows you to claim deductions under Section 80C. Secure your wealth and reduce your tax liability simultaneously.</p>
+            </div>
+            <div class="col-md-4 text-md-right mt-3 mt-md-0">
+                <a href="#" class="btn btn-light btn-lg rounded-pill font-weight-bold text-primary">Learn More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container text-center">
+        <h5 class="text-white font-weight-bold mb-3">FAKE BANK OF INDIA</h5>
+        <p class="small px-5">Member of DICGC. Deposits insured up to ₹5 Lakhs per depositor. Fixed deposit interest rates are subject to change without prior notice.</p>
+        <div class="mt-4 pt-3 border-top border-secondary">
+            <p class="small mb-0">&copy; 2026 Fake Bank. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Reveal animations on scroll
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

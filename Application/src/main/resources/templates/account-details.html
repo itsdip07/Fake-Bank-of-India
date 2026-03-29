@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Details - FAKE BANK OF INDIA</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. NEW EMERGING BLUE BACKGROUND --- */
+        body {
+            font-family: 'Roboto', sans-serif;
+            /* Matches your Login Page exactly */
+            background: linear-gradient(180deg, 
+                #0f4c75 0%, 
+                #5c9bc7 15%, 
+                #e3f2fd 40%, 
+                #e3f2fd 60%, 
+                #5c9bc7 85%, 
+                #0f4c75 100%
+            );
+            background-attachment: fixed;
+            background-size: cover;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- 2. NAVBAR (Deep Blue Transparent) --- */
+        .navbar-custom {
+            background-color: rgba(15, 76, 117, 0.95);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .navbar-custom a { color: #ffffff !important; }
+        .navbar-custom .navbar-brand { font-weight: bold; letter-spacing: 1px; }
+        
+        .navbar-custom ul {
+            display: flex !important;
+            gap: 15px;
+            align-items: center;
+        }
+
+        /* Navbar Buttons */
+        .btn-warning {
+            background-color: transparent !important;
+            border: 1px solid #ffffff !important;
+            color: #ffffff !important;
+            font-weight: 500 !important;
+            border-radius: 20px; /* Rounded pill shape */
+            padding: 5px 20px;
+            transition: all 0.3s ease !important;
+        }
+
+        .btn-warning:hover {
+            background-color: #e3f2fd !important;
+            color: #0f4c75 !important;
+            border-color: #e3f2fd !important;
+            transform: translateY(-2px);
+        }
+
+        /* --- 3. DASHBOARD PANEL (Deep Blue Glass Card) --- */
+        .dashboard-panel {
+            /* Deep Blue Gradient Card */
+            background: linear-gradient(135deg, rgba(15, 76, 117, 0.95), rgba(50, 130, 184, 0.9));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 40px 50px;
+            
+            /* Strong shadow to pop against light background */
+            box-shadow: 0 25px 50px rgba(15, 76, 117, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            
+            max-width: 800px;
+            width: 90%; /* Responsive width */
+            margin-top: 100px; /* Space for fixed navbar */
+            margin-bottom: 50px;
+            text-align: left;
+            color: white; /* Text inside card is white */
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        h2 {
+            margin-bottom: 30px;
+            color: #ffffff;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* --- 4. TABLE STYLING --- */
+        .account-table {
+            color: #ffffff;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .account-table th,
+        .account-table td {
+            border: none;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+        .account-table tr {
+            border-bottom: 1px solid rgba(255,255,255,0.1); /* Subtle separator */
+        }
+        .account-table tr:last-child { border-bottom: none; }
+
+        .account-table th {
+            font-weight: 500;
+            color: #bbe1fa; /* Light Blue Accent for headers */
+            width: 40%;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .account-table td {
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+        
+        /* Responsive tweaks */
+        @media (max-width: 768px) {
+            .dashboard-panel { padding: 30px 20px; }
+            .account-table th, .account-table td { display: block; width: 100%; padding: 5px 0; }
+            .account-table th { margin-top: 10px; opacity: 0.8; }
+        }
+
+        .footer {
+            margin-top: auto;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        .footer a { color: #bbe1fa; text-decoration: none; }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">FAKE BANK OF INDIA</a>
+            <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="btn btn-warning" href="/dashboard">Home</a></li>
+                    <li class="nav-item"><a class="btn btn-warning" href="/transactions">Transactions</a></li>
+                    <li class="nav-item"><a class="btn btn-warning" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-panel">
+        <h2 class="text-center">Account Details</h2>
+        <div class="table-responsive">
+            <table class="table account-table">
+                <tbody>
+                    <tr>
+                        <th>Account Holder</th>
+                        <td th:text="${account.accountHolder}"></td>
+                    </tr>
+                    <tr>
+                        <th>Account Type</th>
+                        <td th:text="${account.accountType}"></td>
+                    </tr>
+                    <tr>
+                        <th>Account Number</th>
+                        <td th:text="${account.id}"></td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td><span class="badge badge-success px-3 py-2" style="font-size: 0.9rem;">Active</span></td>
+                    </tr>
+                    <tr>
+                        <th>Current Balance</th>
+                        <td style="font-size: 1.4rem; color: #4db8ff;" th:text="'₹' + ${account.balance}"></td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td th:text="${account.address}"></td>
+                    </tr>
+                    <tr>
+                        <th>Branch Location</th>
+                        <td th:text="${account.location}"></td>
+                    </tr>
+                    <tr>
+                        <th>Registered Mobile</th>
+                        <td th:text="${account.mobileNumber}"></td>
+                    </tr>
+                    <tr>
+                        <th>Registered Email</th>
+                        <td th:text="${account.email}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 FAKE BANK OF INDIA. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

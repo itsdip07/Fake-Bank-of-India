@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Bank - The Power of AI</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --primary: #0f4c75;
+            --secondary: #3282b8;
+            --accent: #1b9aaa;
+            --gold: #f0a500;
+            --bg-light: #f4f9fd;
+            --bg-gradient: linear-gradient(160deg, #e3f2fd 0%, #ffffff 35%, #f0f8ff 100%);
+            --dark-ai: #05131f;
+            --terminal-green: #22c55e;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar-custom {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+        }
+        .navbar-brand { color: var(--primary) !important; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.2rem; letter-spacing: 0.5px; }
+        .nav-link { color: #555 !important; font-weight: 600; }
+        .nav-link.active { color: var(--primary) !important; font-weight: 700; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            padding: 100px 0 80px;
+            text-align: center;
+            overflow: hidden;
+            background: var(--dark-ai);
+            color: white;
+        }
+
+        /* AI Pulse Rings */
+        .ai-pulse-rings {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px; height: 800px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .ai-pulse-rings span {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(50, 130, 184, 0.3);
+            animation: pulseRing 4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        .ai-pulse-rings span:nth-child(1) { width: 200px; height: 200px; animation-delay: 0s; box-shadow: 0 0 30px rgba(50,130,184,0.4); }
+        .ai-pulse-rings span:nth-child(2) { width: 400px; height: 400px; animation-delay: 1s; }
+        .ai-pulse-rings span:nth-child(3) { width: 600px; height: 600px; animation-delay: 2s; }
+        .ai-pulse-rings span:nth-child(4) { width: 800px; height: 800px; animation-delay: 3s; }
+
+        @keyframes pulseRing {
+            0% { opacity: 0.8; transform: translate(-50%, -50%) scale(0.8); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 900;
+            background: -webkit-linear-gradient(45deg, #fff, #bbe1fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: #a0c4de;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        /* --- GLOWING METRICS --- */
+        .metrics-bar {
+            background: rgba(15, 76, 117, 0.4);
+            border: 1px solid rgba(50, 130, 184, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            display: inline-flex;
+            gap: 40px;
+        }
+        .metric { text-align: left; }
+        .metric-val { font-size: 1.5rem; font-family: 'Fira Code', monospace; color: #bbe1fa; font-weight: bold; }
+        .metric-lbl { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+
+        /* --- FEATURE GRIDS --- */
+        .section-title {
+            text-align: center;
+            margin: 80px 0 50px;
+        }
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+        .section-title p { color: #666; max-width: 500px; margin: 10px auto; }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 45px rgba(15, 76, 117, 0.15);
+        }
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50px; right: -50px;
+            width: 150px; height: 150px;
+            background: linear-gradient(135deg, var(--accent), transparent);
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+        .icon-box {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(15, 76, 117, 0.2);
+        }
+        .card-title { font-weight: 700; font-size: 1.25rem; color: var(--primary); margin-bottom: 15px; }
+        .card-text { font-size: 0.95rem; color: #555; line-height: 1.6; }
+        .tech-badge {
+            display: inline-block;
+            background: rgba(15, 76, 117, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- TERMINAL SECTION --- */
+        .terminal-container {
+            background: #0d1117;
+            border-radius: 15px;
+            border: 1px solid #30363d;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            overflow: hidden;
+            margin: 60px 0;
+        }
+        .terminal-header {
+            background: #161b22;
+            padding: 10px 20px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+        }
+        .terminal-dots { display: flex; gap: 8px; }
+        .terminal-dots span { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+        .terminal-title { margin-left: 15px; color: #8b949e; font-family: 'Fira Code', monospace; font-size: 0.8rem; }
+        
+        .terminal-body {
+            padding: 20px;
+            height: 350px;
+            overflow-y: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #c9d1d9;
+            line-height: 1.7;
+        }
+        .log-time { color: #8b949e; margin-right: 10px; }
+        .log-info { color: #58a6ff; }
+        .log-success { color: #3fb950; font-weight: bold; }
+        .log-warning { color: #d29922; }
+        .log-error { color: #f85149; }
+
+        /* --- ANIMATIONS --- */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 0.6s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">FAKE BANK OF INDIA</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">AI Engine</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Security</a></li>
+                    <li class="nav-item pl-3">
+                        <a class="btn" style="background: var(--primary); color: white; border-radius: 50px; padding: 6px 22px; font-weight: 600;" href="#">Access Vault</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="ai-pulse-rings">
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="container hero-content fade-up visible">
+            <div class="mb-4">
+                <i class="fas fa-brain" style="font-size: 4rem; color: var(--accent); filter: drop-shadow(0 0 20px rgba(27,154,170,0.8));"></i>
+            </div>
+            <h1>The Most Advanced<br>AI Banking Engine.</h1>
+            <p class="subtitle">Powered by SBERT Neural Networks, FAISS Vector Search, and Llama 3.2. We don't just store your money; we anticipate your financial needs with zero-click conversational intelligence.</p>
+            
+            <div class="metrics-bar">
+                <div class="metric">
+                    <div class="metric-val">0.42s</div>
+                    <div class="metric-lbl">Avg Response Time</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-val">98.7%</div>
+                    <div class="metric-lbl">Intent Accuracy</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-val">10M+</div>
+                    <div class="metric-lbl">Vector Embeddings</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section-title fade-up">
+            <h2>The Brain: NLP & Intent Detection</h2>
+            <p>Our triple-layer Python architecture eliminates confusing menus. Just tell the bank what you want.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4 fade-up delay-1">
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fas fa-project-diagram"></i></div>
+                    <h3 class="card-title">Triple-Layer Intent</h3>
+                    <p class="card-text">We process your speech through an <strong>SBERT Classifier</strong>, refine it with Semantic Vector Similarity, and apply strict rule-based overrides. The system perfectly maps queries like <em>"Send 500 to Irvin"</em> to actionable endpoints.</p>
+                    <span class="tech-badge">all-mpnet-base-v2</span>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-2">
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fas fa-database"></i></div>
+                    <h3 class="card-title">FAISS Semantic Search</h3>
+                    <p class="card-text">Confused about an RTGS transfer or Home Loan EMI? Our AI fetches exact policy matches from our massive document knowledge base in milliseconds using high-dimensional vector space indexing.</p>
+                    <span class="tech-badge">Meta FAISS</span>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 fade-up delay-3">
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fas fa-comment-dots"></i></div>
+                    <h3 class="card-title">Empathetic LLM (Llama 3.2)</h3>
+                    <p class="card-text">Experience customer support with a warm, natural tone. Our isolated Llama 3.2 integration ensures responses are strictly confined to banking matters—safeguarding you from AI hallucinations.</p>
+                    <span class="tech-badge">Ollama Llama-3.2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container fade-up">
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="dot-red"></span>
+                    <span class="dot-yellow"></span>
+                    <span class="dot-green"></span>
+                </div>
+                <div class="terminal-title">ai_service.py — Live Transaction Log</div>
+            </div>
+            <div class="terminal-body" id="terminal">
+                </div>
+        </div>
+    </div>
+
+    <div class="container pb-5">
+        <div class="section-title fade-up">
+            <h2>The Vault: Java Spring Boot Engine</h2>
+            <p>While the AI understands you, our impenetrable Java backend protects you.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4 fade-up delay-1">
+                <div class="glass-card" style="border-left: 4px solid var(--gold);">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-shield-alt fa-2x mr-3" style="color: var(--gold);"></i>
+                        <h3 class="card-title m-0">Ironclad Security</h3>
+                    </div>
+                    <p class="card-text">Every action passes through our <strong>Spring Security Filter Chain</strong>. Passwords are secured with BCrypt. Unrecognized IPs immediately trigger session invalidation and custom <em>Access Denied</em> protocols.</p>
+                    <span class="tech-badge">Spring Security</span> <span class="tech-badge">BCrypt</span>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4 fade-up delay-2">
+                <div class="glass-card" style="border-left: 4px solid #ef4444;">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-snowflake fa-2x mr-3" style="color: #ef4444;"></i>
+                        <h3 class="card-title m-0">Instant Account Freezing</h3>
+                    </div>
+                    <p class="card-text">Detect suspicious activity? Say <em>"I lost my card."</em> The AI instantly invokes the <code>setFrozen(true)</code> Java entity, locking all debit/credit operations and disabling login access worldwide instantly.</p>
+                    <span class="tech-badge">JPA Hibernate</span> <span class="tech-badge">Real-Time State</span>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4 fade-up delay-1">
+                <div class="glass-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-fingerprint fa-2x mr-3" style="color: var(--primary);"></i>
+                        <h3 class="card-title m-0">Automated OTP Verification</h3>
+                    </div>
+                    <p class="card-text">High-risk transactions require dynamic OTP generation. The system cross-references timestamps via <code>otpGeneratedTime</code> ensuring temporary tokens expire mathematically before hackers can act.</p>
+                    <span class="tech-badge">Multi-Factor Auth</span>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4 fade-up delay-2">
+                <div class="glass-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-exchange-alt fa-2x mr-3" style="color: var(--primary);"></i>
+                        <h3 class="card-title m-0">Smart Pending Flows</h3>
+                    </div>
+                    <p class="card-text">"Transfer ₹2000 to Mom". The AI links the nickname to your <em>Beneficiary Repository</em>, isolates the amount, assigns a secure UUID, and safely halts until you say <strong>"Confirm."</strong></p>
+                    <span class="tech-badge">Transactional Rollback</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background: var(--dark-ai); color: #888; padding: 40px 0; text-align: center;">
+        <div class="container">
+            <i class="fas fa-shield-alt fa-2x mb-3" style="color: #3282b8;"></i>
+            <p>&copy; 2026 Fake Bank of India. Enterprise AI Platform Showcase.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+        // Scroll Fade-Up Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Terminal Log Simulation
+        const terminal = document.getElementById('terminal');
+        const logs = [
+            { type: 'info', msg: 'Listening on port 5000... Model all-mpnet-base-v2 loaded.' },
+            { type: 'info', msg: 'FAISS Vector Database initiated. 2,500 chunks loaded.' },
+            { type: 'info', msg: '[USER_INPUT] Audio transcription: "Transfer 50,000 rupees to Raj"' },
+            { type: 'warning', msg: '[SBERT] Generating vector embeddings. Analyzing semantic similarity...' },
+            { type: 'success', msg: '[INTENT_MATCH] fund_transfer detected. Confidence: 0.992' },
+            { type: 'warning', msg: '[DATA_EXTRACT] Extracted Amount: 50000.0 | Extracted Recipient: "Raj"' },
+            { type: 'info', msg: '[DB_QUERY] Cross-referencing "Raj" in BeneficiaryRepository...' },
+            { type: 'success', msg: '[DB_MATCH] Found ActualUsername: "raj_kumar_99".' },
+            { type: 'info', msg: '[FLOW] Generating UUID for pending transaction...' },
+            { type: 'info', msg: '[OLLAMA_3.2] Generating conversational prompt...' },
+            { type: 'success', msg: '[RESPONSE] "I understand you want to transfer ₹50,000 to Raj. Reply \'confirm\' to proceed."' },
+            { type: 'info', msg: '[USER_INPUT] Text input: "confirm"' },
+            { type: 'warning', msg: '[SECURITY] Triggering Spring Boot /transfer endpoint...' },
+            { type: 'info', msg: '[SECURITY] Generating OTP... Dispatching to SmsService & EmailService.' },
+            { type: 'success', msg: '[TX_SUCCESS] Transaction Committed. Balance updated.' }
+        ];
+
+        let logIndex = 0;
+        function printLog() {
+            if (logIndex < logs.length) {
+                const log = logs[logIndex];
+                const time = new Date().toISOString().substring(11, 23);
+                
+                const p = document.createElement('div');
+                let colorClass = 'log-info';
+                if (log.type === 'success') colorClass = 'log-success';
+                if (log.type === 'warning') colorClass = 'log-warning';
+                if (log.type === 'error') colorClass = 'log-error';
+
+                p.innerHTML = `<span class="log-time">[${time}]</span> <span class="${colorClass}">${log.msg}</span>`;
+                terminal.appendChild(p);
+                terminal.scrollTop = terminal.scrollHeight;
+                
+                logIndex++;
+                setTimeout(printLog, Math.random() * 800 + 400); // Random delay between logs
+            } else {
+                setTimeout(() => {
+                    terminal.innerHTML = '';
+                    logIndex = 0;
+                    printLog();
+                }, 5000); // Restart loop after 5 seconds
+            }
+        }
+        
+        // Start terminal printing after 1 second
+        setTimeout(printLog, 1000);
+    </script>
+</body>
+
+</html>
