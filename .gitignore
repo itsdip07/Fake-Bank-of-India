@@ -1,8 +1,5 @@
-# =========================
+🔹 Python
 
-# 🔹 Python
-
-# =========================
 
 **pycache**/
 *.pyc
@@ -28,11 +25,9 @@ dist/
 
 .ipynb_checkpoints/
 
-# =========================
 
-# 🔹 Java (Maven/Gradle)
+🔹 Java (Maven/Gradle)
 
-# =========================
 
 target/
 *.class
@@ -40,66 +35,53 @@ target/
 *.war
 *.ear
 
-# =========================
 
-# 🔹 IDE / Editor
 
-# =========================
+🔹 IDE / Editor
+
 
 .vscode/
 .idea/
 *.iml
 
-# =========================
 
-# 🔹 OS Files
+🔹 OS Files
 
-# =========================
 
 .DS_Store
 Thumbs.db
 
-# =========================
 
-# 🔹 Logs
+🔹 Logs
 
-# =========================
 
 *.log
 logs/
 
-# =========================
 
-# 🔹 Database
+🔹 Database
 
-# =========================
 
 *.db
 *.sqlite3
 
-# =========================
 
-# 🔹 Environment Variables (IMPORTANT)
+🔹 Environment Variables (IMPORTANT)
 
-# =========================
 
 .env
 
-# =========================
 
-# 🔹 Temporary Files
+🔹 Temporary Files
 
-# =========================
 
 *.tmp
 *.temp
 *.swp
 
-# =========================
 
-# 🔹 Optional (Large Files)
+🔹 Optional (Large Files)
 
-# =========================
 
 *.zip
 *.tar
