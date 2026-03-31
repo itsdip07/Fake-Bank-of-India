@@ -1,1 +1,1 @@
-CREATE DATABASE practice_bankappdb_1;
+CREATE DATABASE fake_bank_of_india;
